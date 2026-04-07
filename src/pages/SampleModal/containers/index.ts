@@ -1,0 +1,17 @@
+import type { FromType } from '../../../types/from'
+import type { ServiceType } from '../../../types/serviceType'
+import { SampleAType1Container } from './SampleA/Type1'
+import { SampleAType2Container } from './SampleA/Type2'
+import { SampleBType1Container } from './SampleB/Type1'
+
+type ContainerMap = Record<FromType, Partial<Record<ServiceType, React.ComponentType>>>
+
+export const CONTAINER_MAP: ContainerMap = {
+  sample_a: {
+    type_1: SampleAType1Container,
+    type_2: SampleAType2Container,
+  },
+  sample_b: {
+    type_1: SampleBType1Container,
+  },
+}
