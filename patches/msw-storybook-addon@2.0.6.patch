@@ -1,0 +1,25 @@
+diff --git a/dist/index.browser.js b/dist/index.browser.js
+index c03fb204bb5f79fca8cf1831ab7e2e658226bbd3..518b2597c72040a8873635bb9dc050a7ca81e8c7 100644
+--- a/dist/index.browser.js
++++ b/dist/index.browser.js
+@@ -54,17 +54,17 @@ var augmentInitializeOptions = (options) => {
+ 
+ // src/initialize.browser.ts
+ var api;
++var activationPromise;
+ function initialize(options, initialHandlers = []) {
+   const worker = setupWorker(...initialHandlers);
+-  worker.context.activationPromise = worker.start(
++  activationPromise = worker.start(
+     augmentInitializeOptions(options)
+   );
+   api = worker;
+   return worker;
+ }
+ async function waitForMswReady() {
+-  const msw = getWorker();
+-  await msw.context.activationPromise;
++  await activationPromise;
+ }
+ function getWorker() {
+   if (api === void 0) {

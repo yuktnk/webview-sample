@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm storybook:*)",
+      "Bash(npm show:*)",
+      "Bash(pnpm install:*)",
+      "Bash(ls:*)",
+      "Bash(head:*)",
+      "Bash(grep -n \"mswLoader\\\\|export\" /Users/yuktnk/Documents/000_development/000_my_app/webview-sample/node_modules/.pnpm/msw-storybook-addon@2.0.6_msw@2.13.0*/node_modules/msw-storybook-addon/dist/index.browser.js)",
+      "Bash(cat /Users/yuktnk/Documents/000_development/000_my_app/webview-sample/node_modules/.pnpm/msw-storybook-addon@2.0.6_msw@2.13.0*/node_modules/msw-storybook-addon/package.json)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\({k: d.get\\(k\\) for k in ['peerDependencies','peerDependenciesMeta','version']}, indent=2\\)\\)\")",
+      "Bash(cat /Users/yuktnk/Documents/000_development/000_my_app/webview-sample/node_modules/.pnpm/msw-storybook-addon@2.0.6_msw@2.13.0*/node_modules/msw-storybook-addon/dist/index.browser.js)",
+      "Bash(node -e \"const msw = require\\('/Users/yuktnk/Documents/000_development/000_my_app/webview-sample/node_modules/.pnpm/msw@2.13.0_@types+node@24.12.2_typescript@6.0.2/node_modules/msw/browser/index.js'\\); const w = msw.setupWorker\\(\\); console.log\\(Object.keys\\(w\\)\\); console.log\\('context:', w.context\\);\")",
+      "Bash(grep -n \"context\\\\b\" /Users/yuktnk/Documents/000_development/000_my_app/webview-sample/node_modules/.pnpm/msw@2.13.0*/node_modules/msw/browser/index.js)",
+      "Bash(pnpm patch:*)",
+      "Bash(pnpm patch-commit:*)",
+      "Bash(pnpm exec:*)",
+      "Bash(node -e \"const pkg = require\\('/Users/yuktnk/Documents/000_development/000_my_app/webview-sample/node_modules/.pnpm/@storybook+react-vite@10.3.4_*/node_modules/@storybook/react-vite/package.json'\\); console.log\\(Object.keys\\(pkg.exports || {}\\).slice\\(0,20\\)\\)\")"
+    ]
+  }
+}
