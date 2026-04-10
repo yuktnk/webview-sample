@@ -25,4 +25,4 @@ const getBridge = (): NativeBridge => {
   throw new Error('NativeBridge is not available')
 }
 
-export const nativeBridge = getBridge()
+export const getNativeBridge = (): NativeBridge => getBridge()

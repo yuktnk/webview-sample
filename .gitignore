@@ -25,3 +25,10 @@ dist-ssr
 
 *storybook.log
 storybook-static
+
+# Playwright
+playwright-report
+test-results
+
+# Claude Code（ローカル設定・セッション固有の許可ルール）
+.claude/settings.local.json

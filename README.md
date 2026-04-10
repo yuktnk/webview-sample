@@ -1,73 +1,76 @@
-# React + TypeScript + Vite
+# webview-sample
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+WebViewアプリのフルリプレイスPoCプロジェクト。
+`from` × `serviceType` の組み合わせで画面を切り替えるモーダル画面の実装サンプル。
 
-Currently, two official plugins are available:
+## 技術スタック
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| 役割 | ライブラリ |
+|------|-----------|
+| ビルド | Vite 8.x |
+| UI | React 19.x |
+| 言語 | TypeScript 6.x（strict: true） |
+| ルーティング | TanStack Router 1.x（ファイルルーティング） |
+| サーバー状態管理 | TanStack Query 5.x |
+| バリデーション | Zod 4.x |
+| スタイリング | Tailwind CSS 4.x |
+| コンポーネントテスト | Storybook 10.x |
+| ユニットテスト | Vitest 4.x |
+| E2Eテスト | Playwright 1.x |
+| APIモック | MSW 2.x |
+| パッケージマネージャー | pnpm 10.x |
+| Node.js | 22.x（`.nvmrc`で固定） |
 
-## React Compiler
+## セットアップ
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+# Node.jsバージョンを合わせる（nvmを使っている場合）
+nvm use
 
-## Expanding the ESLint configuration
+# 依存パッケージインストール
+pnpm install
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# MSW Service Worker生成（初回のみ）
+pnpm dlx msw init public/ --save
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 起動コマンド
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# 開発サーバー（MSW自動起動）
+pnpm dev
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Storybook
+pnpm storybook
+
+# ユニットテスト（Storybook stories含む）
+pnpm test
+
+# E2Eテスト（dev serverが自動起動）
+pnpm playwright test
+
+# ビルド
+pnpm build
 ```
+
+## 動作確認URL
+
+開発サーバー起動後に以下のURLで確認できる。
+
+| URL | 表示内容 |
+|-----|---------|
+| `/sampleModal/sample_a/type_1` | SampleAType1Container |
+| `/sampleModal/sample_a/type_2` | SampleAType2Container |
+| `/sampleModal/sample_b/type_1` | SampleBType1Container |
+| `/sampleModal/sample_a/type_3` | 「対応するコンテナが見つかりません」 |
+| `/sampleModal/invalid/type_1` | Zodバリデーションエラー |
+
+## 新しいコンテナの追加手順
+
+1. `src/types/api/` にAPIレスポンス型を追加
+2. `src/mocks/data/` にモックデータを追加
+3. `src/mocks/handlers/` にMSWハンドラーを追加し `index.ts` に集約
+4. `src/queries/` に `queryOptions` を追加
+5. `src/pages/SampleModal/containers/` にコンテナを実装（`LoadingView`・`ErrorView` を使う）
+6. `src/pages/SampleModal/containers/index.ts` の `CONTAINER_MAP` に登録
+7. `index.stories.tsx` を作成（Default・Loading・Error の3点セット）
