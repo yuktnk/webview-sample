@@ -1,18 +1,6 @@
 import { queryOptions } from '@tanstack/react-query'
 import { apiFetch } from '../lib/apiFetch'
-
-type UserInfoResponse = {
-  clientUserId: string
-  groupId: string
-  stores: {
-    akrCode: string
-    storeName: string
-  }[]
-}
-
-type BatchDateResponse = {
-  latestDate: string
-}
+import type { UserInfoResponse, BatchDateResponse } from '../types/api/common'
 
 export const userInfoQueryOptions = queryOptions({
   queryKey: ['userInfo'],

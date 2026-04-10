@@ -4,9 +4,7 @@ import { SampleAType1Container } from './SampleA/Type1'
 import { SampleAType2Container } from './SampleA/Type2'
 import { SampleBType1Container } from './SampleB/Type1'
 
-type ContainerMap = Record<FromType, Partial<Record<ServiceType, React.ComponentType>>>
-
-export const CONTAINER_MAP: ContainerMap = {
+export const CONTAINER_MAP = {
   sample_a: {
     type_1: SampleAType1Container,
     type_2: SampleAType2Container,
@@ -14,4 +12,4 @@ export const CONTAINER_MAP: ContainerMap = {
   sample_b: {
     type_1: SampleBType1Container,
   },
-}
+} satisfies Record<FromType, Partial<Record<ServiceType, React.ComponentType>>>
