@@ -1,6 +1,6 @@
 # webview-sample
 
-WebViewアプリのフルリプレイスPoCプロジェクト。
+WebViewアプリのフルリプレイスPoCプロジェクト。  
 `from` × `serviceType` の組み合わせで画面を切り替えるモーダル画面の実装サンプル。
 
 ## 技術スタック
@@ -34,7 +34,7 @@ pnpm install
 pnpm dlx msw init public/ --save
 ```
 
-## 起動コマンド
+## コマンド一覧
 
 ```bash
 # 開発サーバー（MSW自動起動）
@@ -46,11 +46,29 @@ pnpm storybook
 # ユニットテスト（Storybook stories含む）
 pnpm test
 
+# ユニットテスト（ウォッチモード）
+pnpm test:watch
+
 # E2Eテスト（dev serverが自動起動）
 pnpm playwright test
 
 # ビルド
 pnpm build
+
+# 型チェック
+pnpm typecheck
+
+# Lintチェック
+pnpm lint
+
+# Lint自動修正
+pnpm lint:fix
+
+# コード整形
+pnpm format
+
+# コード整形の確認（変更なし）
+pnpm format:check
 ```
 
 ## 動作確認URL
@@ -59,11 +77,31 @@ pnpm build
 
 | URL | 表示内容 |
 |-----|---------|
-| `/sampleModal/sample_a/type_1` | SampleAType1Container |
-| `/sampleModal/sample_a/type_2` | SampleAType2Container |
-| `/sampleModal/sample_b/type_1` | SampleBType1Container |
+| `/sampleModal?from=sample_a&serviceType=type_1` | SampleAType1Container |
+| `/sampleModal?from=sample_a&serviceType=type_2` | SampleAType2Container |
+| `/sampleModal?from=sample_b&serviceType=type_1` | SampleBType1Container |
+| `/sampleModal?from=invalid&serviceType=type_1` | Zodバリデーションエラー |
+| `/sampleModal/sample_a/type_1` | SampleAType1Container（パスパラメータ形式） |
 | `/sampleModal/sample_a/type_3` | 「対応するコンテナが見つかりません」 |
 | `/sampleModal/invalid/type_1` | Zodバリデーションエラー |
+
+## ディレクトリ構成
+
+```
+src/
+├── routes/        # ルート定義（薄い定義のみ。ロジックはpages/に置く）
+├── pages/         # ページ・コンテナ実装
+├── components/    # 共通UIコンポーネント
+├── queries/       # TanStack Query queryOptions定義
+├── types/         # 型定義
+├── lib/           # fetchラッパー・QueryClientインスタンス
+├── bridge/        # NativeBridge（iOS/Android対応）
+├── mocks/         # MSWハンドラー・モックデータ
+└── utils/         # 純粋関数ユーティリティ
+
+tests/
+└── e2e/           # Playwright E2Eテスト
+```
 
 ## 新しいコンテナの追加手順
 
@@ -74,3 +112,7 @@ pnpm build
 5. `src/pages/SampleModal/containers/` にコンテナを実装（`LoadingView`・`ErrorView` を使う）
 6. `src/pages/SampleModal/containers/index.ts` の `CONTAINER_MAP` に登録
 7. `index.stories.tsx` を作成（Default・Loading・Error の3点セット）
+
+## 設計・実装の詳細
+
+設計方針・注意事項の詳細は [CLAUDE.md](./CLAUDE.md) を参照。
