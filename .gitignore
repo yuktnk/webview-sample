@@ -30,5 +30,8 @@ storybook-static
 playwright-report
 test-results
 
+# TanStack Router（自動生成の一時ファイル）
+.tanstack/
+
 # Claude Code（ローカル設定・セッション固有の許可ルール）
 .claude/settings.local.json

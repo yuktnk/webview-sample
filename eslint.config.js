@@ -10,7 +10,7 @@ import tseslint from 'typescript-eslint'
 import prettier from 'eslint-config-prettier'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
-export default defineConfig([globalIgnores(['dist']), {
+export default defineConfig([globalIgnores(['dist', 'public', 'tests']), {
   files: ['**/*.{ts,tsx}'],
   extends: [
     js.configs.recommended,
