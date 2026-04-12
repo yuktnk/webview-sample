@@ -12,8 +12,7 @@
  */
 import { ErrorView } from '@/components/ui/ErrorView'
 import { SampleModalPage } from '@/pages/SampleModal'
-import { FROM_VALUES } from '@/types/from'
-import { SERVICE_TYPE_VALUES } from '@/types/serviceType'
+import { FROM_VALUES, SERVICE_TYPE_VALUES } from '@/types/routing'
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 

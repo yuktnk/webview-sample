@@ -1,3 +1,7 @@
+export const FROM_VALUES = ['sample_a', 'sample_b'] as const
+
+export type FromType = (typeof FROM_VALUES)[number]
+
 export const SERVICE_TYPE_VALUES = [
   'type_1',
   'type_2',

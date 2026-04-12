@@ -125,8 +125,7 @@ src/
 │   └── sampleB.ts                   # SampleB用queryOptions（Type1）
 │
 ├── types/                           # 共通型定義
-│   ├── from.ts                      # FromType
-│   ├── serviceType.ts               # ServiceType
+│   ├── routing.ts                   # クエリパラメータ・パスパラメータの型と定数
 │   └── api/                         # APIレスポンスの型
 │       ├── common.ts                # UserInfoResponse・BatchDateResponse
 │       ├── sampleA.ts               # SampleAType1Response・SampleAType2Response
