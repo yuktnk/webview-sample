@@ -48,8 +48,11 @@ pnpm test
 # ユニットテスト（ウォッチモード）
 pnpm test:watch
 
+# カバレッジレポート生成
+pnpm test:coverage
+
 # E2Eテスト（dev serverが自動起動）
-pnpm playwright test
+pnpm test:e2e
 
 # ビルド
 pnpm build

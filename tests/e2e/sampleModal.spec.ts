@@ -1,4 +1,4 @@
-import { test, expect } from './fixtures/nativeBridge'
+import { expect, test } from './fixtures/nativeBridge'
 
 test.describe('SampleModal', () => {
   test('sample_a/type_1 - データが表示される', async ({ page }) => {
@@ -19,13 +19,19 @@ test.describe('SampleModal', () => {
     await expect(page.getByText('スコア: 85')).toBeVisible()
   })
 
-  test('無効なfromパラメータ - エラーコンポーネントが表示される', async ({ page }) => {
+  test('無効なfromパラメータ - エラーコンポーネントが表示される', async ({
+    page,
+  }) => {
     await page.goto('/sampleModal/invalid/type_1')
-    await expect(page.getByText('Error!')).toBeVisible()
+    await expect(page.getByText('エラーが発生しました')).toBeVisible()
   })
 
-  test('未対応のserviceType - コンテナが見つからないメッセージが表示される', async ({ page }) => {
+  test('未対応のserviceType - コンテナが見つからないメッセージが表示される', async ({
+    page,
+  }) => {
     await page.goto('/sampleModal/sample_a/type_3')
-    await expect(page.getByText('対応するコンテナが見つかりません')).toBeVisible()
+    await expect(
+      page.getByText('対応するコンテナが見つかりません'),
+    ).toBeVisible()
   })
 })

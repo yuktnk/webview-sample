@@ -15,7 +15,7 @@ pre-commit:
   commands:
     lint:
       glob: '*.{ts,tsx,js,jsx}'
-      run: pnpm eslint {staged_files} --max-warnings 0
+      run: pnpm eslint {staged_files} --max-warnings 0 --no-warn-ignored
       fail_text: "ESLint errors found. Run 'pnpm lint' to see details."
 
     format-check:
