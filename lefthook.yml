@@ -1,0 +1,34 @@
+# スキップ方法: LEFTHOOK=0 git commit または git commit --no-verify
+#
+# 設計判断:
+# - lint・format-check はステージングされたファイルのみ対象（{staged_files}）
+# - typecheck は pre-push（--incremental でキャッシュ活用・pre-commit だと重い）
+# - E2E テストは CI/CD のみ（Playwright はローカルで走らせるには重すぎる）
+
+parallel: true
+
+skip:
+  - merge
+  - rebase
+
+pre-commit:
+  commands:
+    lint:
+      glob: '*.{ts,tsx,js,jsx}'
+      run: pnpm eslint {staged_files} --max-warnings 0
+      fail_text: "ESLint errors found. Run 'pnpm lint' to see details."
+
+    format-check:
+      glob: '*.{ts,tsx,js,jsx,json,md}'
+      run: pnpm prettier --check {staged_files}
+      fail_text: "Formatting issues found. Run 'pnpm format' to fix."
+
+pre-push:
+  commands:
+    typecheck:
+      run: pnpm tsc -b --noEmit
+      fail_text: "TypeScript errors found. Run 'pnpm typecheck' to see details."
+
+    test:
+      run: pnpm vitest run
+      fail_text: "Tests failed. Run 'pnpm test' to see details."

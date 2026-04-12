@@ -1,25 +1,24 @@
 # webview-sample
 
-WebViewアプリのフルリプレイスPoCプロジェクト。  
-`from` × `serviceType` の組み合わせで画面を切り替えるモーダル画面の実装サンプル。
+WebViewアプリのフルリプレイスPoCプロジェクトの実装サンプル。
 
 ## 技術スタック
 
-| 役割 | ライブラリ |
-|------|-----------|
-| ビルド | Vite 8.x |
-| UI | React 19.x |
-| 言語 | TypeScript 6.x（strict: true） |
-| ルーティング | TanStack Router 1.x（ファイルルーティング） |
-| サーバー状態管理 | TanStack Query 5.x |
-| バリデーション | Zod 4.x |
-| スタイリング | Tailwind CSS 4.x |
-| コンポーネントテスト | Storybook 10.x |
-| ユニットテスト | Vitest 4.x |
-| E2Eテスト | Playwright 1.x |
-| APIモック | MSW 2.x |
-| パッケージマネージャー | pnpm 10.x |
-| Node.js | 22.x（`.nvmrc`で固定） |
+| 役割                   | ライブラリ                                  |
+| ---------------------- | ------------------------------------------- |
+| ビルド                 | Vite 8.x                                    |
+| UI                     | React 19.x                                  |
+| 言語                   | TypeScript 6.x（strict: true）              |
+| ルーティング           | TanStack Router 1.x（ファイルルーティング） |
+| サーバー状態管理       | TanStack Query 5.x                          |
+| バリデーション         | Zod 4.x                                     |
+| スタイリング           | Tailwind CSS 4.x                            |
+| コンポーネントテスト   | Storybook 10.x                              |
+| ユニットテスト         | Vitest 4.x                                  |
+| E2Eテスト              | Playwright 1.x                              |
+| APIモック              | MSW 2.x                                     |
+| パッケージマネージャー | pnpm 10.x                                   |
+| Node.js                | 22.x（`.nvmrc`で固定）                      |
 
 ## セットアップ
 
@@ -75,15 +74,15 @@ pnpm format:check
 
 開発サーバー起動後に以下のURLで確認できる。
 
-| URL | 表示内容 |
-|-----|---------|
-| `/sampleModal?from=sample_a&serviceType=type_1` | SampleAType1Container |
-| `/sampleModal?from=sample_a&serviceType=type_2` | SampleAType2Container |
-| `/sampleModal?from=sample_b&serviceType=type_1` | SampleBType1Container |
-| `/sampleModal?from=invalid&serviceType=type_1` | Zodバリデーションエラー |
-| `/sampleModal/sample_a/type_1` | SampleAType1Container（パスパラメータ形式） |
-| `/sampleModal/sample_a/type_3` | 「対応するコンテナが見つかりません」 |
-| `/sampleModal/invalid/type_1` | Zodバリデーションエラー |
+| URL                                             | 表示内容                                    |
+| ----------------------------------------------- | ------------------------------------------- |
+| `/sampleModal?from=sample_a&serviceType=type_1` | SampleAType1Container                       |
+| `/sampleModal?from=sample_a&serviceType=type_2` | SampleAType2Container                       |
+| `/sampleModal?from=sample_b&serviceType=type_1` | SampleBType1Container                       |
+| `/sampleModal?from=invalid&serviceType=type_1`  | Zodバリデーションエラー                     |
+| `/sampleModal/sample_a/type_1`                  | SampleAType1Container（パスパラメータ形式） |
+| `/sampleModal/sample_a/type_3`                  | 「対応するコンテナが見つかりません」        |
+| `/sampleModal/invalid/type_1`                   | Zodバリデーションエラー                     |
 
 ## ディレクトリ構成
 

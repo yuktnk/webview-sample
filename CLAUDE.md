@@ -2,38 +2,37 @@
 
 ## プロジェクト概要
 
-とあるWebViewアプリのフルリプレイスPoCプロジェクト。
-`from` × `serviceType` の組み合わせで画面を切り替えるモーダル画面の実装サンプル。
-ゆくゆくは3人程度のチームで継続開発予定。ビギナーエンジニアが多い想定。
+WebViewアプリのフルリプレイスPoCプロジェクトの実装サンプル。
 
 ---
 
 ## 技術スタック
 
-| 役割 | ライブラリ | バージョン |
-|------|-----------|-----------|
-| ビルド | Vite | 8.x |
-| UI | React | 19.x |
-| 言語 | TypeScript（strict: true） | 6.x |
-| ルーティング | TanStack Router（ファイルルーティング） | 1.x |
-| サーバー状態管理 | TanStack Query | 5.x |
-| バリデーション | Zod | 4.x |
-| スタイリング | Tailwind CSS | 4.x |
-| ローカル状態 | useState / useReducer（グローバル状態管理ライブラリなし） | - |
-| APIクライアント | fetch（built-in）+ 薄いラッパー（axiosなし） | - |
-| コンポーネントテスト | Storybook | 10.x |
-| ユニットテスト | Vitest | 4.x |
-| E2Eテスト | Playwright | 1.x |
-| APIモック | MSW（Mock Service Worker） | 2.x |
-| 条件クラス名 | clsx | 2.x |
-| パッケージマネージャー | pnpm | 10.x |
-| Node.js | 22.x（.nvmrcで固定） | - |
+| 役割                   | ライブラリ                                                | バージョン |
+| ---------------------- | --------------------------------------------------------- | ---------- |
+| ビルド                 | Vite                                                      | 8.x        |
+| UI                     | React                                                     | 19.x       |
+| 言語                   | TypeScript（strict: true）                                | 6.x        |
+| ルーティング           | TanStack Router（ファイルルーティング）                   | 1.x        |
+| サーバー状態管理       | TanStack Query                                            | 5.x        |
+| バリデーション         | Zod                                                       | 4.x        |
+| スタイリング           | Tailwind CSS                                              | 4.x        |
+| ローカル状態           | useState / useReducer（グローバル状態管理ライブラリなし） | -          |
+| APIクライアント        | fetch（built-in）+ 薄いラッパー（axiosなし）              | -          |
+| コンポーネントテスト   | Storybook                                                 | 10.x       |
+| ユニットテスト         | Vitest                                                    | 4.x        |
+| E2Eテスト              | Playwright                                                | 1.x        |
+| APIモック              | MSW（Mock Service Worker）                                | 2.x        |
+| 条件クラス名           | clsx                                                      | 2.x        |
+| パッケージマネージャー | pnpm                                                      | 10.x       |
+| Node.js                | 22.x（.nvmrcで固定）                                      | -          |
 
 ---
 
 ## 設計原則（重要）
 
 ### 1. 1ページ = 1WebView
+
 - Native が都度 WebView を起動・閉じると JS コンテキストごとリセット
 - ページ間の状態共有は不要 → Zustand / Jotai は使わない
 - グローバル状態管理ライブラリ不要
@@ -50,15 +49,18 @@
 移行時はコード変更不要で設定ファイルの置き換えのみ（半日程度の作業）。
 
 ### 3. 依存ライブラリは最小限
+
 - axios → fetch（built-in）で代替
 - Redux → TanStack Query + useState で代替
 - 「使えそう」ではなく「使う理由がある」ものだけ入れる
 
 ### 4. TypeScript strict: true を妥協しない
+
 - `any` は原則禁止。`unknown` + 型ガードで代替
 - `ignoreBuildErrors` は絶対に使わない
 
 ### 5. テスト可能な設計
+
 - Storybook + Playwright を主軸
 - MSW でモックを一元管理（Storybook・Vitest・Playwright 全レイヤーで使い回す）
 - セマンティック HTML を自然に書く → Playwright の `getByRole` / `getByLabel` が使える
@@ -153,6 +155,7 @@ public/
 ## 実装済みのファイル一覧
 
 ### 設定ファイル
+
 - `vite.config.ts` — Vite設定（TanStack Router・Tailwind・Storybook統合済み）
 - `tsconfig.app.json` — strict: true
 - `tsconfig.node.json` — strict: true
@@ -162,6 +165,7 @@ public/
 - `playwright.config.ts` — webServer自動起動・chromium設定済み
 
 ### 型定義
+
 - `src/types/from.ts` — `FROM_VALUES = ['sample_a', 'sample_b']`
 - `src/types/serviceType.ts` — `SERVICE_TYPE_VALUES = ['type_1', 'type_2', 'type_3', 'type_4', 'type_5']`
 - `src/types/api/common.ts` — `UserInfoResponse`・`BatchDateResponse`
@@ -169,26 +173,32 @@ public/
 - `src/types/api/sampleB.ts` — `SampleBType1Response`
 
 ### ライブラリ
+
 - `src/lib/apiFetch.ts` — fetchラッパー（credentials: 'include'・エラーハンドリング）
 - `src/lib/queryClient.ts` — QueryClientインスタンス（retry: 1・staleTime: 5分）
 
 ### クエリ
+
 - `src/queries/common.ts` — `userInfoQueryOptions`・`batchDateQueryOptions`
 - `src/queries/sampleA.ts` — `sampleAType1QueryOptions`・`sampleAType2QueryOptions`
 - `src/queries/sampleB.ts` — `sampleBType1QueryOptions`
 
 ### 共通UIコンポーネント
+
 - `src/components/ui/LoadingView.tsx` — ローディング表示
 - `src/components/ui/ErrorView.tsx` — エラー表示
 
 ### ユーティリティ
+
 - `src/utils/formatDate.ts` — ISO日付→日本語形式（`2024-01-01` → `2024年01月01日`）
 - `src/utils/formatDate.test.ts` — Vitestテスト
 
 ### NativeBridge
+
 - `src/bridge/index.ts` — iOS（webkit）・Android（MebViewInterface）対応
 
 ### MSW
+
 - `src/mocks/data/common.ts` — mockUserInfo・mockBatchDate
 - `src/mocks/data/sampleA.ts` — mockSampleAType1Data・mockSampleAType2Data
 - `src/mocks/data/sampleB.ts` — mockSampleBType1Data
@@ -199,12 +209,14 @@ public/
 - `src/mocks/browser.ts` — setupWorker
 
 ### ルーティング
+
 - `src/routes/__root.tsx` — rootRoute（loader: userInfo・batchDate）
 - `src/routes/index.tsx` — / ルート
 - `src/routes/sampleModal/index.tsx` — クエリパラメータ形式（Nativeからの入口）
 - `src/routes/sampleModal/$from/$serviceType.tsx` — パスパラメータ形式
 
 ### ページ・コンテナ
+
 - `src/pages/SampleModal/index.tsx` — CONTAINER_MAPで切り替え
 - `src/pages/SampleModal/containers/index.ts` — `satisfies`で型チェック済みCONTAINER_MAP
 - `src/pages/SampleModal/containers/SampleA/Type1/index.tsx` — useQuery + LoadingView/ErrorView
@@ -212,11 +224,13 @@ public/
 - `src/pages/SampleModal/containers/SampleB/Type1/index.tsx` — useQuery + LoadingView/ErrorView
 
 ### Storybook
+
 - `src/pages/SampleModal/containers/SampleA/Type1/index.stories.tsx` — Default・Loading・Error
 - `src/pages/SampleModal/containers/SampleA/Type2/index.stories.tsx` — Default・Loading・Error
 - `src/pages/SampleModal/containers/SampleB/Type1/index.stories.tsx` — Default・Loading・Error
 
 ### Playwright E2E
+
 - `tests/e2e/fixtures/auth.ts` — 認証fixture（PoC段階はpassthrough）
 - `tests/e2e/fixtures/nativeBridge.ts` — webkit/MebViewInterfaceをaddInitScriptでモック
 - `tests/e2e/sampleModal.spec.ts` — 5シナリオ（正常表示3件・エラー系2件）
@@ -263,26 +277,120 @@ pnpm build
 
 ---
 
+## インフラ方針
+
+App EngineのランタイムはPythonを使用する。
+
+```yaml
+# app.yaml
+runtime: python312
+
+handlers:
+  - url: /.*
+    static_files: dist/index.html
+    upload: dist/index.html
+
+  - url: /assets
+    static_dir: dist/assets
+```
+
+**なぜPythonか：**
+このアプリは静的ファイル配信のみで動作する設計であり、Node.jsサーバーを必要とするReact Server Components等の実装を意図的に防いでいる。別の既存SPAアプリもPythonランタイムで統一しており、EOSL対応を一元化するため。
+
+**絶対にやってはいけないこと：**
+
+- ランタイムをNode.jsに変更すること
+- サーバーコンポーネントを実装すること（Node.jsランタイムが必要になるため）
+
+---
+
 ## 次のタスク
 
 ### 優先度中
+
 - [ ] Playwright Visual Regression Test（@storybook/test-runner）
 
 ### 優先度低
+
 - [ ] CI/CD設定（GitHub Actions）
 - [ ] Chromatic連携（StorybookのVisual Regression）
+
+---
+
+## 開発環境・コード品質
+
+### Lefthook（導入済み）
+
+**役割分担：**
+
+- lefthook → ローカルで素早く気づく（開発者体験）
+- CI/CD → 絶対に通過させる関門（品質保証）
+
+lefthookは`--no-verify`でスキップできるため、CI/CDが本番の砦。
+
+```yaml
+# lefthook.yml
+# スキップ方法: LEFTHOOK=0 git commit または git commit --no-verify
+
+parallel: true
+
+skip:
+  - merge
+  - rebase
+
+pre-commit:
+  commands:
+    lint:
+      glob: '*.{ts,tsx,js,jsx}'
+      run: pnpm eslint {staged_files} --max-warnings 0
+
+    format-check:
+      glob: '*.{ts,tsx,js,jsx,json,md}'
+      run: pnpm prettier --check {staged_files}
+
+pre-push:
+  commands:
+    typecheck:
+      run: pnpm tsc -b --noEmit
+
+    test:
+      run: pnpm vitest run
+```
+
+**設計判断：**
+
+- 型チェックはpre-pushに置く（pre-commitだと重い）
+- lintとformatはステージングされたファイルのみ対象（`{staged_files}`）
+- E2EテストはCI/CDのみ（Playwrightはローカルで走らせるには重すぎる）
+
+### CI/CD（GitHub Actions・未導入）
+
+```yaml
+# .github/workflows/ci.yml
+jobs:
+  quality:
+    steps:
+      - pnpm install
+      - pnpm typecheck # フルチェック（lefthookはincrementalだがCIはフル）
+      - pnpm lint
+      - pnpm format:check
+      - pnpm test
+      - pnpm build
+```
 
 ---
 
 ## 重要な注意事項
 
 ### MSW
+
 - `msw-storybook-addon@2.x` を使用。MSW v2.13.0との互換性問題（`worker.context`削除）を `patches/msw-storybook-addon@2.0.6.patch` で対応済み
 - `public/mockServiceWorker.js` は `pnpm dlx msw init public/ --save` で生成済み
 - 新しいAPIを追加したら `src/mocks/handlers/` にハンドラーを追加し `index.ts` に集約すること
 - ハンドラーのURLパターンは `*/api/...` ではなく `/api/...`（相対パス）を使うこと（MSW v2の仕様）
 
 ### TanStack Router
+
 - `src/routes/` はルート定義のみ。ロジックは `src/pages/` に置く
 - `routeTree.gen.ts` は自動生成ファイル。手動編集しないこと
 - パスパラメータのバリデーションは `params.parse` でZodを使う
@@ -312,6 +420,7 @@ Native → /sampleModal/sample_a/type_1
 ```
 
 ### Storybook
+
 - Storyは必ず **Default・Loading・Error** の3点セットで作る
 - コンポーネントと同じディレクトリに `index.stories.tsx` として置く
 - `import type { Meta, StoryObj }` は `@storybook/react-vite` からimportすること（`@storybook/react` は直接symlink されていない）
@@ -320,15 +429,38 @@ Native → /sampleModal/sample_a/type_1
 - Error: `HttpResponse.error()` で明示的にネットワークエラーを返す
 
 ### NativeBridge
+
 - `getNativeBridge()` を呼び出すと実行時にwebkit / MebViewInterfaceの存在チェックが走る
 - Storybook・Vitest環境ではこれらが存在しないため、コンポーネント内では必ずイベントハンドラ等の中で呼び出すこと（モジュールトップレベルでのimportは問題ない）
 
 ### 型安全
+
 - `any` は禁止。`unknown` + 型ガードを使う
 - APIレスポンスの型は `src/types/api/` に定義する
 - `CONTAINER_MAP` は `satisfies Record<FromType, Partial<Record<ServiceType, React.ComponentType>>>` で型チェック
 
+#### ZodによるAPIレスポンス検証（方針）
+
+現状は手書き型定義のみだが、APIレスポンスはZodでパースする方針に移行する。
+
+**理由：**
+
+- OpenAPI specがないため、手書き型定義とAPIの実際のレスポンスが乖離するリスクがある
+- Zodによる実行時パースはAPIの変更を即座に検知でき、バックエンド側の品質担保にもなる
+
+```ts
+// 現状（型アサーションのみ・実行時チェックなし）
+const data = await apiFetch<{ result: SampleAType1Response }>('/api/sample_a/type_1')
+
+// 移行後（Zodで実行時検証）
+const SampleAType1Schema = z.object({ ... })
+const data = SampleAType1Schema.parse(await apiFetch('/api/sample_a/type_1'))
+```
+
+**移行タイミング：** 実APIとの結合時。現状はMSWモックのみのため優先度低。
+
 ### 既知の不整合（要対応）
+
 - `src/mocks/handlers/common.ts` が `{ result: ... }` でレスポンスをラップしているが、`src/queries/common.ts` の型はラップなしの `UserInfoResponse` / `BatchDateResponse`
 - `userInfo`・`batchDate` はまだどのコンポーネントでも参照されていないため現状は問題なし
 - 実際に使い始めるタイミングでハンドラー or クエリの型を統一すること
