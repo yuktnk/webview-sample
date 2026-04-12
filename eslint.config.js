@@ -30,6 +30,12 @@ export default defineConfig([
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+      parserOptions: {
+        projectService: {
+          allowDefaultProject: ['vitest.shims.d.ts'],
+        },
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
     rules: {
       'react/function-component-definition': [
@@ -58,6 +64,11 @@ export default defineConfig([
       'prefer-template': 'error',
       'react/jsx-pascal-case': 'error',
       eqeqeq: ['error', 'always'],
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/no-misused-promises': [
+        'error',
+        { checksVoidReturn: { attributes: false } },
+      ],
       'no-restricted-imports': [
         'error',
         {

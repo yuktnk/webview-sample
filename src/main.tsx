@@ -25,7 +25,7 @@ const prepare = async () => {
   }
 }
 
-prepare().then(() => {
+void prepare().then(() => {
   const rootElement = document.getElementById('root')
   if (!rootElement) throw new Error('Root element not found')
   createRoot(rootElement).render(
