@@ -2,6 +2,7 @@
 #
 # 設計判断:
 # - lint・format-check はステージングされたファイルのみ対象（{staged_files}）
+# - secretlint はステージングされたファイルのみ対象（機密情報の流出防止）
 # - typecheck は pre-push（--incremental でキャッシュ活用・pre-commit だと重い）
 # - E2E テストは CI/CD のみ（Playwright はローカルで走らせるには重すぎる）
 
@@ -22,6 +23,16 @@ pre-commit:
       glob: '*.{ts,tsx,js,jsx,json,md}'
       run: pnpm prettier --check {staged_files}
       fail_text: "Formatting issues found. Run 'pnpm format' to fix."
+
+    secretlint:
+      run: pnpm secretlint {staged_files}
+      fail_text: "Secrets detected. Remove credentials before committing."
+
+commit-msg:
+  commands:
+    commitlint:
+      run: pnpm commitlint --edit {1}
+      fail_text: "Invalid commit message. Use format: type(scope): description (e.g. feat: add login)"
 
 pre-push:
   commands:

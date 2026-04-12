@@ -181,14 +181,10 @@ handlers:
 
 ## 次のタスク
 
-### 優先度中
-
-- [ ] Playwright Visual Regression Test（@storybook/test-runner）
-
 ### 優先度低
 
 - [ ] CI/CD設定（GitHub Actions）
-- [ ] Chromatic連携（StorybookのVisual Regression）
+- [ ] Playwright Visual Regression Test（`toHaveScreenshot()`）← CI/CD整備と同時に導入
 
 ---
 
@@ -218,7 +214,7 @@ handlers:
 
 ### MSW
 
-- `msw-storybook-addon@2.x` を使用。MSW v2.13.0との互換性問題（`worker.context`削除）を `patches/msw-storybook-addon@2.0.6.patch` で対応済み
+- `msw-storybook-addon@2.x` を使用（MSW v2との互換性問題は2.0.7で解消済み）
 - `public/mockServiceWorker.js` は `pnpm dlx msw init public/ --save` で生成済み
 - 新しいAPIを追加したら `src/mocks/handlers/` にハンドラーを追加し `index.ts` に集約すること
 - ハンドラーのURLパターンは `*/api/...` ではなく `/api/...`（相対パス）を使うこと（MSW v2の仕様）
