@@ -2,6 +2,7 @@
 import storybook from 'eslint-plugin-storybook'
 
 import js from '@eslint/js'
+import queryPlugin from '@tanstack/eslint-plugin-query'
 import prettier from 'eslint-config-prettier'
 import reactPlugin from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
@@ -11,7 +12,7 @@ import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
 export default defineConfig([
-  globalIgnores(['dist', 'public', 'tests']),
+  globalIgnores(['dist', 'public', 'tests', 'coverage']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -19,6 +20,7 @@ export default defineConfig([
       tseslint.configs.recommended,
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
+      ...queryPlugin.configs['flat/recommended'],
       prettier,
     ],
     plugins: {

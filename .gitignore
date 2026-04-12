@@ -30,6 +30,9 @@ storybook-static
 playwright-report
 test-results
 
+# Vitest coverage
+coverage
+
 # TanStack Router（自動生成の一時ファイル）
 .tanstack/
 
