@@ -6,4 +6,4 @@ export const SERVICE_TYPE_VALUES = [
   'type_5',
 ] as const
 
-export type ServiceType = typeof SERVICE_TYPE_VALUES[number]
+export type ServiceType = (typeof SERVICE_TYPE_VALUES)[number]

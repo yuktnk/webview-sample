@@ -3,6 +3,6 @@ import { mockSampleBType1Data } from '../data/sampleB'
 
 export const sampleBHandlers = [
   http.get('/api/sample_b/type_1', () =>
-    HttpResponse.json({ result: mockSampleBType1Data })
+    HttpResponse.json({ result: mockSampleBType1Data }),
   ),
 ]

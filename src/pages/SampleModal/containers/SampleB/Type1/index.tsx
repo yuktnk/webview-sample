@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
-import { sampleBType1QueryOptions } from '../../../../../queries/sampleB'
-import { LoadingView } from '../../../../../components/ui/LoadingView'
 import { ErrorView } from '../../../../../components/ui/ErrorView'
+import { LoadingView } from '../../../../../components/ui/LoadingView'
+import { sampleBType1QueryOptions } from '../../../../../queries/sampleB'
 
 export function SampleBType1Container() {
   const { data, isLoading, isError } = useQuery(sampleBType1QueryOptions)

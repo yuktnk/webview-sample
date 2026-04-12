@@ -14,11 +14,15 @@ const getBridge = (): NativeBridge => {
   // iOS
   if ('webkit' in window) {
     const webkit = window.webkit as {
-      messageHandlers: Record<string, { postMessage: (params?: string) => void }>
+      messageHandlers: Record<
+        string,
+        { postMessage: (params?: string) => void }
+      >
     }
     return {
       onClickClose: () => webkit.messageHandlers['onClickClose']?.postMessage(),
-      sendTrack: (params) => webkit.messageHandlers['sendTrack']?.postMessage(params),
+      sendTrack: (params) =>
+        webkit.messageHandlers['sendTrack']?.postMessage(params),
     }
   }
 

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { http, delay, HttpResponse } from 'msw'
+import { delay, http, HttpResponse } from 'msw'
 import { SampleAType1Container } from '.'
 
 const meta: Meta<typeof SampleAType1Container> = {
@@ -25,9 +25,7 @@ export const Loading: Story = {
 export const Error: Story = {
   parameters: {
     msw: {
-      handlers: [
-        http.get('/api/sample_a/type_1', () => HttpResponse.error()),
-      ],
+      handlers: [http.get('/api/sample_a/type_1', () => HttpResponse.error())],
     },
   },
 }
