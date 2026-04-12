@@ -1,9 +1,10 @@
+import type { FromType } from '../../types/from'
 import type { ServiceType } from '../../types/serviceType'
-import { Route } from '../../routes/sampleModal/$from/$serviceType'
 import { CONTAINER_MAP } from './containers'
 
-export const SampleModalPage = () => {
-  const { from, serviceType } = Route.useParams()
+type Props = { from: FromType; serviceType: ServiceType }
+
+export function SampleModalPage({ from, serviceType }: Props) {
   const map = CONTAINER_MAP[from] as Partial<Record<ServiceType, React.ComponentType>>
   const Container = map[serviceType]
 

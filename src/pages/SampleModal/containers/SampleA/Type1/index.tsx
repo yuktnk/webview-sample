@@ -4,7 +4,7 @@ import { LoadingView } from '../../../../../components/ui/LoadingView'
 import { ErrorView } from '../../../../../components/ui/ErrorView'
 import { formatDate } from '../../../../../utils/formatDate'
 
-export const SampleAType1Container = () => {
+export function SampleAType1Container() {
   const { data, isLoading, isError } = useQuery(sampleAType1QueryOptions)
 
   if (isLoading) return <LoadingView />

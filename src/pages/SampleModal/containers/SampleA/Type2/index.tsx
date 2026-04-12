@@ -3,7 +3,7 @@ import { sampleAType2QueryOptions } from '../../../../../queries/sampleA'
 import { LoadingView } from '../../../../../components/ui/LoadingView'
 import { ErrorView } from '../../../../../components/ui/ErrorView'
 
-export const SampleAType2Container = () => {
+export function SampleAType2Container() {
   const { data, isLoading, isError } = useQuery(sampleAType2QueryOptions)
 
   if (isLoading) return <LoadingView />

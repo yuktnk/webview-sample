@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SampleModalIndexRouteImport } from './routes/sampleModal/index'
 import { Route as SampleModalFromServiceTypeRouteImport } from './routes/sampleModal/$from/$serviceType'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SampleModalIndexRoute = SampleModalIndexRouteImport.update({
+  id: '/sampleModal/',
+  path: '/sampleModal/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SampleModalFromServiceTypeRoute =
@@ -26,27 +32,31 @@ const SampleModalFromServiceTypeRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/sampleModal/': typeof SampleModalIndexRoute
   '/sampleModal/$from/$serviceType': typeof SampleModalFromServiceTypeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/sampleModal': typeof SampleModalIndexRoute
   '/sampleModal/$from/$serviceType': typeof SampleModalFromServiceTypeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/sampleModal/': typeof SampleModalIndexRoute
   '/sampleModal/$from/$serviceType': typeof SampleModalFromServiceTypeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sampleModal/$from/$serviceType'
+  fullPaths: '/' | '/sampleModal/' | '/sampleModal/$from/$serviceType'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sampleModal/$from/$serviceType'
-  id: '__root__' | '/' | '/sampleModal/$from/$serviceType'
+  to: '/' | '/sampleModal' | '/sampleModal/$from/$serviceType'
+  id: '__root__' | '/' | '/sampleModal/' | '/sampleModal/$from/$serviceType'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SampleModalIndexRoute: typeof SampleModalIndexRoute
   SampleModalFromServiceTypeRoute: typeof SampleModalFromServiceTypeRoute
 }
 
@@ -57,6 +67,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sampleModal/': {
+      id: '/sampleModal/'
+      path: '/sampleModal'
+      fullPath: '/sampleModal/'
+      preLoaderRoute: typeof SampleModalIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sampleModal/$from/$serviceType': {
@@ -71,6 +88,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SampleModalIndexRoute: SampleModalIndexRoute,
   SampleModalFromServiceTypeRoute: SampleModalFromServiceTypeRoute,
 }
 export const routeTree = rootRouteImport
