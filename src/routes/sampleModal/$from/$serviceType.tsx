@@ -4,12 +4,12 @@
  * 開発時の直接アクセスや、将来Nativeがパスパラメータ形式に移行した際の受け口。
  * クエリパラメータ形式との移行背景は src/routes/sampleModal/index.tsx のコメントを参照。
  */
+import { ErrorView } from '@/components/ui/ErrorView'
+import { SampleModalPage } from '@/pages/SampleModal'
+import { FROM_VALUES } from '@/types/from'
+import { SERVICE_TYPE_VALUES } from '@/types/serviceType'
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
-import { ErrorView } from '../../../components/ui/ErrorView'
-import { SampleModalPage } from '../../../pages/SampleModal'
-import { FROM_VALUES } from '../../../types/from'
-import { SERVICE_TYPE_VALUES } from '../../../types/serviceType'
 
 export const Route = createFileRoute('/sampleModal/$from/$serviceType')({
   params: {

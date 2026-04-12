@@ -1,5 +1,5 @@
-import type { FromType } from '../../types/from'
-import type { ServiceType } from '../../types/serviceType'
+import type { FromType } from '@/types/from'
+import type { ServiceType } from '@/types/serviceType'
 import { CONTAINER_MAP } from './containers'
 
 type Props = { from: FromType; serviceType: ServiceType }

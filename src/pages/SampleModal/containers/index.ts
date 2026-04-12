@@ -1,5 +1,5 @@
-import type { FromType } from '../../../types/from'
-import type { ServiceType } from '../../../types/serviceType'
+import type { FromType } from '@/types/from'
+import type { ServiceType } from '@/types/serviceType'
 import { SampleAType1Container } from './SampleA/Type1'
 import { SampleAType2Container } from './SampleA/Type2'
 import { SampleBType1Container } from './SampleB/Type1'

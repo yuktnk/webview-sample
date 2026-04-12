@@ -10,12 +10,12 @@
  * 将来Nativeがパスパラメータ形式に対応したら、このファイルを削除するだけで移行完了。
  * 移行先: src/routes/sampleModal/$from/$serviceType.tsx
  */
+import { ErrorView } from '@/components/ui/ErrorView'
+import { SampleModalPage } from '@/pages/SampleModal'
+import { FROM_VALUES } from '@/types/from'
+import { SERVICE_TYPE_VALUES } from '@/types/serviceType'
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
-import { ErrorView } from '../../components/ui/ErrorView'
-import { SampleModalPage } from '../../pages/SampleModal'
-import { FROM_VALUES } from '../../types/from'
-import { SERVICE_TYPE_VALUES } from '../../types/serviceType'
 
 export const Route = createFileRoute('/sampleModal/')({
   validateSearch: z.object({

@@ -1,9 +1,9 @@
-import { queryOptions } from '@tanstack/react-query'
-import { apiFetch } from '../lib/apiFetch'
+import { apiFetch } from '@/lib/apiFetch'
 import type {
   SampleAType1Response,
   SampleAType2Response,
-} from '../types/api/sampleA'
+} from '@/types/api/sampleA'
+import { queryOptions } from '@tanstack/react-query'
 
 export const sampleAType1QueryOptions = queryOptions({
   queryKey: ['sampleA', 'type1'],

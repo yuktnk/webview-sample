@@ -1,8 +1,8 @@
+import { ErrorView } from '@/components/ui/ErrorView'
+import { LoadingView } from '@/components/ui/LoadingView'
+import { sampleAType1QueryOptions } from '@/queries/sampleA'
+import { formatDate } from '@/utils/formatDate'
 import { useQuery } from '@tanstack/react-query'
-import { ErrorView } from '../../../../../components/ui/ErrorView'
-import { LoadingView } from '../../../../../components/ui/LoadingView'
-import { sampleAType1QueryOptions } from '../../../../../queries/sampleA'
-import { formatDate } from '../../../../../utils/formatDate'
 
 export function SampleAType1Container() {
   const { data, isLoading, isError } = useQuery(sampleAType1QueryOptions)
