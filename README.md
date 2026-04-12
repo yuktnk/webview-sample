@@ -28,9 +28,6 @@ nvm use
 
 # 依存パッケージインストール
 pnpm install
-
-# MSW Service Worker生成（初回のみ）
-pnpm dlx msw init public/ --save
 ```
 
 ## コマンド一覧
@@ -71,6 +68,9 @@ pnpm format
 
 # コード整形の確認（変更なし）
 pnpm format:check
+
+# 未使用コード・依存関係の検出
+pnpm knip
 ```
 
 ## 動作確認URL
