@@ -152,131 +152,6 @@ public/
 
 ---
 
-## 実装済みのファイル一覧
-
-### 設定ファイル
-
-- `vite.config.ts` — Vite設定（TanStack Router・Tailwind・Storybook統合済み）
-- `tsconfig.app.json` — strict: true
-- `tsconfig.node.json` — strict: true
-- `.nvmrc` — Node.js 22.22.2固定
-- `.storybook/main.ts` — staticDirs: ['../public']設定済み
-- `.storybook/preview.ts` — QueryClientProvider・MSW（msw-storybook-addon@2.x + patchあり）設定済み
-- `playwright.config.ts` — webServer自動起動・chromium設定済み
-
-### 型定義
-
-- `src/types/from.ts` — `FROM_VALUES = ['sample_a', 'sample_b']`
-- `src/types/serviceType.ts` — `SERVICE_TYPE_VALUES = ['type_1', 'type_2', 'type_3', 'type_4', 'type_5']`
-- `src/types/api/common.ts` — `UserInfoResponse`・`BatchDateResponse`
-- `src/types/api/sampleA.ts` — `SampleAType1Response`・`SampleAType2Response`
-- `src/types/api/sampleB.ts` — `SampleBType1Response`
-
-### ライブラリ
-
-- `src/lib/apiFetch.ts` — fetchラッパー（credentials: 'include'・エラーハンドリング）
-- `src/lib/queryClient.ts` — QueryClientインスタンス（retry: 1・staleTime: 5分）
-
-### クエリ
-
-- `src/queries/common.ts` — `userInfoQueryOptions`・`batchDateQueryOptions`
-- `src/queries/sampleA.ts` — `sampleAType1QueryOptions`・`sampleAType2QueryOptions`
-- `src/queries/sampleB.ts` — `sampleBType1QueryOptions`
-
-### 共通UIコンポーネント
-
-- `src/components/ui/LoadingView.tsx` — ローディング表示
-- `src/components/ui/ErrorView.tsx` — エラー表示
-
-### ユーティリティ
-
-- `src/utils/formatDate.ts` — ISO日付→日本語形式（`2024-01-01` → `2024年01月01日`）
-- `src/utils/formatDate.test.ts` — Vitestテスト
-
-### NativeBridge
-
-- `src/bridge/index.ts` — iOS（webkit）・Android（MebViewInterface）対応
-
-### MSW
-
-- `src/mocks/data/common.ts` — mockUserInfo・mockBatchDate
-- `src/mocks/data/sampleA.ts` — mockSampleAType1Data・mockSampleAType2Data
-- `src/mocks/data/sampleB.ts` — mockSampleBType1Data
-- `src/mocks/handlers/common.ts` — `/api/user/info`・`/api/batch/date`
-- `src/mocks/handlers/sampleA.ts` — `/api/sample_a/type_1`・`/api/sample_a/type_2`
-- `src/mocks/handlers/sampleB.ts` — `/api/sample_b/type_1`
-- `src/mocks/handlers/index.ts` — 全ハンドラー集約
-- `src/mocks/browser.ts` — setupWorker
-
-### ルーティング
-
-- `src/routes/__root.tsx` — rootRoute（loader: userInfo・batchDate）
-- `src/routes/index.tsx` — / ルート
-- `src/routes/sampleModal/index.tsx` — クエリパラメータ形式（Nativeからの入口）
-- `src/routes/sampleModal/$from/$serviceType.tsx` — パスパラメータ形式
-
-### ページ・コンテナ
-
-- `src/pages/SampleModal/index.tsx` — CONTAINER_MAPで切り替え
-- `src/pages/SampleModal/containers/index.ts` — `satisfies`で型チェック済みCONTAINER_MAP
-- `src/pages/SampleModal/containers/SampleA/Type1/index.tsx` — useQuery + LoadingView/ErrorView
-- `src/pages/SampleModal/containers/SampleA/Type2/index.tsx` — useQuery + LoadingView/ErrorView
-- `src/pages/SampleModal/containers/SampleB/Type1/index.tsx` — useQuery + LoadingView/ErrorView
-
-### Storybook
-
-- `src/pages/SampleModal/containers/SampleA/Type1/index.stories.tsx` — Default・Loading・Error
-- `src/pages/SampleModal/containers/SampleA/Type2/index.stories.tsx` — Default・Loading・Error
-- `src/pages/SampleModal/containers/SampleB/Type1/index.stories.tsx` — Default・Loading・Error
-
-### Playwright E2E
-
-- `tests/e2e/fixtures/auth.ts` — 認証fixture（PoC段階はpassthrough）
-- `tests/e2e/fixtures/nativeBridge.ts` — webkit/MebViewInterfaceをaddInitScriptでモック
-- `tests/e2e/sampleModal.spec.ts` — 5シナリオ（正常表示3件・エラー系2件）
-
----
-
-## 動作確認済みURL
-
-```
-# クエリパラメータ形式（Nativeからの実際の入口）
-http://localhost:5173/sampleModal?from=sample_a&serviceType=type_1  → SampleAType1Container
-http://localhost:5173/sampleModal?from=sample_a&serviceType=type_2  → SampleAType2Container
-http://localhost:5173/sampleModal?from=sample_b&serviceType=type_1  → SampleBType1Container
-http://localhost:5173/sampleModal?from=invalid&serviceType=type_1   → Zodバリデーションエラー → errorComponent
-
-# パスパラメータ形式（開発・将来の移行先）
-http://localhost:5173/sampleModal/sample_a/type_1  → SampleAType1Container（APIコール済み）
-http://localhost:5173/sampleModal/sample_a/type_2  → SampleAType2Container（APIコール済み）
-http://localhost:5173/sampleModal/sample_b/type_1  → SampleBType1Container（APIコール済み）
-http://localhost:5173/sampleModal/sample_a/type_3  → 「対応するコンテナが見つかりません」
-http://localhost:5173/sampleModal/invalid/type_1   → Zodバリデーションエラー → errorComponent
-```
-
----
-
-## 起動コマンド
-
-```bash
-# 開発サーバー
-pnpm dev
-
-# Storybook
-pnpm storybook
-
-# ユニットテスト（Storybook stories含む）
-pnpm test
-
-# E2Eテスト（dev serverが自動起動）
-pnpm playwright test
-
-# ビルド
-pnpm build
-```
-
----
-
 ## インフラ方針
 
 App EngineのランタイムはPythonを使用する。
@@ -321,41 +196,9 @@ handlers:
 
 ### Lefthook（導入済み）
 
-**役割分担：**
-
 - lefthook → ローカルで素早く気づく（開発者体験）
 - CI/CD → 絶対に通過させる関門（品質保証）
-
-lefthookは`--no-verify`でスキップできるため、CI/CDが本番の砦。
-
-```yaml
-# lefthook.yml
-# スキップ方法: LEFTHOOK=0 git commit または git commit --no-verify
-
-parallel: true
-
-skip:
-  - merge
-  - rebase
-
-pre-commit:
-  commands:
-    lint:
-      glob: '*.{ts,tsx,js,jsx}'
-      run: pnpm eslint {staged_files} --max-warnings 0
-
-    format-check:
-      glob: '*.{ts,tsx,js,jsx,json,md}'
-      run: pnpm prettier --check {staged_files}
-
-pre-push:
-  commands:
-    typecheck:
-      run: pnpm tsc -b --noEmit
-
-    test:
-      run: pnpm vitest run
-```
+- `--no-verify` でスキップできるため、CI/CDが本番の砦
 
 **設計判断：**
 
@@ -363,20 +206,11 @@ pre-push:
 - lintとformatはステージングされたファイルのみ対象（`{staged_files}`）
 - E2EテストはCI/CDのみ（Playwrightはローカルで走らせるには重すぎる）
 
+設定は `lefthook.yml` を参照。
+
 ### CI/CD（GitHub Actions・未導入）
 
-```yaml
-# .github/workflows/ci.yml
-jobs:
-  quality:
-    steps:
-      - pnpm install
-      - pnpm typecheck # フルチェック（lefthookはincrementalだがCIはフル）
-      - pnpm lint
-      - pnpm format:check
-      - pnpm test
-      - pnpm build
-```
+導入時の実行ステップ: `pnpm install` → `pnpm typecheck` → `pnpm lint` → `pnpm format:check` → `pnpm test` → `pnpm build`
 
 ---
 
