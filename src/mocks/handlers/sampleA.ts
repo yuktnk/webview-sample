@@ -1,5 +1,8 @@
+import {
+  mockSampleAType1Data,
+  mockSampleAType2Data,
+} from '@/mocks/data/sampleA'
 import { http, HttpResponse } from 'msw'
-import { mockSampleAType1Data, mockSampleAType2Data } from '../data/sampleA'
 
 export const sampleAHandlers = [
   http.get('/api/sample_a/type_1', () =>

@@ -1,8 +1,8 @@
+import { handlers } from '@/mocks/handlers'
 import type { Preview } from '@storybook/react-vite'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { createElement } from 'react'
 import { initialize, mswLoader } from 'msw-storybook-addon'
-import { handlers } from '../src/mocks/handlers'
+import { createElement } from 'react'
 
 initialize()
 
@@ -22,7 +22,11 @@ const preview: Preview = {
           },
         },
       })
-      return createElement(QueryClientProvider, { client: queryClient }, createElement(Story))
+      return createElement(
+        QueryClientProvider,
+        { client: queryClient },
+        createElement(Story),
+      )
     },
   ],
 }
