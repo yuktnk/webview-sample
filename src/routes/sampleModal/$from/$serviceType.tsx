@@ -1,3 +1,9 @@
+/**
+ * パスパラメータ形式のルート
+ *
+ * 開発時の直接アクセスや、将来Nativeがパスパラメータ形式に移行した際の受け口。
+ * クエリパラメータ形式との移行背景は src/routes/sampleModal/index.tsx のコメントを参照。
+ */
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 import { FROM_VALUES } from '../../../types/from'

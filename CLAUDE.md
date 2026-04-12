@@ -4,7 +4,7 @@
 
 とあるWebViewアプリのフルリプレイスPoCプロジェクト。
 `from` × `serviceType` の組み合わせで画面を切り替えるモーダル画面の実装サンプル。
-**実装者は自分1人**。メンバーのキャッチアップ考慮は不要。
+ゆくゆくは3人程度のチームで継続開発予定。ビギナーエンジニアが多い想定。
 
 ---
 
@@ -62,8 +62,9 @@ src/
 │   ├── __root.tsx                   # rootRoute（loader・共通レイアウト）
 │   ├── index.tsx                    # / ルート
 │   └── sampleModal/
+│       ├── index.tsx                # /sampleModal?from=&serviceType=（Nativeからのクエリパラメータ形式）
 │       └── $from/
-│           └── $serviceType.tsx     # /sampleModal/$from/$serviceType
+│           └── $serviceType.tsx     # /sampleModal/$from/$serviceType（パスパラメータ形式）
 │
 ├── pages/                           # ページ単位の実装
 │   └── SampleModal/
@@ -189,7 +190,8 @@ public/
 ### ルーティング
 - `src/routes/__root.tsx` — rootRoute（loader: userInfo・batchDate）
 - `src/routes/index.tsx` — / ルート
-- `src/routes/sampleModal/$from/$serviceType.tsx` — パスパラメータのZodバリデーション
+- `src/routes/sampleModal/index.tsx` — クエリパラメータ形式（Nativeからの入口）
+- `src/routes/sampleModal/$from/$serviceType.tsx` — パスパラメータ形式
 
 ### ページ・コンテナ
 - `src/pages/SampleModal/index.tsx` — CONTAINER_MAPで切り替え
@@ -213,6 +215,13 @@ public/
 ## 動作確認済みURL
 
 ```
+# クエリパラメータ形式（Nativeからの実際の入口）
+http://localhost:5173/sampleModal?from=sample_a&serviceType=type_1  → SampleAType1Container
+http://localhost:5173/sampleModal?from=sample_a&serviceType=type_2  → SampleAType2Container
+http://localhost:5173/sampleModal?from=sample_b&serviceType=type_1  → SampleBType1Container
+http://localhost:5173/sampleModal?from=invalid&serviceType=type_1   → Zodバリデーションエラー → errorComponent
+
+# パスパラメータ形式（開発・将来の移行先）
 http://localhost:5173/sampleModal/sample_a/type_1  → SampleAType1Container（APIコール済み）
 http://localhost:5173/sampleModal/sample_a/type_2  → SampleAType2Container（APIコール済み）
 http://localhost:5173/sampleModal/sample_b/type_1  → SampleBType1Container（APIコール済み）
@@ -266,6 +275,30 @@ pnpm build
 - `src/routes/` はルート定義のみ。ロジックは `src/pages/` に置く
 - `routeTree.gen.ts` は自動生成ファイル。手動編集しないこと
 - パスパラメータのバリデーションは `params.parse` でZodを使う
+- クエリパラメータのバリデーションは `validateSearch` でZodを使う
+
+### ルーティング設計（2つのルートが存在する理由）
+
+リプレイス前のNativeアプリがクエリパラメータ形式（`?from=&serviceType=`）でWebViewを起動するため、
+互換性のためにクエリパラメータ形式のルートを維持している。
+
+```
+Native → /sampleModal?from=sample_a&serviceType=type_1
+                ↓ validateSearch（Zod）
+         SampleModalPage へ props を渡す（URLはそのまま）
+```
+
+ページコンポーネント（`SampleModalPage`）はルートの形式を知らない設計になっており、
+`from` / `serviceType` を props で受け取るだけ。
+これにより将来パスパラメータへ完全移行する際は、
+`src/routes/sampleModal/index.tsx` を削除するだけで済む。
+
+```
+# 将来の移行後（index.tsx を削除するだけ）
+Native → /sampleModal/sample_a/type_1
+                ↓ params.parse（Zod）
+         SampleModalPage へ props を渡す
+```
 
 ### Storybook
 - Storyは必ず **Default・Loading・Error** の3点セットで作る
