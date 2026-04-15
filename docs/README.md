@@ -5,9 +5,17 @@ WebView アプリの設計・実装に関するドキュメント。
 ## 目次
 
 - **[pages/](./pages/)** — 画面ごとの仕様・パラメータ・API
-- **[api/](./api/)** — API 設計・エンドポイント一覧
-- **[routing.md](./routing.md)** — ルーティング設計（パラメータ・バリデーション）
-- **[native-bridge.md](./native-bridge.md)** — NativeBridge 仕様
+- **[api/](./api/)** — API エンドポイント単位のドキュメント
+
+## 設計・実装ガイド
+
+詳細な設計原則・アーキテクチャ・ルールは [`.claude/rules/`](../.claude/rules/) に整理しています。
+
+- `architecture.md` — 設計原則・ディレクトリ構成・ルーティング設計
+- `testing.md` — テスト戦略・役割分担
+- `msw.md` — MSW（Mock Service Worker）
+- `native-bridge.md` — NativeBridge 仕様
+- `docs-generation.md` — ドキュメント自動生成
 
 ## Storybook
 
