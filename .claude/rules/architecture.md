@@ -126,40 +126,68 @@ public/
 
 ---
 
-## コンポーネント設計（スコープとファイル配置）
+## コンポーネント・フック設計（スコープとファイル配置）
 
 **原則：「最初は最も近い場所に置いて、共有が必要になったら一段上に移動する」**
+
+UI コンポーネントとロジック（カスタムフック）は同じスコープ原則に従い、階層的に管理します。
+
+### ディレクトリ構成
 
 ```
 src/
 ├── components/ui/           ← 複数ページで使う汎用UI（LoadingView・ErrorViewなど）
+├── hooks/                   # 複数ページで使う共通フック
+│   ├── useQuery.ts          # TanStack Query ラッパー（例）
+│   └── useDebounce.ts
 └── pages/SampleModal/
     ├── components/          ← SampleModal内で複数コンテナが共有するコンポーネント
     │   └── DataCard.tsx      ← 例: Type1・Type2の両方で使うデータ表示カード
+    ├── hooks/                # SampleModal内で複数コンテナが共有するフック
+    │   ├── useSampleDataFetch.ts
+    │   └── useModalState.ts
     └── containers/
         ├── SampleA/
         │   ├── components/   ← Type1・Type2が共有するコンポーネント
+        │   ├── hooks/        # Type1・Type2が共有するフック
+        │   │   └── useCommonLogic.ts
         │   ├── Type1/
-        │   │   └── index.tsx
+        │   │   ├── index.tsx
+        │   │   ├── ChartWidget.tsx   # Type1だけで使うコンポーネント
+        │   │   └── hooks.ts           # Type1だけで使うフック
         │   └── Type2/
         │       └── index.tsx
         └── SampleB/
             └── Type1/
                 ├── index.tsx
-                └── ChartWidget.tsx  ← Type1だけで使う場合、同階層に配置
+                └── hooks.ts           # Type1だけで使うフック
 ```
 
-**ルール：**
+### スコープルール
 
-| スコープ                | 置き場所                                |
-| ----------------------- | --------------------------------------- |
-| Type1 だけで使う        | `containers/SampleA/Type1/` 内に配置    |
-| Type1・Type2 両方で使う | `containers/SampleA/components/` に配置 |
-| SampleModal 全体で使う  | `pages/SampleModal/components/` に配置  |
-| 複数ページで使う        | `src/components/` に配置                |
+| スコープ                | コンポーネント配置                      | フック配置                          |
+| ----------------------- | --------------------------------------- | ----------------------------------- |
+| Type1 だけで使う        | `containers/SampleA/Type1/` 内に配置    | `containers/SampleA/Type1/hooks.ts` |
+| Type1・Type2 両方で使う | `containers/SampleA/components/` に配置 | `containers/SampleA/hooks/` に配置  |
+| SampleModal 全体で使う  | `pages/SampleModal/components/` に配置  | `pages/SampleModal/hooks/` に配置   |
+| 複数ページで使う        | `src/components/` に配置                | `src/hooks/` に配置                 |
 
-同じコンポーネントを別の場所でも使いたくなったら、そのタイミングで一段上に移動する。
-「いつか使い回すかも」で早めに汎用化しすぎると、本当に汎用なのか判断しにくくなるため避ける。
+### ファイル命名規則
+
+**コンポーネント：**
+
+- 単一コンポーネント：`index.tsx`（推奨）
+- 複数コンポーネント：`Component.tsx`
+
+**カスタムフック：**
+
+- 単一フック：`hooks.ts`（スコープ内の最深位置のみ）
+- 複数フック：`hooks/` ディレクトリを作成し、`useXXX.ts` ごとにファイル分割
+
+### 移動ルール
+
+同じコンポーネントやフックを別の場所でも使いたくなったら、そのタイミングで一段上に移動します。
+「いつか使い回すかも」で早めに汎用化しすぎると、本当に汎用なのか判断しにくくなるため避けます。
 
 ---
 
