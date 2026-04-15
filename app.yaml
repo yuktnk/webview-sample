@@ -1,0 +1,13 @@
+runtime: python312
+
+handlers:
+  # メインアプリのアセット
+  - url: /assets
+    static_dir: dist/assets
+    secure: always
+
+  # メインアプリ（SPA）
+  - url: /.*
+    static_files: dist/index.html
+    upload: dist/index.html
+    secure: always

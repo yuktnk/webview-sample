@@ -169,20 +169,26 @@ public/
 
 ## インフラ方針
 
-App EngineのランタイムはPythonを使用する。
+App EngineのランタイムはPythonを使用する。メインアプリは静的ファイルのみをデプロイ。
 
-```yaml
-# app.yaml
-runtime: python312
+**開発環境でのビルド：**
 
-handlers:
-  - url: /.*
-    static_files: dist/index.html
-    upload: dist/index.html
-
-  - url: /assets
-    static_dir: dist/assets
+```bash
+pnpm build:dev
+# ├─ dist/（メインアプリ）
+# └─ storybook-static/（Storybook）
 ```
+
+**本番環境へのデプロイ：**
+
+```bash
+pnpm build
+# └─ dist/（メインアプリのみ）
+
+gcloud app deploy
+```
+
+`app.yaml` はメインアプリのみを配信。Storybook を本番に含めたい場合は、別途 `app.yaml.dev` を用意するか、デプロイ前に `pnpm build:dev` を実行してから手動で `storybook-static/` を含める。
 
 **なぜPythonか：**
 このアプリは静的ファイル配信のみで動作する設計であり、Node.jsサーバーを必要とするReact Server Components等の実装を意図的に防いでいる。別の既存SPAアプリもPythonランタイムで統一しており、EOSL対応を一元化するため。
