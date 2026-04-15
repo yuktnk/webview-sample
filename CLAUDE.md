@@ -171,24 +171,34 @@ public/
 
 App EngineのランタイムはPythonを使用する。メインアプリは静的ファイルのみをデプロイ。
 
-**サービス構成：**
+**環境とサービス構成：**
 
 ```
-App Engine
-├── webview           # 本番・メインアプリ
-└── webview-storybook # 開発・Storybook（別サービス）
+本番環境（GCP プロジェクト: production）
+└── App Engine
+    └── webview サービス（メインアプリのみ）
+
+開発環境（GCP プロジェクト: development）
+└── App Engine
+    ├── webview サービス（メインアプリ）
+    └── webview-storybook サービス（Storybook）
 ```
 
 **デプロイ方法：**
 
 ```bash
-# 本番環境（webview サービス）
+# 本番環境へ（production プロジェクト）
 pnpm build
-gcloud app deploy app.yaml
+gcloud app deploy app.yaml --project=production
 
-# 開発環境（webview-storybook サービス）
+# 開発環境へ（development プロジェクト）
+# メインアプリ
+pnpm build
+gcloud app deploy app.yaml --project=development
+
+# Storybook
 pnpm build:dev
-gcloud app deploy app.webview-storybook.yaml
+gcloud app deploy app.webview-storybook.yaml --project=development
 ```
 
 **ファイル構成：**
