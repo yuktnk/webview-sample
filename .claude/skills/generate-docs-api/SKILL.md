@@ -1,8 +1,8 @@
 ---
-name: doc-api
+name: generate-docs-api
 description: Generate API specification documentation from implementation files
 disable-model-invocation: true
-argument-hint: '[endpoint-name]'
+argument-hint: '[api-name]'
 ---
 
 # スキル：API ドキュメント生成

@@ -1,5 +1,5 @@
 ---
-name: doc-pages
+name: generate-docs-pages
 description: Generate screen specification documentation from implementation files
 disable-model-invocation: true
 argument-hint: '[page-name]'
@@ -7,8 +7,8 @@ argument-hint: '[page-name]'
 
 # スキル：画面ドキュメント生成
 
-以下のファイルを参照して、`docs/skills/pages/TEMPLATE.md` のフォーマットに従い
-`docs/screens/{画面名}.md` を生成してください。
+以下のファイルを参照して、`TEMPLATE.md` のフォーマットに従い
+`docs/pages/{画面名}.md` を生成してください。
 
 ## 参照するファイル
 
@@ -33,7 +33,7 @@ argument-hint: '[page-name]'
 ## 出力先
 
 ```
-docs/screens/{画面名}.md
+docs/pages/{画面名}.md
 ```
 
 ## 参考資料
