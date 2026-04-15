@@ -1,0 +1,9 @@
+service: webview-storybook
+
+runtime: python312
+
+handlers:
+  # Storybook 静的ファイル
+  - url: /.*
+    static_dir: storybook-static
+    secure: always

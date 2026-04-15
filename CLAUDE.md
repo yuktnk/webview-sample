@@ -171,24 +171,30 @@ public/
 
 App EngineのランタイムはPythonを使用する。メインアプリは静的ファイルのみをデプロイ。
 
-**開発環境でのビルド：**
+**サービス構成：**
 
-```bash
-pnpm build:dev
-# ├─ dist/（メインアプリ）
-# └─ storybook-static/（Storybook）
+```
+App Engine
+├── webview           # 本番・メインアプリ
+└── webview-storybook # 開発・Storybook（別サービス）
 ```
 
-**本番環境へのデプロイ：**
+**デプロイ方法：**
 
 ```bash
+# 本番環境（webview サービス）
 pnpm build
-# └─ dist/（メインアプリのみ）
+gcloud app deploy app.yaml
 
-gcloud app deploy
+# 開発環境（webview-storybook サービス）
+pnpm build:dev
+gcloud app deploy app.webview-storybook.yaml
 ```
 
-`app.yaml` はメインアプリのみを配信。Storybook を本番に含めたい場合は、別途 `app.yaml.dev` を用意するか、デプロイ前に `pnpm build:dev` を実行してから手動で `storybook-static/` を含める。
+**ファイル構成：**
+
+- `app.yaml` — webview サービス用。メインアプリのみを配信。
+- `app.webview-storybook.yaml` — webview-storybook サービス用。Storybook を配信。
 
 **なぜPythonか：**
 このアプリは静的ファイル配信のみで動作する設計であり、Node.jsサーバーを必要とするReact Server Components等の実装を意図的に防いでいる。別の既存SPAアプリもPythonランタイムで統一しており、EOSL対応を一元化するため。
@@ -197,6 +203,8 @@ gcloud app deploy
 
 - ランタイムをNode.jsに変更すること
 - サーバーコンポーネントを実装すること（Node.jsランタイムが必要になるため）
+- 本番環境（webview サービス）に Storybook を含めること
+- CI/CD で `app.dev.yaml` を使うこと（本番に Storybook が含まれるため）
 
 ---
 
