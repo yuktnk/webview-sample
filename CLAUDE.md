@@ -284,6 +284,41 @@ Native → /sampleModal/sample_a/type_1
 - APIレスポンスの型は `src/types/api/` に定義する
 - `CONTAINER_MAP` は `satisfies Record<FromType, Partial<Record<ServiceType, React.ComponentType>>>` で型チェック
 
+### コンポーネント設計（スコープとファイル配置）
+
+**原則：「最初は最も近い場所に置いて、共有が必要になったら一段上に移動する」**
+
+```
+src/
+├── components/ui/           ← 複数ページで使う汎用UI（LoadingView・ErrorViewなど）
+└── pages/SampleModal/
+    ├── components/          ← SampleModal内で複数コンテナが共有するコンポーネント
+    │   └── DataCard.tsx      ← 例: Type1・Type2の両方で使うデータ表示カード
+    └── containers/
+        ├── SampleA/
+        │   ├── components/   ← Type1・Type2が共有するコンポーネント
+        │   ├── Type1/
+        │   │   └── index.tsx
+        │   └── Type2/
+        │       └── index.tsx
+        └── SampleB/
+            └── Type1/
+                ├── index.tsx
+                └── ChartWidget.tsx  ← Type1だけで使う場合、同階層に配置
+```
+
+**ルール：**
+
+| スコープ                | 置き場所                                |
+| ----------------------- | --------------------------------------- |
+| Type1 だけで使う        | `containers/SampleA/Type1/` 内に配置    |
+| Type1・Type2 両方で使う | `containers/SampleA/components/` に配置 |
+| SampleModal 全体で使う  | `pages/SampleModal/components/` に配置  |
+| 複数ページで使う        | `src/components/` に配置                |
+
+同じコンポーネントを別の場所でも使いたくなったら、そのタイミングで一段上に移動する。
+「いつか使い回すかも」で早めに汎用化しすぎると、本当に汎用なのか判断しにくくなるため避ける。
+
 #### ZodによるAPIレスポンス検証（方針）
 
 現状は手書き型定義のみだが、APIレスポンスはZodでパースする方針に移行する。

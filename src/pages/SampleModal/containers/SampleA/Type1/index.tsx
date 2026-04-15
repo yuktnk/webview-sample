@@ -1,5 +1,6 @@
 import { ErrorView } from '@/components/ui/ErrorView'
 import { LoadingView } from '@/components/ui/LoadingView'
+import { DataCard } from '@/pages/SampleModal/containers/SampleA/components/DataCard'
 import { sampleAType1QueryOptions } from '@/queries/sampleA'
 import { formatDate } from '@/utils/formatDate'
 import { useQuery } from '@tanstack/react-query'
@@ -13,10 +14,13 @@ export function SampleAType1Container() {
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold">{data?.result.title}</h1>
-      <p className="text-lg mt-2">値: {data?.result.value}</p>
-      <p className="text-sm text-gray-500 mt-1">
-        日付: {data?.result.date ? formatDate(data.result.date) : ''}
-      </p>
+      <div className="mt-4 space-y-2">
+        <DataCard label="値" value={data?.result.value ?? 0} />
+        <DataCard
+          label="日付"
+          value={data?.result.date ? formatDate(data.result.date) : 'N/A'}
+        />
+      </div>
     </div>
   )
 }
