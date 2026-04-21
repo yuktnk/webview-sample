@@ -4,22 +4,10 @@
 
 ### CLAUDE.md更新（Claude Codeで作業）
 
-- [ ] 品質ピラミッドのセクションを追加
-  - Vitest と Storybook は同列（上下関係なし）
-  - ライブラリの健全性をピラミッドの最下層として追加
-- [ ] lefthookの設定を更新
-  - secretlintをpre-commitに追加
-  - 現在のpackage.jsonのscriptsに合わせて修正
 - [ ] CI/CDセクションを追加
   - PRのたびに走るjobs（quality）
   - mainマージ後のjobs（storybook deploy）
   - PRマージ前のjobs（e2e）
-- [ ] Dependabotセクションを追加
-  - .github/dependabot.ymlの設定例
-  - グループ化の方針（storybook・tanstack・vitest系）
-  - patch: auto-merge / minor: グループPR / major: 手動レビュー必須
-- [ ] ライブラリ健全性セクションを追加
-- [ ] @tanstack/eslint-plugin-queryの設定を追加
 - [ ] copilot-instructions.mdをCLAUDE.mdと同内容で作成
 
 ---
@@ -67,8 +55,6 @@
 ### 品質
 
 - [ ] カバレッジ閾値の設定（vitest.config.tsに追加）
-- [ ] axe-playwrightをE2Eに組み込む（アクセシビリティ自動チェック）
-- [ ] Lighthouseによるパフォーマンス計測
 
 ### CI/CD（通常）
 
@@ -110,54 +96,3 @@
 | Vitest / Storybook | 12/20  | テスト未記述・Storybookデプロイ未実施           |
 | Playwright         | 8/20   | テスト未記述・CI未組み込み                      |
 | AI活用             | 11/20  | Storybookデプロイ未実施・画面ドキュメント未整備 |
-
----
-
-## CLAUDE.md追記タスク（Claude Codeで作業）
-
-### AIコードレビューの観点を追加
-
-#### レビューしてほしい観点
-
-**設計・アーキテクチャ**
-
-- routes/が薄い定義になっているか（ロジックがpages/に分離されているか）
-- Containerが内部で切り替えロジックを持っていないか
-- CONTAINER_MAPへの追加だけで済む設計になっているか
-
-**パフォーマンス**
-
-- 不要な再レンダリングが発生していないか
-- useQueryのqueryKeyが適切に設定されているか
-- 不要なuseEffectを使っていないか
-
-**セキュリティ**
-
-- APIレスポンスをZodでパースしているか
-- クエリパラメータのバリデーションが抜けていないか
-
-**テスト**
-
-- Storyが3点セット（Default・Loading・Error）揃っているか
-- E2Eテストで異常系がカバーされているか
-- MSWハンドラーがhandlers/index.tsに集約されているか
-
-**NativeBridge**
-
-- nativeBridgeを直接呼んでいるか（Redux経由になっていないか）
-- 呼び出しタイミングが仕様通りか
-
-**TanStack Query・Router**
-
-- TanStack QueryのqueryOptionsが queries/ に定義されているか
-- TanStack Routerのloaderに共通APIが集約されているか
-- Zodバリデーションが適切か
-
-#### 指摘不要な観点（ツールで担保済み）
-
-- フォーマット（Prettierで担保）
-- importの順番（prettier-plugin-organize-importsで担保）
-- anyの使用（ESLintで担保）
-- console.logの残留（ESLintで担保）
-- 型の整合性（TypeScript strict: trueで担保）
-- 未使用変数・ファイル（knipで担保）
