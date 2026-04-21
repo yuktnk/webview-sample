@@ -24,6 +24,10 @@ export default defineConfig({
       '@': path.resolve(dirname, 'src'),
     },
   },
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+  },
   test: {
     projects: [
       {

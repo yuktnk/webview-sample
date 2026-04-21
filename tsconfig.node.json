@@ -20,12 +20,7 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-
-    /* Path aliases */
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "noUncheckedIndexedAccess": true
   },
   "include": ["vite.config.ts", "playwright.config.ts", ".storybook/*.ts"]
 }
