@@ -19,7 +19,10 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "perf": "lighthouse https://localhost:5173 --output=json --output-path=./dist/lighthouse.json",
+    "a11y": "playwright test",
+    "bundle": "vite build --profile"
   },
   "engines": {
     "node": ">=24.0.0",
@@ -36,6 +39,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.0",
     "@chromatic-com/storybook": "^5.1.1",
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
@@ -66,10 +70,12 @@
     "jsdom": "^29.0.2",
     "knip": "^6.4.0",
     "lefthook": "^2.1.5",
+    "lighthouse": "^12.3.0",
     "msw-storybook-addon": "^2.0.7",
     "playwright": "^1.59.1",
     "prettier": "^3.8.2",
     "prettier-plugin-organize-imports": "^4.3.0",
+    "rollup-plugin-visualizer": "^7.0.1",
     "secretlint": "^11.6.0",
     "storybook": "^10.3.5",
     "tailwindcss": "^4.2.2",
