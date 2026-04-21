@@ -1,3 +1,4 @@
+import '@/index.css'
 import { handlers } from '@/mocks/handlers'
 import type { Preview } from '@storybook/react-vite'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
