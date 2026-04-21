@@ -1,0 +1,15 @@
+service: webview-storybook
+
+runtime: python312
+
+handlers:
+  # Storybook アセット
+  - url: /assets
+    static_dir: storybook-static/assets
+    secure: always
+
+  # Storybook（SPA）
+  - url: /.*
+    static_files: storybook-static/index.html
+    upload: storybook-static/index.html
+    secure: always
