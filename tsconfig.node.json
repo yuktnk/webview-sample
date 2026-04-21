@@ -22,5 +22,11 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true
   },
-  "include": ["vite.config.ts", "playwright.config.ts", ".storybook/*.ts"]
+  "include": [
+    "commitlint.config.ts",
+    "eslint.config.ts",
+    "vite.config.ts",
+    "playwright.config.ts",
+    ".storybook/*.ts"
+  ]
 }
