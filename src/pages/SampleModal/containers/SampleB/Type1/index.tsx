@@ -10,7 +10,7 @@ export function SampleBType1Container() {
   if (isError) return <ErrorView />
 
   return (
-    <div className="p-4">
+    <div className="p-1">
       <h1 className="text-2xl font-bold">{data?.result.name}</h1>
       <p className="mt-2">ステータス: {data?.result.status}</p>
       <p className="mt-1 text-xl">スコア: {data?.result.score}</p>

@@ -11,9 +11,9 @@ export function SampleAType2Container() {
   if (isError) return <ErrorView />
 
   return (
-    <div className="p-4">
+    <div className="p-1">
       <h1 className="text-2xl font-bold">{data?.result.title}</h1>
-      <ul className="mt-4 space-y-2">
+      <ul className="mt-1 space-y-1">
         {data?.result.items.map((item) => (
           <li key={item.label}>
             <DataCard label={item.label} value={item.count} />

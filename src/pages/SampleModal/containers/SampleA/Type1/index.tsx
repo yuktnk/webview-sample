@@ -12,9 +12,9 @@ export function SampleAType1Container() {
   if (isError) return <ErrorView />
 
   return (
-    <div className="p-4">
+    <div className="p-1">
       <h1 className="text-2xl font-bold">{data?.result.title}</h1>
-      <div className="mt-4 space-y-2">
+      <div className="mt-1 space-y-1">
         <DataCard label="値" value={data?.result.value ?? 0} />
         <DataCard
           label="日付"

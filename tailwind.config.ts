@@ -3,10 +3,7 @@ import type { Config } from 'tailwindcss'
 export default {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    // NOTE: colors を theme 直下に定義することで、Tailwind のデフォルト色を上書き。
-    // これにより、定義されたカラーパレットのみを強制し、任意のカラー値（hex など）
-    // の直接指定や未定義のカラー（bg-blue-500 など）を使用不可にする。
-    // デザインシステムの一貫性を保証。
+    // NOTE: デザインシステムのルールは @.claude/rules/design-system.md を参照。
     colors: {
       // 基本色（必須）
       transparent: 'transparent',
@@ -61,46 +58,45 @@ export default {
         700: '#a16207',
       },
     },
+    spacing: {
+      0: '0',
+      1: '4px',
+      2: '8px',
+      3: '12px',
+      4: '16px',
+      5: '20px',
+      6: '24px',
+      8: '32px',
+      10: '40px',
+      12: '48px',
+    },
+    fontSize: {
+      xs: '12px',
+      sm: '14px',
+      base: '16px',
+      lg: '18px',
+      xl: '20px',
+      '2xl': '24px',
+      '3xl': '30px',
+      '4xl': '36px',
+      '5xl': '48px',
+    },
+    borderRadius: {
+      none: '0',
+      sm: '2px',
+      base: '4px',
+      md: '6px',
+      lg: '8px',
+      xl: '12px',
+      '2xl': '16px',
+      full: '9999px',
+    },
     extend: {
       fontFamily: {
         // メインフォント（サンセリフ）
         sans: ['system-ui', 'sans-serif'],
         // モノスペース（コード表示用）
         mono: ['ui-monospace', 'monospace'],
-      },
-      fontSize: {
-        xs: '0.75rem',
-        sm: '0.875rem',
-        base: '1rem',
-        lg: '1.125rem',
-        xl: '1.25rem',
-        '2xl': '1.5rem',
-        '3xl': '1.875rem',
-        '4xl': '2.25rem',
-        '5xl': '3rem',
-      },
-      spacing: {
-        0: '0',
-        1: '0.25rem',
-        2: '0.5rem',
-        3: '0.75rem',
-        4: '1rem',
-        6: '1.5rem',
-        8: '2rem',
-        12: '3rem',
-        16: '4rem',
-        20: '5rem',
-        24: '6rem',
-      },
-      borderRadius: {
-        none: '0',
-        sm: '0.125rem',
-        base: '0.25rem',
-        md: '0.375rem',
-        lg: '0.5rem',
-        xl: '0.75rem',
-        '2xl': '1rem',
-        full: '9999px',
       },
       boxShadow: {
         none: 'none',
