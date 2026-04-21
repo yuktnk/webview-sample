@@ -85,5 +85,9 @@ export default defineConfig([
       ],
     },
   },
-  ...storybook.configs['flat/recommended'],
+  // NOTE: storybook.configs['flat/recommended'] が readonly 型を返すため、
+  // ESLint の defineConfig の型定義と合致しない。eslint-plugin-storybook
+  // の型定義が不完全なため、ここでのみ型アサーションを使用。
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ...(storybook.configs['flat/recommended'] as any),
 ])
