@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { CONTAINER_MAP } from '@/pages/SampleModal/containers'
+import { CONTAINER_MAP } from '@/pages/sampleModal/containers'
 import type { FromType, ServiceType } from '@/types/routing'
 import { createFileRoute, useRouter } from '@tanstack/react-router'
 

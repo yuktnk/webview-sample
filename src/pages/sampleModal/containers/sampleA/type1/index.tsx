@@ -1,6 +1,6 @@
 import { ErrorView } from '@/components/ui/ErrorView'
 import { LoadingView } from '@/components/ui/LoadingView'
-import { DataCard } from '@/pages/SampleModal/containers/SampleA/components/DataCard'
+import { DataCard } from '@/pages/sampleModal/containers/sampleA/components/DataCard'
 import { sampleAType1QueryOptions } from '@/queries/sampleA'
 import { formatDate } from '@/utils/formatDate'
 import { useQuery } from '@tanstack/react-query'

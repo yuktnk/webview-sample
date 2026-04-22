@@ -5,7 +5,7 @@
  * クエリパラメータ形式との移行背景は src/routes/sampleModal/index.tsx のコメントを参照。
  */
 import { ErrorView } from '@/components/ui/ErrorView'
-import { SampleModalPage } from '@/pages/SampleModal'
+import { SampleModalPage } from '@/pages/sampleModal'
 import { FROM_VALUES, SERVICE_TYPE_VALUES } from '@/types/routing'
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'

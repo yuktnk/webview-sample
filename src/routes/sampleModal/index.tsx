@@ -11,7 +11,7 @@
  * 移行先: src/routes/sampleModal/$from/$serviceType.tsx
  */
 import { ErrorView } from '@/components/ui/ErrorView'
-import { SampleModalPage } from '@/pages/SampleModal'
+import { SampleModalPage } from '@/pages/sampleModal'
 import { FROM_VALUES, SERVICE_TYPE_VALUES } from '@/types/routing'
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
