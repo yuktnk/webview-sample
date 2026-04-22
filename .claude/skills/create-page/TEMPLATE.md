@@ -84,13 +84,13 @@ test.describe('{PageName}', () => {
   test.use({ ...nativeBridgeFixture })
 
   test('ページが読み込まれる', async ({ page }) => {
-    await page.goto('/{pageName}')
+    await page.goto('/{pageName}') // ← ルーティング設定に合わせて URL を修正
     await expect(page.getByRole('heading')).toContainText('{PageName}')
   })
 
   test('エラー状態を表示する', async ({ page }) => {
     // エラーハンドリングのテスト
-    await page.goto('/{pageName}')
+    await page.goto('/{pageName}') // ← ルーティング設定に合わせて URL を修正
     // 期待される動作をアサート
   })
 })
@@ -100,11 +100,24 @@ test.describe('{PageName}', () => {
 
 ## 使用例
 
+### 例1: weeklyReport
+
 ```bash
-/create-page Dashboard
-  → src/pages/Dashboard/index.tsx
-  → src/pages/Dashboard/index.stories.tsx
-  → tests/e2e/dashboard.spec.ts
+/create-page weeklyReport
+  → src/pages/WeeklyReport/index.tsx
+  → src/pages/WeeklyReport/index.stories.tsx
+  → tests/e2e/weeklyReport.spec.ts
+  → URL: /weeklyReport
+```
+
+### 例2: userProfile
+
+```bash
+/create-page userProfile
+  → src/pages/UserProfile/index.tsx
+  → src/pages/UserProfile/index.stories.tsx
+  → tests/e2e/userProfile.spec.ts
+  → URL: /userProfile
 ```
 
 ---

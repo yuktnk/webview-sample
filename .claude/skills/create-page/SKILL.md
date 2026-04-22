@@ -1,7 +1,7 @@
 ---
 name: create-page
 description: Create a new page with required files (component, story, e2e test)
-argument-hint: '[page-name]'
+argument-hint: '[page-name in camelCase]'
 ---
 
 # スキル：新しいページ作成
@@ -20,9 +20,13 @@ argument-hint: '[page-name]'
 
 ### ページ名の形式
 
-- **入力形式**: PascalCase（例: `Dashboard`, `Settings`, `UserProfile`）
-- **ファイル配置**: `src/pages/{PageName}/`
-- **E2E テスト名**: キャメルケース（例: `dashboard.spec.ts`, `userProfile.spec.ts`）
+- **入力形式**: キャメルケース（例: `weeklyReport`, `dashboard`, `userProfile`）
+- **自動変換**: キャメルケース → PascalCase
+  - 入力: `weeklyReport` → ページディレクトリ: `WeeklyReport`
+  - 入力: `dashboard` → ページディレクトリ: `Dashboard`
+- **ファイル配置**: `src/pages/{PascalCase}/`
+- **URL**: `/{キャメルケース}`
+- **E2E テスト名**: `{キャメルケース}.spec.ts`
 
 ### 生成ファイルの要件
 
