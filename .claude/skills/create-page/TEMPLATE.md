@@ -1,18 +1,31 @@
 # ページ作成テンプレート
 
-ページ名を `{PageName}` としたときの、生成ファイルのテンプレート例。
+スキルが受け取るキャメルケース入力をもとに、キャメルケースのディレクトリと PascalCase のコンポーネント名で生成します。
+
+## 変換ルール
+
+```
+入力: weeklyReport
+  ↓
+ディレクトリ: src/pages/weeklyReport/（キャメルケース）
+ファイル名: weeklyReport.spec.ts（キャメルケース）
+URL: /weeklyReport（キャメルケース）
+コンポーネント名: WeeklyReport（アッパーキャメルケース）
+```
 
 ---
 
 ## 1. ページコンポーネント
 
-**ファイル**: `src/pages/{PageName}/index.tsx`
+**ファイル**: `src/pages/{camelCase}/index.tsx`
+
+例：`/create-page weeklyReport` の場合
 
 ```tsx
 import { useState } from 'react'
 import type { ReactNode } from 'react'
 
-export function {PageName}(): ReactNode {
+export function WeeklyReport(): ReactNode {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -26,7 +39,7 @@ export function {PageName}(): ReactNode {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold">{PageName}</h1>
+      <h1 className="text-2xl font-bold">Weekly Report</h1>
       {/* コンテンツをここに追加 */}
     </div>
   )
@@ -37,14 +50,16 @@ export function {PageName}(): ReactNode {
 
 ## 2. Storybook Story
 
-**ファイル**: `src/pages/{PageName}/index.stories.tsx`
+**ファイル**: `src/pages/{camelCase}/index.stories.tsx`
+
+例：`/create-page weeklyReport` の場合
 
 ```tsx
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { {PageName} } from './index'
+import { WeeklyReport } from './index'
 
-const meta: Meta<typeof {PageName}> = {
-  component: {PageName},
+const meta: Meta<typeof WeeklyReport> = {
+  component: WeeklyReport,
   tags: ['autodocs'],
 }
 
@@ -74,23 +89,25 @@ export const Error: Story = {
 
 ## 3. E2E テスト
 
-**ファイル**: `tests/e2e/{pageName}.spec.ts`
+**ファイル**: `tests/e2e/{camelCase}.spec.ts`
+
+例：`/create-page weeklyReport` の場合
 
 ```ts
 import { test, expect } from '@playwright/test'
 import { nativeBridgeFixture } from './fixtures/nativeBridge'
 
-test.describe('{PageName}', () => {
+test.describe('WeeklyReport', () => {
   test.use({ ...nativeBridgeFixture })
 
   test('ページが読み込まれる', async ({ page }) => {
-    await page.goto('/{pageName}') // ← ルーティング設定に合わせて URL を修正
-    await expect(page.getByRole('heading')).toContainText('{PageName}')
+    await page.goto('/weeklyReport') // ← ルーティング設定に合わせて URL を修正
+    await expect(page.getByRole('heading')).toContainText('Weekly Report')
   })
 
   test('エラー状態を表示する', async ({ page }) => {
     // エラーハンドリングのテスト
-    await page.goto('/{pageName}') // ← ルーティング設定に合わせて URL を修正
+    await page.goto('/weeklyReport') // ← ルーティング設定に合わせて URL を修正
     // 期待される動作をアサート
   })
 })
@@ -104,8 +121,8 @@ test.describe('{PageName}', () => {
 
 ```bash
 /create-page weeklyReport
-  → src/pages/WeeklyReport/index.tsx
-  → src/pages/WeeklyReport/index.stories.tsx
+  → src/pages/weeklyReport/index.tsx
+  → src/pages/weeklyReport/index.stories.tsx
   → tests/e2e/weeklyReport.spec.ts
   → URL: /weeklyReport
 ```
@@ -114,34 +131,34 @@ test.describe('{PageName}', () => {
 
 ```bash
 /create-page userProfile
-  → src/pages/UserProfile/index.tsx
-  → src/pages/UserProfile/index.stories.tsx
+  → src/pages/userProfile/index.tsx
+  → src/pages/userProfile/index.stories.tsx
   → tests/e2e/userProfile.spec.ts
   → URL: /userProfile
 ```
 
 ---
 
-## 生成後の手動追加項目
+## 手動追加が必要な項目
 
-必要に応じて以下を追加：
+ルーティング・API・型定義などは必要に応じて追加：
 
 ### ルーティング
 
-**`src/routes/dashboard/index.tsx`**
+**`src/routes/weeklyReport/index.tsx`**
 
 ```tsx
 import { createFileRoute } from '@tanstack/react-router'
-import { Dashboard } from '@/pages/Dashboard'
+import { WeeklyReport } from '@/pages/weeklyReport'
 
-export const Route = createFileRoute('/dashboard')({
-  component: Dashboard,
+export const Route = createFileRoute('/weeklyReport')({
+  component: WeeklyReport,
 })
 ```
 
 ### API クエリ
 
-**`src/queries/dashboard.ts`**
+**`src/queries/weeklyReport.ts`**
 
 ```ts
 import { queryOptions } from '@tanstack/react-query'
@@ -150,7 +167,7 @@ import { queryOptions } from '@tanstack/react-query'
 
 ### 型定義
 
-**`src/types/api/dashboard.ts`**
+**`src/types/api/weeklyReport.ts`**
 
 ```ts
 // APIレスポンス型
@@ -158,7 +175,7 @@ import { queryOptions } from '@tanstack/react-query'
 
 ### MSW ハンドラー
 
-**`src/mocks/handlers/dashboard.ts`**
+**`src/mocks/handlers/weeklyReport.ts`**
 
 ```ts
 import { http, HttpResponse } from 'msw'

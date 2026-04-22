@@ -12,20 +12,22 @@ argument-hint: '[page-name in camelCase]'
 
 3 つのファイルを自動生成します：
 
-1. **ページコンポーネント** — `src/pages/{PageName}/index.tsx`
-2. **Storybook Story** — `src/pages/{PageName}/index.stories.tsx`
-3. **E2E テスト** — `tests/e2e/{pageName}.spec.ts`
+1. **ページコンポーネント** — `src/pages/{camelCase}/index.tsx`
+2. **Storybook Story** — `src/pages/{camelCase}/index.stories.tsx`
+3. **E2E テスト** — `tests/e2e/{camelCase}.spec.ts`
 
 ## ルール
 
 ### ページ名の形式
 
 - **入力形式**: キャメルケース（例: `weeklyReport`, `dashboard`, `userProfile`）
-- **自動変換**: キャメルケース → PascalCase
-  - 入力: `weeklyReport` → ページディレクトリ: `WeeklyReport`
-  - 入力: `dashboard` → ページディレクトリ: `Dashboard`
-- **ファイル配置**: `src/pages/{PascalCase}/`
-- **URL**: `/{キャメルケース}`
+- **ディレクトリ**: キャメルケース（入力そのまま）
+  - 入力: `weeklyReport` → ディレクトリ: `src/pages/weeklyReport/`
+  - 入力: `dashboard` → ディレクトリ: `src/pages/dashboard/`
+- **コンポーネント名**: アッパーキャメルケース（自動変換）
+  - 入力: `weeklyReport` → 関数名: `export function WeeklyReport()`
+  - 入力: `dashboard` → 関数名: `export function Dashboard()`
+- **URL**: `/{キャメルケース}` （ディレクトリと同じ）
 - **E2E テスト名**: `{キャメルケース}.spec.ts`
 
 ### 生成ファイルの要件
@@ -66,8 +68,8 @@ argument-hint: '[page-name in camelCase]'
 
 生成後、以下は必要に応じて **手動で追加**：
 
-- `src/routes/{pageName}/` — ルーティング定義
-- `src/queries/{pageName}.ts` — API Query 定義
-- `src/types/api/{pageName}.ts` — API 型定義
-- `src/mocks/handlers/{pageName}.ts` — MSW ハンドラー
-- `src/pages/{PageName}/components/` — ページ固有コンポーネント
+- `src/routes/{camelCase}/` — ルーティング定義（例: `weeklyReport`）
+- `src/queries/{camelCase}.ts` — API Query 定義（例: `weeklyReport.ts`）
+- `src/types/api/{camelCase}.ts` — API 型定義（例: `weeklyReport.ts`）
+- `src/mocks/handlers/{camelCase}.ts` — MSW ハンドラー（例: `weeklyReport.ts`）
+- `src/pages/{camelCase}/components/` — ページ固有コンポーネント（例: `src/pages/weeklyReport/components/`）
