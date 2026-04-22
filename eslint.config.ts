@@ -34,7 +34,11 @@ export default defineConfig([
       globals: globals.browser,
       parserOptions: {
         projectService: {
-          allowDefaultProject: ['vitest.shims.d.ts'],
+          allowDefaultProject: [
+            'vitest.shims.d.ts',
+            '.storybook/main.ts',
+            '.storybook/preview.ts',
+          ],
         },
         tsconfigRootDir: import.meta.dirname,
       },
@@ -83,6 +87,14 @@ export default defineConfig([
           ],
         },
       ],
+    },
+  },
+  // NOTE: .storybook は src の外にあるため、相対パス（../src）を使用する必要があります。
+  // no-restricted-imports ルールを除外します。
+  {
+    files: ['.storybook/**/*.ts'],
+    rules: {
+      'no-restricted-imports': 'off',
     },
   },
   // NOTE: storybook.configs['flat/recommended'] が readonly 型を返すため、

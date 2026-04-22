@@ -32,7 +32,6 @@
     "eslint.config.ts",
     "tailwind.config.ts",
     "vite.config.ts",
-    "playwright.config.ts",
-    ".storybook/*.ts"
+    "playwright.config.ts"
   ]
 }
