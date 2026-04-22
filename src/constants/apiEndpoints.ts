@@ -10,4 +10,7 @@
 export const API_ENDPOINTS = {
   // User API
   USER_INFO: '/api/userInfo',
+
+  // Test API
+  TEST_API: '/api/v2/hoge_fuga/xxxxxxx',
 } as const
