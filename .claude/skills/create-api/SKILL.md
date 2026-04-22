@@ -1,21 +1,36 @@
 ---
 name: create-api
 description: Create API query, types, and MSW handler/data files
-argument-hint: '[api-name in camelCase]'
+argument-hint: '[api-name in camelCase] [endpoint URL]'
 ---
 
 # スキル：API・型・モック定義の生成
 
-API 名を引数に、API 関連ファイルを一括生成します。
+API 名とエンドポイント URL を引数に、API 関連ファイルを一括生成します。
+
+## 使用方法
+
+```bash
+/create-api {apiName} {endpointUrl}
+```
+
+**例：**
+
+```bash
+/create-api userData /api/user-data
+/create-api listUsers /api/users
+/create-api createProduct /api/products
+```
 
 ## 生成ファイル
 
-4 つのファイルを自動生成します：
+4 つのファイルを自動生成 + 1 つのファイルに追加：
 
 1. **API Query** — `src/queries/{camelCase}.ts`
 2. **API 型定義** — `src/types/api/{camelCase}.ts`
 3. **MSW ハンドラー** — `src/mocks/handlers/{camelCase}.ts`
 4. **モックデータ** — `src/mocks/data/{camelCase}.ts`
+5. **エンドポイント追加** — `src/constants/apiEndpoints.ts` に URL を追加（入力値をそのまま使用）
 
 ## ルール
 
@@ -25,6 +40,31 @@ API 名を引数に、API 関連ファイルを一括生成します。
 - **ファイル名**: キャメルケース（入力そのまま）
   - 入力: `userData` → ファイル: `userData.ts`
   - 入力: `productList` → ファイル: `productList.ts`
+
+### エンドポイント URL の形式
+
+スキル実行時に指定するエンドポイント URL の例：
+
+```
+/api/userData          # apiNameと同じパス
+/api/user-data         # スネークケース
+/api/v1/users          # バージョン付き
+/users                 # ルートパス
+```
+
+**重要：** `/api` で始まる必要はありません。バックエンド仕様に合わせて自由に指定できます。
+
+### HTTPメソッド
+
+すべての API はデフォルトで **GET** で生成されます。POST・PUT・DELETE が必要な場合は、生成後に `src/mocks/handlers/{apiName}.ts` を手動で修正してください。
+
+```ts
+// デフォルト（GET）
+http.get(API_ENDPOINTS.USER_DATA, () => ...)
+
+// POST に変更する場合
+http.post(API_ENDPOINTS.USER_DATA, () => ...)
+```
 
 ### 生成ファイルの要件
 
@@ -70,6 +110,9 @@ API 名を引数に、API 関連ファイルを一括生成します。
 
 生成後、以下は必要に応じて **手動で追加**：
 
-- `src/queries/{apiName}.ts` 内の queryFn を実装
 - `src/mocks/handlers/index.ts` に handler を import・export
 - `src/pages/{pageName}/index.tsx` で queryOptions を import して使用
+
+**重要：** API URL は `API_ENDPOINTS` から参照する（自動追加）
+
+詳細は [.claude/rules/api-design.md](./../rules/api-design.md) を参照。
