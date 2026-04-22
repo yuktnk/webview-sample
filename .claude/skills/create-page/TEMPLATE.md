@@ -22,21 +22,9 @@ URL: /weeklyReport（キャメルケース）
 例：`/create-page weeklyReport` の場合
 
 ```tsx
-import { useState } from 'react'
 import type { ReactNode } from 'react'
 
 export function WeeklyReport(): ReactNode {
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-
-  if (isLoading) {
-    return <div className="p-4">読み込み中...</div>
-  }
-
-  if (error) {
-    return <div className="p-4 text-red-600">エラー: {error}</div>
-  }
-
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold">Weekly Report</h1>
