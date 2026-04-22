@@ -10,11 +10,12 @@ argument-hint: '[page-name in camelCase]'
 
 ## 生成ファイル
 
-3 つのファイルを自動生成します：
+4 つのファイルを自動生成します：
 
-1. **ページコンポーネント** — `src/pages/{camelCase}/index.tsx`
-2. **Storybook Story** — `src/pages/{camelCase}/index.stories.tsx`
-3. **E2E テスト** — `tests/e2e/{camelCase}.spec.ts`
+1. **ルーティング定義** — `src/routes/{camelCase}/index.tsx`
+2. **ページコンポーネント** — `src/pages/{camelCase}/index.tsx`
+3. **Storybook Story** — `src/pages/{camelCase}/index.stories.tsx`
+4. **E2E テスト** — `tests/e2e/{camelCase}.spec.ts`
 
 ## ルール
 
@@ -32,17 +33,25 @@ argument-hint: '[page-name in camelCase]'
 
 ### 生成ファイルの要件
 
-#### 1. ページコンポーネント（`index.tsx`）
+#### 1. ルーティング定義（`src/routes/{camelCase}/index.tsx`）
+
+```tsx
+// ✅ 要件
+- TanStack Router ファイルベースルーティング対応
+- createFileRoute で route を定義
+- コンポーネントを import・export
+```
+
+#### 2. ページコンポーネント（`src/pages/{camelCase}/index.tsx`）
 
 ```tsx
 // ✅ 要件
 - React 関数コンポーネント（named export）
 - TypeScript strict 対応
 - セマンティック HTML
-- ローディング・エラー状態の考慮
 ```
 
-#### 2. Storybook Story（`index.stories.tsx`）
+#### 3. Storybook Story（`src/pages/{camelCase}/index.stories.tsx`）
 
 ```tsx
 // ✅ 要件
@@ -51,13 +60,13 @@ argument-hint: '[page-name in camelCase]'
 - コンポーネント名は PascalCase
 ```
 
-#### 3. E2E テスト（`{pageName}.spec.ts`）
+#### 4. E2E テスト（`tests/e2e/{camelCase}.spec.ts`）
 
 ```ts
 // ✅ 要件
 - Playwright テスト
 - 基本テンプレート（正常系・異常系）
-- fixtures: nativeBridge, auth を使用
+- fixtures: nativeBridge を使用
 ```
 
 ## 参考資料
@@ -66,10 +75,12 @@ argument-hint: '[page-name in camelCase]'
 
 ## 実装後
 
-生成後、以下は必要に応じて **手動で追加**：
+生成後、以下は必要に応じて **手動で追加** または **`/create-api` スキルで生成**：
 
-- `src/routes/{camelCase}/` — ルーティング定義（例: `weeklyReport`）
 - `src/queries/{camelCase}.ts` — API Query 定義（例: `weeklyReport.ts`）
 - `src/types/api/{camelCase}.ts` — API 型定義（例: `weeklyReport.ts`）
 - `src/mocks/handlers/{camelCase}.ts` — MSW ハンドラー（例: `weeklyReport.ts`）
+- `src/mocks/data/{camelCase}.ts` — モックデータ（例: `weeklyReport.ts`）
 - `src/pages/{camelCase}/components/` — ページ固有コンポーネント（例: `src/pages/weeklyReport/components/`）
+
+API 関連は `/create-api {apiName}` スキルで一括生成できます。

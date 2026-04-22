@@ -15,6 +15,23 @@ URL: /weeklyReport（キャメルケース）
 
 ---
 
+## 0. ルーティング定義
+
+**ファイル**: `src/routes/{camelCase}/index.tsx`
+
+例：`/create-page weeklyReport` の場合
+
+```tsx
+import { createFileRoute } from '@tanstack/react-router'
+import { WeeklyReport } from '@/pages/weeklyReport'
+
+export const Route = createFileRoute('/weeklyReport')({
+  component: WeeklyReport,
+})
+```
+
+---
+
 ## 1. ページコンポーネント
 
 **ファイル**: `src/pages/{camelCase}/index.tsx`
@@ -109,42 +126,31 @@ test.describe('WeeklyReport', () => {
 
 ```bash
 /create-page weeklyReport
+  → src/routes/weeklyReport/index.tsx
   → src/pages/weeklyReport/index.tsx
   → src/pages/weeklyReport/index.stories.tsx
   → tests/e2e/weeklyReport.spec.ts
-  → URL: /weeklyReport
+  → URL: /weeklyReport (すぐにアクセス可能)
 ```
 
 ### 例2: userProfile
 
 ```bash
 /create-page userProfile
+  → src/routes/userProfile/index.tsx
   → src/pages/userProfile/index.tsx
   → src/pages/userProfile/index.stories.tsx
   → tests/e2e/userProfile.spec.ts
-  → URL: /userProfile
+  → URL: /userProfile (すぐにアクセス可能)
 ```
 
 ---
 
 ## 手動追加が必要な項目
 
-ルーティング・API・型定義などは必要に応じて追加：
+API関連は必要に応じて追加：
 
-### ルーティング
-
-**`src/routes/weeklyReport/index.tsx`**
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { WeeklyReport } from '@/pages/weeklyReport'
-
-export const Route = createFileRoute('/weeklyReport')({
-  component: WeeklyReport,
-})
-```
-
-### API クエリ
+### API クエリ（`/create-api` スキルで一括生成可能）
 
 **`src/queries/weeklyReport.ts`**
 
