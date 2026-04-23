@@ -58,6 +58,13 @@ pnpm format:check
 
 # 未使用コード・依存関係の検出
 pnpm knip
+
+# アクセシビリティ監査（月次）
+pnpm a11y
+
+# バンドルサイズ分析（ビルド時に自動生成）
+pnpm bundle
+# 結果: dist/bundle-analysis.html
 ```
 
 ## 動作確認URL

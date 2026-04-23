@@ -21,8 +21,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "perf": "lighthouse https://localhost:5173 --output=json --output-path=./dist/lighthouse.json",
-    "a11y": "playwright test",
-    "bundle": "vite build --profile"
+    "a11y": "playwright test --project=a11y",
+    "bundle": "vite build && echo '✅ Bundle analysis generated: dist/bundle-analysis.html'"
   },
   "engines": {
     "node": ">=24.0.0",

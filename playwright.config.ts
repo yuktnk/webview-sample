@@ -15,6 +15,12 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
+    // A11y monitoring (monthly check)
+    {
+      name: 'a11y',
+      testMatch: '**/*.a11y.ts',
+      use: { ...devices['Desktop Chrome'] },
+    },
   ],
   webServer: {
     command: 'pnpm dev',
