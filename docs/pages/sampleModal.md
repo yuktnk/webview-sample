@@ -8,7 +8,7 @@ SampleModal はコンテナベースのモーダル画面。
 
 ## パラメータ
 
-詳細は [routing.md](../routing.md) を参照。
+詳細は [architecture.md](../../.claude/rules/architecture.md#ルーティング設計) を参照。
 
 | パラメータ    | 型          | 例                     | 説明               |
 | ------------- | ----------- | ---------------------- | ------------------ |
@@ -27,7 +27,7 @@ SampleModal はコンテナベースのモーダル画面。
 - 数値型データ
 - 日付データ
 
-**API**: [GET /api/sample_a/type_1](../api/endpoints.md#get-appsample_atype_1)
+**API**: [GET /api/sample_a/type_1](../api/sampleA.md#samplea-type1)
 
 **UI**: [Storybook](https://[dev-project].appspot.com/storybook/?path=/story/samplea-type1-container)
 
@@ -42,7 +42,7 @@ SampleModal はコンテナベースのモーダル画面。
 - タイトル
 - リスト形式のデータ（ラベル・カウント）
 
-**API**: [GET /api/sample_a/type_2](../api/endpoints.md#get-appsample_atype_2)
+**API**: [GET /api/sample_a/type_2](../api/sampleA.md#samplea-type2)
 
 **UI**: [Storybook](https://[dev-project].appspot.com/storybook/?path=/story/samplea-type2-container)
 
@@ -58,7 +58,7 @@ SampleModal はコンテナベースのモーダル画面。
 - ステータス
 - スコア
 
-**API**: [GET /api/sample_b/type_1](../api/endpoints.md#get-apisample_btype_1)
+**API**: [GET /api/sample_b/type_1](../api/sampleB.md#sampleb-type1)
 
 **UI**: [Storybook](https://[dev-project].appspot.com/storybook/?path=/story/sampleb-type1-container)
 

@@ -55,19 +55,20 @@ src/
 │           └── $serviceType.tsx     # /sampleModal/$from/$serviceType（パスパラメータ形式）
 │
 ├── pages/                           # ページ単位の実装
-│   └── SampleModal/
+│   └── sampleModal/
 │       ├── index.tsx                # CONTAINER_MAPでContainerを切り替えるだけ
 │       └── containers/
 │           ├── index.ts             # CONTAINER_MAP定義
-│           ├── SampleA/
-│           │   ├── Type1/
+│           ├── sampleA/
+│           │   ├── components/      # sampleA内で複数コンテナが共有するコンポーネント
+│           │   ├── type1/
 │           │   │   ├── index.tsx
 │           │   │   └── index.stories.tsx
-│           │   └── Type2/
+│           │   └── type2/
 │           │       ├── index.tsx
 │           │       └── index.stories.tsx
-│           └── SampleB/
-│               └── Type1/
+│           └── sampleB/
+│               └── type1/
 │                   ├── index.tsx
 │                   └── index.stories.tsx
 │
@@ -78,10 +79,13 @@ src/
 │   ├── apiFetch.ts                  # fetchの薄いラッパー
 │   └── queryClient.ts               # QueryClient インスタンス
 │
+├── constants/                       # 定数定義
+│   └── apiEndpoints.ts              # APIエンドポイントURL一元管理（api-design.md参照）
+│
 ├── queries/                         # TanStack Query queryOptions定義
 │   ├── common.ts                    # userInfo・batchDate（全ページ共通API）
-│   ├── sampleA.ts                   # SampleA用queryOptions（Type1・Type2）
-│   └── sampleB.ts                   # SampleB用queryOptions（Type1）
+│   ├── sampleA.ts                   # sampleA用queryOptions（type1・type2）
+│   └── sampleB.ts                   # sampleB用queryOptions（type1）
 │
 ├── types/                           # 共通型定義
 │   ├── routing.ts                   # クエリパラメータ・パスパラメータの型と定数
@@ -140,36 +144,36 @@ src/
 ├── hooks/                   # 複数ページで使う共通フック
 │   ├── useQuery.ts          # TanStack Query ラッパー（例）
 │   └── useDebounce.ts
-└── pages/SampleModal/
-    ├── components/          ← SampleModal内で複数コンテナが共有するコンポーネント
-    │   └── DataCard.tsx      ← 例: Type1・Type2の両方で使うデータ表示カード
-    ├── hooks/                # SampleModal内で複数コンテナが共有するフック
+└── pages/sampleModal/
+    ├── components/          ← sampleModal内で複数コンテナが共有するコンポーネント
+    │   └── DataCard.tsx      ← 例: type1・type2の両方で使うデータ表示カード
+    ├── hooks/                # sampleModal内で複数コンテナが共有するフック
     │   ├── useSampleDataFetch.ts
     │   └── useModalState.ts
     └── containers/
-        ├── SampleA/
-        │   ├── components/   ← Type1・Type2が共有するコンポーネント
-        │   ├── hooks/        # Type1・Type2が共有するフック
+        ├── sampleA/
+        │   ├── components/   ← type1・type2が共有するコンポーネント
+        │   ├── hooks/        # type1・type2が共有するフック
         │   │   └── useCommonLogic.ts
-        │   ├── Type1/
+        │   ├── type1/
         │   │   ├── index.tsx
-        │   │   ├── ChartWidget.tsx   # Type1だけで使うコンポーネント
-        │   │   └── hooks.ts           # Type1だけで使うフック
-        │   └── Type2/
+        │   │   ├── ChartWidget.tsx   # type1だけで使うコンポーネント
+        │   │   └── hooks.ts           # type1だけで使うフック
+        │   └── type2/
         │       └── index.tsx
-        └── SampleB/
-            └── Type1/
+        └── sampleB/
+            └── type1/
                 ├── index.tsx
-                └── hooks.ts           # Type1だけで使うフック
+                └── hooks.ts           # type1だけで使うフック
 ```
 
 ### スコープルール
 
 | スコープ                | コンポーネント配置                      | フック配置                          |
 | ----------------------- | --------------------------------------- | ----------------------------------- |
-| Type1 だけで使う        | `containers/SampleA/Type1/` 内に配置    | `containers/SampleA/Type1/hooks.ts` |
-| Type1・Type2 両方で使う | `containers/SampleA/components/` に配置 | `containers/SampleA/hooks/` に配置  |
-| SampleModal 全体で使う  | `pages/SampleModal/components/` に配置  | `pages/SampleModal/hooks/` に配置   |
+| type1 だけで使う        | `containers/sampleA/type1/` 内に配置    | `containers/sampleA/type1/hooks.ts` |
+| type1・type2 両方で使う | `containers/sampleA/components/` に配置 | `containers/sampleA/hooks/` に配置  |
+| sampleModal 全体で使う  | `pages/sampleModal/components/` に配置  | `pages/sampleModal/hooks/` に配置   |
 | 複数ページで使う        | `src/components/` に配置                | `src/hooks/` に配置                 |
 
 ### ファイル命名規則
