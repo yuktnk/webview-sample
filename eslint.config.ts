@@ -1,12 +1,13 @@
 // For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import storybook from 'eslint-plugin-storybook'
 
 import js from '@eslint/js'
 import queryPlugin from '@tanstack/eslint-plugin-query'
 import prettier from 'eslint-config-prettier'
+import importPlugin from 'eslint-plugin-import'
 import reactPlugin from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
+import storybook from 'eslint-plugin-storybook'
 import unicorn from 'eslint-plugin-unicorn'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import globals from 'globals'
@@ -26,6 +27,7 @@ export default defineConfig([
     ],
     plugins: {
       react: reactPlugin,
+      import: importPlugin,
     },
     settings: {
       react: { version: 'detect' },
@@ -95,6 +97,37 @@ export default defineConfig([
           format: ['PascalCase'],
         },
       ],
+      // import/export ルール
+      'import/order': [
+        'warn',
+        {
+          groups: [
+            'builtin', // Node.js 標準モジュール
+            'external', // 外部ライブラリ（node_modules）
+            'internal', // @/ エイリアス
+            'parent', // ../
+            'sibling', // ./
+            'index', // ./index
+          ],
+          pathGroups: [
+            {
+              pattern: 'eslint/**',
+              group: 'builtin',
+              position: 'before',
+            },
+            {
+              pattern: '@/**',
+              group: 'internal',
+            },
+          ],
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true,
+          },
+          'newlines-between': 'always-and-inside-groups',
+        },
+      ],
+      'import/no-cycle': 'warn',
     },
   },
   // .ts ファイルのファイル名: camelCase のみ（自動生成ファイルは除外）

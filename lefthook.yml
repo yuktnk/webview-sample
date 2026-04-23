@@ -26,13 +26,13 @@ pre-commit:
 
     secretlint:
       run: pnpm secretlint {staged_files}
-      fail_text: "Secrets detected. Remove credentials before committing."
+      fail_text: 'Secrets detected. Remove credentials before committing.'
 
 commit-msg:
   commands:
     commitlint:
       run: pnpm commitlint --edit {1}
-      fail_text: "Invalid commit message. Use format: type(scope): description (e.g. feat: add login)"
+      fail_text: 'Invalid commit message. Use format: type(scope): description (e.g. feat: add login)'
 
 pre-push:
   commands:

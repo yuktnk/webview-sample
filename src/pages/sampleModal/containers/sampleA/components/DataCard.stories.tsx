@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+
 import { DataCard } from './DataCard'
 
 const meta: Meta<typeof DataCard> = {

@@ -1,9 +1,10 @@
+import { useQuery } from '@tanstack/react-query'
+
 import { ErrorView } from '@/components/ui/ErrorView'
 import { LoadingView } from '@/components/ui/LoadingView'
 import { DataCard } from '@/pages/sampleModal/containers/sampleA/components/DataCard'
 import { sampleAType1QueryOptions } from '@/queries/sampleA'
 import { formatDate } from '@/utils/formatDate'
-import { useQuery } from '@tanstack/react-query'
 
 export function SampleAType1Container() {
   const { data, isLoading, isError } = useQuery(sampleAType1QueryOptions)

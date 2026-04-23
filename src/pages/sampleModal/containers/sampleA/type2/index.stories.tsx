@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { delay, http, HttpResponse } from 'msw'
+
 import { SampleAType2Container } from '.'
 
 const meta: Meta<typeof SampleAType2Container> = {

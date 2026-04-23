@@ -1,11 +1,14 @@
 /// <reference types="vitest/config" />
+import path from 'node:path'
+
+import { fileURLToPath } from 'node:url'
+
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin'
 import tailwindcss from '@tailwindcss/vite'
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
 import react from '@vitejs/plugin-react'
 import { playwright } from '@vitest/browser-playwright'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+
 import { defineConfig } from 'vite'
 
 const dirname =

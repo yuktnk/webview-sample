@@ -1,4 +1,5 @@
 import type { FromType, ServiceType } from '@/types/routing'
+
 import { SampleAType1Container } from './sampleA/type1'
 import { SampleAType2Container } from './sampleA/type2'
 import { SampleBType1Container } from './sampleB/type1'

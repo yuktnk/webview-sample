@@ -39,6 +39,138 @@
 
 ---
 
+## Import / Export ルール
+
+### Default Export（単一の主要エクスポート）
+
+ファイルが**単一の主要なエクスポート**を持つ場合のみ使用。
+
+```tsx
+// ✅ OK - Default Export の使用場所
+export default function SampleModal() {} // ページコンポーネント
+export default { component: SampleA } // ルート定義
+export default userInfoQueryOptions // API クエリ（全体）
+export default { title: '...' } // Story ファイル
+```
+
+**メリット：**
+
+- インポート時に名前を指定する必要がない
+- ファイル内の主要な責務が明確
+
+### Named Export（複数エクスポート・再利用可能）
+
+複数のエクスポート、またはユーティリティ・ライブラリ的な性質の場合に使用。
+
+```tsx
+// ✅ OK - Named Export の使用場所
+export function DataCard() {} // UI コンポーネント
+export function useSampleData() {} // カスタムフック
+export function formatDate() {} // ユーティリティ関数
+export type UserInfo = {} // 型定義
+export const API_ENDPOINTS = {} // 定数
+export const userInfoHandlers = [] // MSW ハンドラー
+```
+
+**メリット：**
+
+- Tree-shaking に最適（未使用コードを自動削除）
+- バンドルサイズが小さくなる
+- 再利用性が高い
+
+### ルール早見表
+
+| 対象                           | Export タイプ    | 例                            |
+| ------------------------------ | ---------------- | ----------------------------- |
+| ページコンポーネント           | **Default**      | `src/pages/sampleModal/`      |
+| UI コンポーネント              | Named            | `DataCard.tsx`                |
+| カスタムフック                 | Named            | `useSampleData()`, `hooks.ts` |
+| ユーティリティ関数             | Named            | `formatDate()`, `utils/`      |
+| API クエリ定義                 | **Default**      | `src/queries/sampleA.ts`      |
+| API 型定義                     | Named            | `src/types/api/sampleA.ts`    |
+| MSW ハンドラー（集約）         | Named            | `handlers/index.ts`           |
+| MSW ハンドラー（ドメイン単位） | Named            | `handlers/sampleA.ts`         |
+| 定数・設定                     | Named            | `API_ENDPOINTS`               |
+| ルート定義                     | **Default**      | `src/routes/*/index.tsx`      |
+| Story                          | Named（Default） | `*.stories.tsx`               |
+
+---
+
+## Import 順序
+
+**Prettier の `prettier-plugin-organize-imports` で自動フォーマット。**
+
+### グループ分けルール
+
+import 文は以下の順序で自動整列される：
+
+```ts
+// グループ 1: Node.js 標準モジュール
+import fs from 'fs'
+import path from 'path'
+
+// グループ 2: 外部ライブラリ（node_modules）
+import { QueryClient } from '@tanstack/react-query'
+import React from 'react'
+import { clsx } from 'clsx'
+
+// グループ 3: 内部モジュール（@/ エイリアス）
+import { API_ENDPOINTS } from '@/constants/apiEndpoints'
+import { userInfoQueryOptions } from '@/queries/userInfo'
+import type { UserInfo } from '@/types/api/userInfo'
+
+// グループ 4: 相対パス
+import { DataCard } from './components/DataCard'
+import './index.css'
+```
+
+### 型 import の統一
+
+`@typescript-eslint/consistent-type-imports` により、型は自動的に `import type` に統一される。
+
+```ts
+// ✅ 自動修正される
+import type { UserInfo } from '@/types/api/userInfo'
+import type { Props } from './component.tsx'
+```
+
+### 自動矯正の仕組み
+
+**ESLint と Prettier の協調体制：**
+
+| ツール                            | 役割                    | コマンド                      |
+| --------------------------------- | ----------------------- | ----------------------------- |
+| **ESLint** (`import/order`)       | import 順序を検出・警告 | `pnpm lint` / `pnpm lint:fix` |
+| **Prettier** (`organize-imports`) | import 順序を自動修正   | `pnpm format`                 |
+
+**開発フロー：**
+
+```bash
+# 1. ESLint で check
+pnpm lint
+
+# 2. ESLint で自動修正
+pnpm lint:fix
+
+# 3. Prettier で最終調整
+pnpm format
+```
+
+または、両方を同時実行：
+
+```bash
+pnpm lint:fix && pnpm format
+```
+
+**CI/CD では：**
+
+```bash
+pnpm lint          # エラー検出
+pnpm format:check  # フォーマット検証
+```
+
+---
+
 ## 手動で守る規則
 
 ESLint では検査できないため、コードレビュー時に確認する。

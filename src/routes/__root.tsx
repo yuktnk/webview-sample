@@ -1,7 +1,8 @@
-import { batchDateQueryOptions, userInfoQueryOptions } from '@/queries/common'
 import type { QueryClient } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router'
+
+import { batchDateQueryOptions, userInfoQueryOptions } from '@/queries/common'
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   {
