@@ -8,9 +8,14 @@
  */
 
 export const API_ENDPOINTS = {
-  // User API
-  USER_INFO: '/api/userInfo',
+  // Common API
+  USER_INFO: '/api/user/info',
+  BATCH_DATE: '/api/batch/date',
 
-  // Test API
-  TEST_API: '/api/v2/hoge_fuga/xxxxxxx',
+  // SampleA API
+  SAMPLE_A_TYPE1: '/api/sample_a/type_1',
+  SAMPLE_A_TYPE2: '/api/sample_a/type_2',
+
+  // SampleB API
+  SAMPLE_B_TYPE1: '/api/sample_b/type_1',
 } as const

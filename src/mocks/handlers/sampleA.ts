@@ -1,3 +1,4 @@
+import { API_ENDPOINTS } from '@/constants/apiEndpoints'
 import {
   mockSampleAType1Data,
   mockSampleAType2Data,
@@ -5,10 +6,10 @@ import {
 import { http, HttpResponse } from 'msw'
 
 export const sampleAHandlers = [
-  http.get('/api/sample_a/type_1', () =>
+  http.get(API_ENDPOINTS.SAMPLE_A_TYPE1, () =>
     HttpResponse.json({ result: mockSampleAType1Data }),
   ),
-  http.get('/api/sample_a/type_2', () =>
+  http.get(API_ENDPOINTS.SAMPLE_A_TYPE2, () =>
     HttpResponse.json({ result: mockSampleAType2Data }),
   ),
 ]
