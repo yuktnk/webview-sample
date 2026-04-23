@@ -33,8 +33,9 @@ test-results
 # Vitest coverage
 coverage
 
-# TanStack Router（自動生成の一時ファイル）
+# TanStack Router（自動生成ファイル）
 .tanstack/
+src/routeTree.gen.ts
 
 # Claude Code（ローカル設定・セッション固有の許可ルール）
 .claude/settings.local.json
