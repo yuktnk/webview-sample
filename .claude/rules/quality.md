@@ -202,13 +202,33 @@ paths:
 typecheck → lint → format:check → knip → secretlint → test → build
 ```
 
-### main マージ時に走る
+### main マージ時に走る（すべてのマージで実行）
+
+#### セキュリティ監査
 
 ```
 pnpm audit --audit-level=high
   → 脆弱性が検出された場合のみ Issue を自動作成
   → 脆弱性 0 件のときは Issue を立てない（ノイズ防止）
 ```
+
+#### 品質監査（パフォーマンス・アクセシビリティ・バンドルサイズ）
+
+```
+pnpm a11y                    # axe-playwright で WCAG 準拠性チェック
+pnpm build && pnpm bundle   # bundle size 分析（dist/bundle-analysis.html）
+pnpm perf                    # Lighthouse パフォーマンス監査
+  ↓
+各レポートを GitHub コメント or Issue として記録
+  ↓
+マージごとの品質トレンドを可視化
+```
+
+**ポリシー：**
+
+- **ブロッキング** — a11y・bundle size・Lighthouse のいずれかが重大な問題を検出した場合、マージをブロック
+- **レポート化** — 各レポートは PR / Issue に自動コメント（時系列の品質ログ）
+- **ノイズ防止** — 0 件 issue や改善した場合は簡潔に（冗長なコメントを避ける）
 
 ### main マージ後に走る
 
@@ -218,29 +238,13 @@ Storybook ビルド → 開発環境 App Engine にデプロイ
 
 ---
 
-## 品質 CI（Drone・定期実行）
+## 品質チェック実行タイミング（Drone・CI/CD）
 
-**役割：定点観測・劣化の早期検知**
+**役割：すべてのマージで品質を担保**
 
-### セキュリティ監査（master マージのタイミング）
-
-```
-pnpm audit --audit-level=high
-  → 脆弱性が検出された場合のみ GitHub API で Issue を自動作成
-  → 脆弱性 0 件のときは Issue を立てない（ノイズ防止）
-```
-
-### 定点観測（月イチ・毎月 1 日）
-
-```
-Lighthouse（パフォーマンス）
-axe-playwright（アクセシビリティ）
-bundle size（バンドルサイズ）
-  ↓
-品質ダッシュボード Issue にコメントとして記録
-  ↓
-時系列の品質ログになる
-```
+上記「main マージ時に走る」セクションの内容が実装されます。
+Drone が全品質チェック（セキュリティ・a11y・パフォーマンス・バンドル）を実行し、
+チェック失敗時はマージをブロック、成功時は各レポートを Issue / PR コメントに記録。
 
 ---
 
