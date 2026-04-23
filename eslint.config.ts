@@ -7,6 +7,7 @@ import prettier from 'eslint-config-prettier'
 import reactPlugin from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
+import unicorn from 'eslint-plugin-unicorn'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
@@ -85,6 +86,42 @@ export default defineConfig([
                 "Use '@/' path alias instead of relative imports going up directories.",
             },
           ],
+        },
+      ],
+      '@typescript-eslint/naming-convention': [
+        'error',
+        {
+          selector: 'typeLike',
+          format: ['PascalCase'],
+        },
+      ],
+    },
+  },
+  // .ts ファイルのファイル名: camelCase のみ（自動生成ファイルは除外）
+  {
+    files: ['src/**/*.ts'],
+    plugins: { unicorn },
+    rules: {
+      'unicorn/filename-case': [
+        'error',
+        {
+          cases: { camelCase: true },
+          ignore: [/^routeTree\.gen/],
+        },
+      ],
+    },
+  },
+  // .tsx ファイルのファイル名: camelCase または PascalCase
+  // TanStack Router の特殊ファイル（$param.tsx・__root.tsx）は除外
+  {
+    files: ['src/**/*.tsx'],
+    plugins: { unicorn },
+    rules: {
+      'unicorn/filename-case': [
+        'error',
+        {
+          cases: { camelCase: true, pascalCase: true },
+          ignore: [/^\$/, /^__/],
         },
       ],
     },
