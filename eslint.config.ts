@@ -97,6 +97,10 @@ export default defineConfig([
           format: ['PascalCase'],
         },
       ],
+      // TypeScript 型安全性強化
+      '@typescript-eslint/prefer-nullish-coalescing': 'error',
+      '@typescript-eslint/prefer-optional-chain': 'error',
+      '@typescript-eslint/no-unnecessary-type-constraint': 'error',
       // import/export ルール
       'import/order': [
         'warn',
@@ -111,8 +115,8 @@ export default defineConfig([
           ],
           pathGroups: [
             {
-              pattern: 'eslint/**',
-              group: 'builtin',
+              pattern: 'eslint',
+              group: 'external',
               position: 'before',
             },
             {
@@ -120,6 +124,7 @@ export default defineConfig([
               group: 'internal',
             },
           ],
+          pathGroupsExcludedImportTypes: ['eslint'],
           alphabetize: {
             order: 'asc',
             caseInsensitive: true,
@@ -165,6 +170,13 @@ export default defineConfig([
     files: ['.storybook/**/*.ts'],
     rules: {
       'no-restricted-imports': 'off',
+    },
+  },
+  // NOTE: eslint.config.ts は ESLint 自身の設定のため、import/order ルールを除外
+  {
+    files: ['eslint.config.ts'],
+    rules: {
+      'import/order': 'off',
     },
   },
   // NOTE: storybook.configs['flat/recommended'] が readonly 型を返すため、

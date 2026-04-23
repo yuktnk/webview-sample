@@ -59,15 +59,59 @@ paths:
 
 ## 静的解析
 
+### 概要
+
 | ツール                        | 役割                        |
 | ----------------------------- | --------------------------- |
-| TypeScript strict: true       | 型の整合性                  |
+| TypeScript strict mode        | 型の整合性・型安全性強化    |
 | ESLint                        | コードの品質ルール          |
 | @tanstack/eslint-plugin-query | TanStack Query のベスプラ   |
 | Prettier                      | フォーマットの統一          |
 | knip                          | 未使用ファイル・export 検出 |
 | secretlint                    | 秘密情報の漏洩チェック      |
 | commitlint                    | コミットメッセージ形式統一  |
+
+### TypeScript 型安全性強化
+
+5年プロダクション運用を想定し、`tsconfig.app.json` で以下を有効化：
+
+```json
+{
+  "compilerOptions": {
+    "strict": true,
+    "noImplicitReturns": true, // すべてのフローで return を強制
+    "noImplicitThis": true, // this の型が any になるのを防止
+    "noUncheckedIndexedAccess": true, // 配列/オブジェクトアクセスで undefined チェック
+    "exactOptionalPropertyTypes": true, // 「未定義」と「undefined」を区別
+    "noPropertyAccessFromIndexSignature": true // インデックスシグネチャアクセスを厳密化
+  }
+}
+```
+
+**効果：**
+
+- null/undefined 周辺のバグを事前に検出
+- 配列アクセスの out-of-bounds エラーを防止
+- return忘れを自動検出
+
+### ESLint 型安全性強化
+
+```ts
+// eslint.config.ts で有効化
+{
+  '@typescript-eslint/prefer-nullish-coalescing': 'error',
+  '@typescript-eslint/prefer-optional-chain': 'error',
+  '@typescript-eslint/no-unnecessary-type-constraint': 'error',
+  '@typescript-eslint/no-redundant-type-constituents': 'error',
+  '@typescript-eslint/explicit-function-return-types': 'warn',
+}
+```
+
+**規則の意図：**
+
+- `prefer-nullish-coalescing` — `a ?? b` を強制（`||` より厳密）
+- `prefer-optional-chain` — `a?.b?.c` を強制（存在チェック漏れ防止）
+- `explicit-function-return-types` — 関数の戻り値型を明示（ステップ 3 で warn レベル）
 
 ---
 
