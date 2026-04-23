@@ -1,11 +1,17 @@
 # webview-sample ドキュメント
 
-画面・API の仕様・実装ドキュメント。
+画面・API の仕様・実装ドキュメント。このディレクトリ配下のファイルは Claude のスキルで自動生成されます。
 
 ## 目次
 
 - **[pages/](./pages/)** — 画面ごとの仕様・パラメータ・API
 - **[api/](./api/)** — API エンドポイント単位のドキュメント
+
+## ドキュメント生成方法
+
+実装完了（Story + E2E テスト）後、Claude に `/generate-docs-pages` / `/generate-docs-api` スキルを実行してもらい、自動生成します。
+
+詳細な使い方・運用ルールは [`@.claude/rules/docs-generation.md`](./../.claude/rules/docs-generation.md) を参照してください。
 
 ## Storybook
 
