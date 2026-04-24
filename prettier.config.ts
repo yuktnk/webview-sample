@@ -1,4 +1,5 @@
-/** @type {import('prettier').Config} */
+import type { Config } from 'prettier';
+
 export default {
   // Prettier 基本設定
   semi: true,
@@ -31,4 +32,4 @@ export default {
 
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
-}
+} satisfies Config;

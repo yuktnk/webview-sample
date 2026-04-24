@@ -30,6 +30,7 @@
   "include": [
     "commitlint.config.ts",
     "eslint.config.ts",
+    "prettier.config.ts",
     "tailwind.config.ts",
     "vite.config.ts",
     "playwright.config.ts"
