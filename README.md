@@ -12,7 +12,7 @@ nvm use
 pnpm install
 
 # 開発サーバー起動
-pnpm dev
+pnpm local
 ```
 
 Storybook: `pnpm storybook`
@@ -20,8 +20,8 @@ Storybook: `pnpm storybook`
 ## コマンド一覧
 
 ```bash
-# 開発サーバー（MSW自動起動）
-pnpm dev
+# ローカル開発サーバー（MSW自動起動）
+pnpm local
 
 # Storybook
 pnpm storybook
@@ -38,10 +38,11 @@ pnpm test:coverage
 # E2Eテスト（dev serverが自動起動）
 pnpm test:e2e
 
-# ビルド（環境別）
-pnpm build:dev   # 開発環境
-pnpm build:stg   # ステージング環境
-pnpm build:prd   # 本番環境
+# ビルド（ローカル + GCP環境別）
+pnpm build:local # ローカル本番用
+pnpm build:dev   # GCP dev プロジェクト
+pnpm build:stg   # GCP stg プロジェクト
+pnpm build:prd   # GCP prd プロジェクト
 
 # 型チェック
 pnpm typecheck
