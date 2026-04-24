@@ -38,8 +38,10 @@ pnpm test:coverage
 # E2Eテスト（dev serverが自動起動）
 pnpm test:e2e
 
-# ビルド
-pnpm build
+# ビルド（環境別）
+pnpm build:dev   # 開発環境
+pnpm build:stg   # ステージング環境
+pnpm build:prd   # 本番環境
 
 # 型チェック
 pnpm typecheck

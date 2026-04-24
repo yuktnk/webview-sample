@@ -216,7 +216,7 @@ pnpm audit --audit-level=high
 
 ```
 pnpm a11y                    # axe-playwright で WCAG 準拠性チェック
-pnpm build && pnpm bundle   # bundle size 分析（dist/bundle-analysis.html）
+pnpm build:prd && pnpm bundle   # bundle size 分析（dist/bundle-analysis.html）
 pnpm perf                    # Lighthouse パフォーマンス監査
   ↓
 各レポートを GitHub コメント or Issue として記録

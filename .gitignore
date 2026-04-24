@@ -39,3 +39,7 @@ src/routeTree.gen.ts
 
 # Claude Code（ローカル設定・セッション固有の許可ルール）
 .claude/settings.local.json
+
+# Environment variables
+.env
+.env.*.local
