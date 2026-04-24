@@ -18,6 +18,7 @@ const dirname =
     : path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
+  envDir: 'env',
   plugins: [
     tanstackRouter({ target: 'react', autoCodeSplitting: true }),
     react(),

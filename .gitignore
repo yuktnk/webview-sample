@@ -41,4 +41,4 @@ src/routeTree.gen.ts
 
 # Environment variables
 .env
-.env.*.local
+env/.env.*.local
