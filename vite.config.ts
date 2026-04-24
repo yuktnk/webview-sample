@@ -13,12 +13,11 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vite'
 
 const dirname =
-  typeof __dirname !== 'undefined'
-    ? __dirname
-    : path.dirname(fileURLToPath(import.meta.url))
+  typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
   envDir: 'env',
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   plugins: [
     tanstackRouter({ target: 'react', autoCodeSplitting: true }),
     react(),
@@ -43,9 +42,7 @@ export default defineConfig({
     projects: [
       {
         extends: true,
-        plugins: [
-          storybookTest({ configDir: path.join(dirname, '.storybook') }),
-        ],
+        plugins: [storybookTest({ configDir: path.join(dirname, '.storybook') })],
         test: {
           name: 'storybook',
           browser: {

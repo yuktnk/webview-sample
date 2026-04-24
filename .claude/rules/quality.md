@@ -95,6 +95,9 @@ paths: ['src/**/*', 'tests/**/*', '.github/**/*', 'lefthook.yml', 'package.json'
 
 ### ESLint 型安全性強化
 
+`recommendedTypeChecked` を使用することで、型情報を活用した安全チェックが有効になる。
+加えて以下のルールを個別に設定している。
+
 ```ts
 // eslint.config.ts で有効化
 {
@@ -102,6 +105,10 @@ paths: ['src/**/*', 'tests/**/*', '.github/**/*', 'lefthook.yml', 'package.json'
   '@typescript-eslint/prefer-optional-chain': 'error',
   '@typescript-eslint/no-unnecessary-type-constraint': 'error',
   '@typescript-eslint/no-redundant-type-constituents': 'error',
+  '@typescript-eslint/switch-exhaustiveness-check': 'error',
+  '@typescript-eslint/no-unnecessary-condition': 'error',
+  '@typescript-eslint/prefer-readonly': 'error',
+  '@typescript-eslint/return-await': ['error', 'in-try-catch'],
 }
 ```
 
@@ -110,6 +117,10 @@ paths: ['src/**/*', 'tests/**/*', '.github/**/*', 'lefthook.yml', 'package.json'
 - `prefer-nullish-coalescing` — `a ?? b` を強制（`||` より厳密）
 - `prefer-optional-chain` — `a?.b?.c` を強制（存在チェック漏れ防止）
 - `no-redundant-type-constituents` — 冗長な型定義を防止
+- `switch-exhaustiveness-check` — union 型の switch でケース漏れを検知（`FromType`・`ServiceType` 追加時の安全網）
+- `no-unnecessary-condition` — 型で絞られているのに冗長な条件・デッドコードを検知
+- `prefer-readonly` — 再代入されないプロパティに `readonly` を強制
+- `return-await` — `try/catch` 内で `return await` を強制（スタックトレースを正確に保つ）
 
 ---
 

@@ -24,11 +24,7 @@ const preview: Preview = {
           },
         },
       })
-      return createElement(
-        QueryClientProvider,
-        { client: queryClient },
-        createElement(Story),
-      )
+      return createElement(QueryClientProvider, { client: queryClient }, createElement(Story))
     },
   ],
 }

@@ -19,7 +19,7 @@ export default defineConfig([
     files: ['**/*.{ts,tsx}'],
     extends: [
       js.configs.recommended,
-      tseslint.configs.recommended,
+      tseslint.configs.recommendedTypeChecked,
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
       ...queryPlugin.configs['flat/recommended'],
@@ -91,9 +91,13 @@ export default defineConfig([
       '@typescript-eslint/prefer-optional-chain': 'error',
       '@typescript-eslint/no-unnecessary-type-constraint': 'error',
       '@typescript-eslint/no-redundant-type-constituents': 'error',
+      '@typescript-eslint/switch-exhaustiveness-check': 'error',
+      '@typescript-eslint/no-unnecessary-condition': 'error',
+      '@typescript-eslint/prefer-readonly': 'error',
+      '@typescript-eslint/return-await': ['error', 'in-try-catch'],
       // import/export ルール
       'import/order': [
-        'warn',
+        'error',
         {
           groups: [
             'builtin', // Node.js 標準モジュール
@@ -105,21 +109,16 @@ export default defineConfig([
           ],
           pathGroups: [
             {
-              pattern: 'eslint',
-              group: 'external',
-              position: 'before',
-            },
-            {
               pattern: '@/**',
               group: 'internal',
             },
           ],
-          pathGroupsExcludedImportTypes: ['eslint'],
+          pathGroupsExcludedImportTypes: ['builtin'],
           alphabetize: {
             order: 'asc',
             caseInsensitive: true,
           },
-          'newlines-between': 'always-and-inside-groups',
+          'newlines-between': 'ignore',
         },
       ],
       'import/no-cycle': 'warn',
@@ -154,6 +153,14 @@ export default defineConfig([
       ],
     },
   },
+  // NOTE: .d.ts ファイルは Vite 等のグローバル型を宣言マージで拡張するため interface が必要。
+  // type エイリアスは宣言マージができないため、d.ts ファイルのみ interface を許可する。
+  {
+    files: ['**/*.d.ts'],
+    rules: {
+      '@typescript-eslint/consistent-type-definitions': 'off',
+    },
+  },
   // NOTE: .storybook は src の外にあるため、相対パス（../src）を使用する必要があります。
   // no-restricted-imports ルールを除外します。
   {
@@ -172,6 +179,6 @@ export default defineConfig([
   // NOTE: storybook.configs['flat/recommended'] が readonly 型を返すため、
   // ESLint の defineConfig の型定義と合致しない。eslint-plugin-storybook
   // の型定義が不完全なため、ここでのみ型アサーションを使用。
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
   ...(storybook.configs['flat/recommended'] as any),
 ])

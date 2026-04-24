@@ -54,14 +54,14 @@ paths: ['src/**/*.tsx', 'src/**/*.ts']
 
 ## レビュー不要な観点（ツールで担保済み）
 
-| 観点                    | 担保しているツール               |
-| ----------------------- | -------------------------------- |
-| フォーマット            | Prettier                         |
-| import の順番           | prettier-plugin-organize-imports |
-| any の使用              | ESLint                           |
-| console.log の残留      | ESLint                           |
-| 型の整合性              | TypeScript strict: true          |
-| 未使用変数・ファイル    | knip                             |
-| TanStack Query ベスプラ | @tanstack/eslint-plugin-query    |
-| コミット規約            | commitlint                       |
-| 機密情報漏洩            | secretlint                       |
+| 観点                    | 担保しているツール            |
+| ----------------------- | ----------------------------- |
+| フォーマット            | Prettier                      |
+| import の順番           | ESLint (`import/order`)       |
+| any の使用              | ESLint                        |
+| console.log の残留      | ESLint                        |
+| 型の整合性              | TypeScript strict: true       |
+| 未使用変数・ファイル    | knip                          |
+| TanStack Query ベスプラ | @tanstack/eslint-plugin-query |
+| コミット規約            | commitlint                    |
+| 機密情報漏洩            | secretlint                    |

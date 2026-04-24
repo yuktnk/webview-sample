@@ -31,6 +31,33 @@
 | `enum`       | PascalCase | `enum ServiceType { ... }`       |
 | 型パラメータ | PascalCase | `<T extends ...>`                |
 
+### `type` vs `interface`（`@typescript-eslint/consistent-type-definitions`）
+
+アプリケーションコードでは **`type` を使う**（`interface` は使わない）。
+
+```ts
+// ✅ OK
+type UserInfoResponse = { userId: string }
+
+// ❌ NG
+interface UserInfoResponse {
+  userId: string
+}
+```
+
+**例外：`.d.ts` ファイル**
+
+`viteEnv.d.ts` のような型宣言ファイルでは `interface` を使う。
+`interface` は**宣言マージ**ができるため、Vite 等のグローバル型の拡張に必要。
+`type` エイリアスは宣言マージができないため、既存の型を正しく上書きできない。
+
+```ts
+// ✅ viteEnv.d.ts（宣言マージが必要なため interface）
+interface ImportMetaEnv {
+  readonly VITE_API_BASE_URL: string
+}
+```
+
 ### JSX コンポーネントの使用（`react/jsx-pascal-case`）
 
 | 対象     | ルール     | 例                                |
@@ -98,11 +125,9 @@ export const userInfoHandlers = [] // MSW ハンドラー
 
 ## Import 順序
 
-**Prettier の `prettier-plugin-organize-imports` で自動フォーマット。**
-
 ### グループ分けルール
 
-import 文は以下の順序で自動整列される：
+import 文は以下の順序で整列する：
 
 ```ts
 // グループ 1: Node.js 標準モジュール
@@ -136,27 +161,15 @@ import type { Props } from './component.tsx'
 
 ### 自動矯正の仕組み
 
-**ESLint と Prettier の協調体制：**
+| ツール                            | 役割                                 | コマンド        |
+| --------------------------------- | ------------------------------------ | --------------- |
+| **ESLint** (`import/order`)       | import 順序を検出・エラー → 自動修正 | `pnpm lint:fix` |
+| **Prettier** (`organize-imports`) | import の並び替え（空行・整形）      | `pnpm format`   |
 
-| ツール                            | 役割                    | コマンド                      |
-| --------------------------------- | ----------------------- | ----------------------------- |
-| **ESLint** (`import/order`)       | import 順序を検出・警告 | `pnpm lint` / `pnpm lint:fix` |
-| **Prettier** (`organize-imports`) | import 順序を自動修正   | `pnpm format`                 |
+- **順序の検知・修正は ESLint が担当**。`import/order` は `error` なので、違反があると `pnpm lint` が失敗する
+- **Prettier は順序ルールを持たない**（TypeScript の organize imports を実行するだけ）。ESLint と競合しないよう `newlines-between: 'ignore'` を設定している
 
 **開発フロー：**
-
-```bash
-# 1. ESLint で check
-pnpm lint
-
-# 2. ESLint で自動修正
-pnpm lint:fix
-
-# 3. Prettier で最終調整
-pnpm format
-```
-
-または、両方を同時実行：
 
 ```bash
 pnpm lint:fix && pnpm format
