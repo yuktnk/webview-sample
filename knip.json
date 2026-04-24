@@ -1,5 +1,14 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "project": ["src/**/*.{ts,tsx}"],
-  "ignore": ["src/bridge/index.ts"]
+  "ignore": [
+    "src/bridge/index.ts",
+    "src/mocks/data/userInfo.ts",
+    "src/mocks/handlers/userInfo.ts",
+    "src/queries/userInfo.ts",
+    "src/types/api/userInfo.ts",
+    "src/viteEnv.d.ts"
+  ],
+  "entry": ["src/routes/**/*.tsx"],
+  "ignoreDependencies": ["@secretlint/secretlint-rule-preset-recommend"]
 }
