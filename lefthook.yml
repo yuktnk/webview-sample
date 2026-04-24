@@ -37,7 +37,7 @@ commit-msg:
 pre-push:
   commands:
     typecheck:
-      run: pnpm tsc -b --noEmit
+      run: pnpm tsc --noEmit --incremental
       fail_text: "TypeScript errors found. Run 'pnpm typecheck' to see details."
 
     test:

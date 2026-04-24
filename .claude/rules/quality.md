@@ -183,7 +183,7 @@ paths:
 
 ### pre-push（少し重くてもOK）
 
-- `typecheck` — `tsc --noEmit --incremental`
+- `typecheck` — `tsc --noEmit --incremental`（ローカル キャッシュ活用）
 - `test` — Vitest
 
 ### commit-msg
