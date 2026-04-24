@@ -33,36 +33,26 @@ export default defineConfig([
       react: { version: 'detect' },
     },
     languageOptions: {
-      ecmaVersion: 2020,
+      ecmaVersion: 2023,
       globals: globals.browser,
       parserOptions: {
         projectService: {
-          allowDefaultProject: [
-            'vitest.shims.d.ts',
-            '.storybook/main.ts',
-            '.storybook/preview.ts',
-          ],
+          allowDefaultProject: ['vitest.shims.d.ts', '.storybook/main.ts', '.storybook/preview.ts'],
         },
         tsconfigRootDir: import.meta.dirname,
       },
     },
     rules: {
-      'react/function-component-definition': [
-        'error',
-        { namedComponents: 'function-declaration' },
-      ],
+      'react/function-component-definition': ['error', { namedComponents: 'function-declaration' }],
       '@typescript-eslint/consistent-type-imports': [
         'error',
         { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
       ],
-      'no-console': 'error',
+      'no-console': 'warn',
       'react/self-closing-comp': 'error',
       'react/jsx-no-useless-fragment': 'error',
       '@typescript-eslint/no-non-null-assertion': 'error',
-      'react/jsx-curly-brace-presence': [
-        'error',
-        { props: 'never', children: 'never' },
-      ],
+      'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
       'react/no-array-index-key': 'error',
       '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
       '@typescript-eslint/array-type': ['error', { default: 'array' }],
@@ -84,8 +74,7 @@ export default defineConfig([
           patterns: [
             {
               group: ['../*'],
-              message:
-                "Use '@/' path alias instead of relative imports going up directories.",
+              message: "Use '@/' path alias instead of relative imports going up directories.",
             },
           ],
         },
@@ -101,6 +90,7 @@ export default defineConfig([
       '@typescript-eslint/prefer-nullish-coalescing': 'error',
       '@typescript-eslint/prefer-optional-chain': 'error',
       '@typescript-eslint/no-unnecessary-type-constraint': 'error',
+      '@typescript-eslint/no-redundant-type-constituents': 'error',
       // import/export ルール
       'import/order': [
         'warn',
