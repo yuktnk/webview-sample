@@ -1,6 +1,5 @@
 ---
-paths:
-  ['src/**/*', 'tests/**/*', '.github/**/*', 'lefthook.yml', 'package.json']
+paths: ['src/**/*', 'tests/**/*', '.github/**/*', 'lefthook.yml', 'package.json']
 ---
 
 # 品質保証の方針
@@ -73,7 +72,7 @@ paths:
 
 ### TypeScript 型安全性強化
 
-5年プロダクション運用を想定し、`tsconfig.app.json` で以下を有効化：
+5年プロダクション運用を想定し、`tsconfig.json` で以下を有効化：
 
 ```json
 {
@@ -103,7 +102,6 @@ paths:
   '@typescript-eslint/prefer-optional-chain': 'error',
   '@typescript-eslint/no-unnecessary-type-constraint': 'error',
   '@typescript-eslint/no-redundant-type-constituents': 'error',
-  '@typescript-eslint/explicit-function-return-types': 'warn',
 }
 ```
 
@@ -111,7 +109,7 @@ paths:
 
 - `prefer-nullish-coalescing` — `a ?? b` を強制（`||` より厳密）
 - `prefer-optional-chain` — `a?.b?.c` を強制（存在チェック漏れ防止）
-- `explicit-function-return-types` — 関数の戻り値型を明示（ステップ 3 で warn レベル）
+- `no-redundant-type-constituents` — 冗長な型定義を防止
 
 ---
 
