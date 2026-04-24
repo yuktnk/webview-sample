@@ -6,8 +6,7 @@
     "src/mocks/data/userInfo.ts",
     "src/mocks/handlers/userInfo.ts",
     "src/queries/userInfo.ts",
-    "src/types/api/userInfo.ts",
-    "src/viteEnv.d.ts"
+    "src/types/api/userInfo.ts"
   ],
   "entry": ["src/routes/**/*.tsx"],
   "ignoreDependencies": ["@secretlint/secretlint-rule-preset-recommend"]
