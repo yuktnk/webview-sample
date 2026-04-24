@@ -21,6 +21,14 @@ export default defineConfig({
       testMatch: '**/*.a11y.ts',
       use: { ...devices['Desktop Chrome'] },
     },
+    // Visual regression testing (Chromatic の代替)
+    {
+      name: 'visual',
+      testMatch: '**/visual.spec.ts',
+      use: {
+        ...devices['iPhone 13'],
+      },
+    },
   ],
   webServer: {
     command: 'pnpm dev',

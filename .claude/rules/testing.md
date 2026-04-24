@@ -77,9 +77,7 @@ export const CustomError: Story = {
     msw: {
       handlers: [
         // この Story ではこのハンドラーを使う
-        http.get('/api/xxx', () =>
-          HttpResponse.json({ error: 'Custom error' }),
-        ),
+        http.get('/api/xxx', () => HttpResponse.json({ error: 'Custom error' })),
       ],
     },
   },
@@ -146,8 +144,26 @@ tests/
     ├── fixtures/
     │   ├── auth.ts
     │   └── nativeBridge.ts
-    └── sampleModal.spec.ts
+    ├── sampleModal.spec.ts
+    └── visual.spec.ts          # ビジュアルリグレッションテスト
 ```
+
+### ビジュアルリグレッションテスト（`toHaveScreenshot`）
+
+Chromatic の代替として Playwright の `toHaveScreenshot()` でスクリーンショット差分を検知する。
+
+```ts
+test('sample_a/type_1', async ({ page }) => {
+  await page.goto('/sampleModal/sample_a/type_1')
+  await page.waitForLoadState('networkidle')
+  await expect(page).toHaveScreenshot('sample-a-type1.png')
+})
+```
+
+- **ベースライン画像**: `tests/e2e/visual.spec.ts-snapshots/` に保存（Git 管理）
+- **更新コマンド**: `pnpm test:visual`（`--update-snapshots` フラグ付き）
+- **CI での差分検知**: `playwright test --project=visual`（更新なし）
+- **ビューポート**: iPhone 13（スマートフォン専用アプリのため）
 
 ### セマンティック HTML の活用
 

@@ -8,6 +8,7 @@ export default {
   tabWidth: 2,
   printWidth: 100,
   arrowParens: 'always',
+  endOfLine: 'lf',
 
   plugins: ['prettier-plugin-organize-imports'],
 } satisfies Config

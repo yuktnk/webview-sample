@@ -91,6 +91,8 @@ export default defineConfig([
       '@typescript-eslint/prefer-optional-chain': 'error',
       '@typescript-eslint/no-unnecessary-type-constraint': 'error',
       '@typescript-eslint/no-redundant-type-constituents': 'error',
+      'no-shadow': 'off',
+      '@typescript-eslint/no-shadow': 'error',
       '@typescript-eslint/switch-exhaustiveness-check': 'error',
       '@typescript-eslint/no-unnecessary-condition': 'error',
       '@typescript-eslint/prefer-readonly': 'error',
