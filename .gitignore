@@ -42,3 +42,6 @@ src/routeTree.gen.ts
 # Environment variables
 .env
 env/.env.*.local
+
+# TypeScript
+*.tsbuildinfo
