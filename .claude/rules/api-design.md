@@ -185,3 +185,18 @@ export function Dashboard() {
 - **API 数：30 個程度** → ファイル単位での管理が最適
 - **エンドポイント一元管理** → 複数箇所での参照を防ぐ
 - **1-1-1-1 ルール** → 各 API がコンパクトで管理しやすい
+
+---
+
+## APIレスポンスの型検証（将来方針）
+
+現状は手書きの TypeScript 型定義のみ（実行時チェックなし）。
+実 API との結合時に Zod でのパースに移行する。
+
+```ts
+// 移行後（Zodで実行時検証）
+const SampleAType1Schema = z.object({ ... })
+const data = SampleAType1Schema.parse(await apiFetch('/api/sample_a/type_1'))
+```
+
+**理由：** OpenAPI spec がないため、手書き型と実レスポンスの乖離をランタイムで検知するため。
