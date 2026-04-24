@@ -1,13 +1,14 @@
-import type { Config } from 'prettier';
+import type { Config } from 'prettier'
 
 export default {
   // Prettier 基本設定
-  semi: true,
+  semi: false,
   singleQuote: true,
-  trailingComma: 'es5',
+  trailingComma: 'all',
   useTabs: false,
   tabWidth: 2,
-  printWidth: 80,
+  printWidth: 100,
+  arrowParens: 'always',
 
   // フォーマット対象外
   ignore: ['src/routeTree.gen.ts', 'public/mockServiceWorker.js'],
@@ -35,4 +36,4 @@ export default {
 
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
-} satisfies Config;
+} satisfies Config

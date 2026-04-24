@@ -22,10 +22,7 @@ function RootPage() {
   // 開発環境：リンク集を動的生成
 
   // 1. 動的パスを含まないページをリスト化
-  const collectRoutes = (
-    node: RouteNode,
-    routes: RouteNode[] = [],
-  ): RouteNode[] => {
+  const collectRoutes = (node: RouteNode, routes: RouteNode[] = []): RouteNode[] => {
     const id = node.id
     // パスパラメータ（$ を含む）がなく、ルートページ / とparent __ を除外
     if (id && id !== '__root__' && id !== '/' && !id.includes('$')) {
@@ -42,12 +39,11 @@ function RootPage() {
   const staticRoutes = collectRoutes(router.routeTree as unknown as RouteNode)
 
   // 2. CONTAINER_MAP から利用可能な from と serviceType の組み合わせを取得
-  const containerRoutes = Object.entries(CONTAINER_MAP).flatMap(
-    ([fromType, serviceTypes]) =>
-      Object.keys(serviceTypes).map((serviceType) => ({
-        from: fromType as FromType,
-        serviceType: serviceType as ServiceType,
-      })),
+  const containerRoutes = Object.entries(CONTAINER_MAP).flatMap(([fromType, serviceTypes]) =>
+    Object.keys(serviceTypes).map((serviceType) => ({
+      from: fromType as FromType,
+      serviceType: serviceType as ServiceType,
+    })),
   )
 
   return (
