@@ -9,6 +9,9 @@ export default {
   tabWidth: 2,
   printWidth: 80,
 
+  // フォーマット対象外
+  ignore: ['src/routeTree.gen.ts', 'public/mockServiceWorker.js'],
+
   // prettier-plugin-organize-imports
   // import 順序を自動フォーマット
   plugins: ['prettier-plugin-organize-imports'],
