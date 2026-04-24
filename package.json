@@ -4,12 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --mode dev",
+    "local": "vite --mode local",
+    "build:local": "vite build --mode local",
     "build:dev": "vite build --mode dev",
     "build:stg": "vite build --mode stg",
     "build:prd": "vite build --mode prd",
-    "build:storybook": "pnpm build:prd && storybook build -o storybook-static",
-    "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -20,10 +19,10 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "perf": "lighthouse https://localhost:5173 --output=json --output-path=./dist/lighthouse.json",
     "a11y": "playwright test --project=a11y",
+    "storybook": "storybook dev -p 6006",
+    "storybook:build": "storybook build -o storybook-static",
+    "perf": "lighthouse https://localhost:5173 --output=json --output-path=./dist/lighthouse.json",
     "bundle": "vite build && echo '✅ Bundle analysis generated: dist/bundle-analysis.html'"
   },
   "engines": {
