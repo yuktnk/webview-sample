@@ -1,3 +1,4 @@
+import { ErrorView } from '@/components/ui/ErrorView'
 import type { FromType, ServiceType } from '@/types/routing'
 
 import { CONTAINER_MAP } from './containers'
@@ -9,7 +10,7 @@ export function SampleModalPage({ from, serviceType }: Props) {
   const Container = map[serviceType]
 
   if (!Container) {
-    return <div className="p-4 text-error-500">対応するコンテナが見つかりません</div>
+    return <ErrorView message="対応するコンテナが見つかりません" />
   }
 
   return <Container />

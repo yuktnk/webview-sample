@@ -10,12 +10,13 @@ export function SampleAType2Container() {
 
   if (isLoading) return <LoadingView />
   if (isError) return <ErrorView />
+  if (!data) return null
 
   return (
     <div className="p-1">
-      <h1 className="text-2xl font-bold">{data?.result.title}</h1>
+      <h1 className="text-2xl font-bold">{data.result.title}</h1>
       <ul className="mt-1 space-y-1">
-        {data?.result.items.map((item) => (
+        {data.result.items.map((item) => (
           <li key={item.label}>
             <DataCard label={item.label} value={item.count} />
           </li>

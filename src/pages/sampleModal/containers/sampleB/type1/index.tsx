@@ -9,12 +9,13 @@ export function SampleBType1Container() {
 
   if (isLoading) return <LoadingView />
   if (isError) return <ErrorView />
+  if (!data) return null
 
   return (
     <div className="p-1">
-      <h1 className="text-2xl font-bold">{data?.result.name}</h1>
-      <p className="mt-2">ステータス: {data?.result.status}</p>
-      <p className="mt-1 text-xl">スコア: {data?.result.score}</p>
+      <h1 className="text-2xl font-bold">{data.result.name}</h1>
+      <p className="mt-2">ステータス: {data.result.status}</p>
+      <p className="mt-1 text-xl">スコア: {data.result.score}</p>
     </div>
   )
 }

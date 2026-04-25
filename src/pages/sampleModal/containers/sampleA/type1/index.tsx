@@ -11,13 +11,14 @@ export function SampleAType1Container() {
 
   if (isLoading) return <LoadingView />
   if (isError) return <ErrorView />
+  if (!data) return null
 
   return (
     <div className="p-1">
-      <h1 className="text-2xl font-bold">{data?.result.title}</h1>
+      <h1 className="text-2xl font-bold">{data.result.title}</h1>
       <div className="mt-1 space-y-1">
-        <DataCard label="値" value={data?.result.value ?? 0} />
-        <DataCard label="日付" value={data?.result.date ? formatDate(data.result.date) : 'N/A'} />
+        <DataCard label="値" value={data.result.value} />
+        <DataCard label="日付" value={formatDate(data.result.date)} />
       </div>
     </div>
   )

@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { delay, http, HttpResponse } from 'msw'
 
+import { API_ENDPOINTS } from '@/constants/apiEndpoints'
+
 import { SampleAType2Container } from '.'
 
 const meta: Meta<typeof SampleAType2Container> = {
@@ -15,7 +17,7 @@ export const Loading: Story = {
   parameters: {
     msw: {
       handlers: [
-        http.get('/api/sample_a/type_2', async () => {
+        http.get(API_ENDPOINTS.SAMPLE_A_TYPE2, async () => {
           await delay('infinite')
         }),
       ],
@@ -26,7 +28,7 @@ export const Loading: Story = {
 export const Error: Story = {
   parameters: {
     msw: {
-      handlers: [http.get('/api/sample_a/type_2', () => HttpResponse.error())],
+      handlers: [http.get(API_ENDPOINTS.SAMPLE_A_TYPE2, () => HttpResponse.error())],
     },
   },
 }
