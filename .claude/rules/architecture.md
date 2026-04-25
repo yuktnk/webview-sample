@@ -54,8 +54,13 @@ src/
 │       └── $from/
 │           └── $serviceType.tsx     # /sampleModal/$from/$serviceType（パスパラメータ形式）
 │
+├── assets/                          # 複数ページで共有するアセット
+│   ├── icons/                       # 共有SVGアイコン（close・arrowなど）
+│   └── images/                      # 共有画像（PNG・JPG等）
+│
 ├── pages/                           # ページ単位の実装
 │   └── sampleModal/
+│       ├── assets/                  # sampleModal専用の画像
 │       ├── index.tsx                # CONTAINER_MAPでContainerを切り替えるだけ
 │       └── containers/
 │           ├── index.ts             # CONTAINER_MAP定義
@@ -184,6 +189,41 @@ src/
 
 同じコンポーネントやフックを別の場所でも使いたくなったら、そのタイミングで一段上に移動します。
 「いつか使い回すかも」で早めに汎用化しすぎると、本当に汎用なのか判断しにくくなるため避けます。
+
+---
+
+## アセット（画像）配置ルール
+
+### 判断フロー
+
+```
+複数のページで使う？
+  Yes → src/assets/icons/（SVG）または src/assets/images/（PNG・JPG等）
+  No  → src/pages/{pageName}/assets/
+```
+
+### ディレクトリ構成
+
+```
+src/
+├── assets/
+│   ├── icons/          ← 全ページ共通のSVGアイコン（close.svg・arrow.svg など）
+│   └── images/         ← 全ページ共通の画像（logo.png など）
+│
+└── pages/
+    └── sampleModal/
+        └── assets/     ← sampleModal専用の画像（banner.png など）
+```
+
+### ルール
+
+- 画像は必ず JS/TS の `import` で参照する（CSS の `url()` や `<img src="...">` の文字列直書きは禁止）
+- `public/` には URL 文字列で参照する必要があるファイルのみ置く（MSW の `mockServiceWorker.js` など）
+- 最初はページ専用として `pages/{pageName}/assets/` に置き、複数ページで使うことが確定したら `src/assets/` に移動する
+
+### knip による未使用検知
+
+`knip.json` の `project` グロブに画像拡張子を含めているため、どこからも `import` されていない画像は knip が検知する。
 
 ---
 

@@ -39,7 +39,12 @@ export default defineConfig([
       globals: globals.browser,
       parserOptions: {
         projectService: {
-          allowDefaultProject: ['vitest.shims.d.ts', '.storybook/main.ts', '.storybook/preview.ts'],
+          allowDefaultProject: [
+            'vitest.shims.d.ts',
+            '.storybook/main.ts',
+            '.storybook/preview.ts',
+            'knip.config.ts',
+          ],
         },
         tsconfigRootDir: import.meta.dirname,
       },
