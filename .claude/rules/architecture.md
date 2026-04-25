@@ -221,9 +221,35 @@ src/
 - `public/` には URL 文字列で参照する必要があるファイルのみ置く（MSW の `mockServiceWorker.js` など）
 - 最初はページ専用として `pages/{pageName}/assets/` に置き、複数ページで使うことが確定したら `src/assets/` に移動する
 
+### SVG の使い方（`vite-plugin-svgr`）
+
+SVG は `?react` suffix で React コンポーネントとして import する。
+これにより Tailwind で色・サイズを制御でき、追加のHTTPリクエストも発生しない。
+
+```tsx
+// ✅ React コンポーネントとして import（色・サイズを Tailwind で制御）
+import CloseIcon from '@/assets/icons/close.svg?react'
+;<CloseIcon className="w-6 h-6 text-neutral-550" />
+
+// ❌ URL として import（色変更不可・<img> タグが必要）
+import closeUrl from '@/assets/icons/close.svg'
+;<img src={closeUrl} alt="閉じる" />
+```
+
+### PNG の使い方
+
+スマートフォンは画面密度が2〜3倍のため、2x サイズ（表示サイズの2倍の解像度）の PNG を用意する。
+
+```tsx
+import banner from '@/pages/sampleModal/assets/banner.png'
+
+// 2x サイズの画像を 1x として表示（Retina 対応）
+;<img src={banner} alt="バナー" />
+```
+
 ### knip による未使用検知
 
-`knip.json` の `project` グロブに画像拡張子を含めているため、どこからも `import` されていない画像は knip が検知する。
+`knip.config.ts` の compilers に画像拡張子を定義しているため、どこからも `import` されていない画像は knip が検知する。
 
 ---
 

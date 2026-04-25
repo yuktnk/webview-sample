@@ -11,6 +11,7 @@ import { playwright } from '@vitest/browser-playwright'
 import { visualizer } from 'rollup-plugin-visualizer'
 
 import { defineConfig } from 'vite'
+import svgr from 'vite-plugin-svgr'
 
 const dirname =
   typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url))
@@ -20,6 +21,7 @@ export default defineConfig({
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   plugins: [
     tanstackRouter({ target: 'react', autoCodeSplitting: true }),
+    svgr(),
     react(),
     tailwindcss(),
     visualizer({
