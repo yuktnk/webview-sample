@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createFileRoute, useRouter } from '@tanstack/react-router'
+import { Link, createFileRoute, useRouter } from '@tanstack/react-router'
 
 import { CONTAINER_MAP } from '@/pages/sampleModal/containers'
 import type { FromType, ServiceType } from '@/types/routing'
@@ -61,9 +61,9 @@ function RootPage() {
 
               return (
                 <li key={id}>
-                  <a href={path} className="text-primary-600 hover:underline">
+                  <Link to={path} className="text-primary-600 hover:underline">
                     {id}
-                  </a>
+                  </Link>
                 </li>
               )
             })}
@@ -77,12 +77,13 @@ function RootPage() {
           <ul className="space-y-2">
             {containerRoutes.map(({ from, serviceType }) => (
               <li key={`${from}-${serviceType}`}>
-                <a
-                  href={`/sampleModal?from=${from}&serviceType=${serviceType}`}
+                <Link
+                  to="/sampleModal"
+                  search={{ from, serviceType }}
                   className="text-primary-600 hover:underline"
                 >
                   {from} / {serviceType}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
