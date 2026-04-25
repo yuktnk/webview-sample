@@ -38,6 +38,9 @@ pnpm test:coverage
 # E2Eテスト（dev serverが自動起動）
 pnpm test:e2e
 
+# ビジュアルリグレッションテスト（スナップショット更新）
+pnpm test:visual
+
 # ビルド（ローカル + GCP環境別）
 pnpm build:local # ローカル本番用
 pnpm build:dev   # GCP dev プロジェクト
