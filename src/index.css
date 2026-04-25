@@ -13,13 +13,13 @@
   }
 
   body {
-    @apply text-neutral-550;
+    color: #555555;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overscroll-behavior: none;
   }
 
   ::placeholder {
-    @apply text-neutral-350;
+    color: #cccccc;
   }
 }
