@@ -13,13 +13,13 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { ...devices['Pixel 5'] },
     },
     // A11y monitoring (monthly check)
     {
       name: 'a11y',
       testMatch: '**/*.a11y.ts',
-      use: { ...devices['Desktop Chrome'] },
+      use: { ...devices['Pixel 5'] },
     },
     // Visual regression testing (Chromatic の代替)
     {

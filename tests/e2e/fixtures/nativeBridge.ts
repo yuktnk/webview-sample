@@ -22,8 +22,10 @@ export const test = base.extend({
       ;(window as unknown as Record<string, unknown>)['webkit'] = {
         messageHandlers,
       }
-      ;(window as unknown as Record<string, unknown>)['MebViewInterface'] =
-        new Proxy({} as Record<string, () => void>, { get: () => noop })
+      ;(window as unknown as Record<string, unknown>)['MebViewInterface'] = new Proxy(
+        {} as Record<string, () => void>,
+        { get: () => noop },
+      )
     })
     await use(page)
   },
