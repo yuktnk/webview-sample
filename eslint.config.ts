@@ -51,6 +51,14 @@ export default defineConfig([
         { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
       ],
       'no-console': 'warn',
+      'no-alert': 'error',
+      'no-restricted-globals': [
+        'error',
+        {
+          name: 'open',
+          message: 'Use NativeBridge instead of window.open in WebView.',
+        },
+      ],
       'react/self-closing-comp': 'error',
       'react/jsx-no-useless-fragment': 'error',
       '@typescript-eslint/no-non-null-assertion': 'error',
