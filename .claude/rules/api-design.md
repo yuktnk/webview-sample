@@ -1,3 +1,13 @@
+---
+paths:
+  [
+    'src/queries/**/*.ts',
+    'src/types/api/**/*.ts',
+    'src/mocks/**/*.ts',
+    'src/constants/apiEndpoints.ts',
+  ]
+---
+
 # API 設計ポリシー
 
 API 関連ファイルの設計方針と管理ルール。

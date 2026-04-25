@@ -1,5 +1,5 @@
 ---
-paths: ['src/**/*.stories.tsx', 'tests/e2e/**/*.spec.ts', 'src/**/*.test.ts']
+paths: ['src/**/*.stories.tsx', 'tests/e2e/**/*.spec.ts', 'src/**/*.test.ts', 'src/mocks/**/*']
 ---
 
 # テスト戦略・役割分担
@@ -22,7 +22,7 @@ paths: ['src/**/*.stories.tsx', 'tests/e2e/**/*.spec.ts', 'src/**/*.test.ts']
 
 ### Story の3点セット
 
-Storyは **Default・Loading・Error** の3点セットを最低限とする。
+Story は **Default・Loading・Error** の3点セットを最低限とする。
 
 ```tsx
 export const Default: Story = {
@@ -50,8 +50,6 @@ export const Error: Story = {
 
 コンポーネントが持つ状態・バリエーション（Disabled・サイズ違い・カラーバリアントなど）の数だけ追加する。
 
-3点セットだけで足りる場合もあれば、複数バリエーションが必要な場合もある。
-
 ### ファイル配置
 
 - コンポーネントと同じディレクトリに `index.stories.tsx` として置く
@@ -69,16 +67,13 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 ### MSW ハンドラーのオーバーライド
 
-Story 単位で `parameters.msw.handlers` でハンドラーをオーバーライド可能。
+Story 単位で `parameters.msw.handlers` でオーバーライド可能。
 
 ```tsx
 export const CustomError: Story = {
   parameters: {
     msw: {
-      handlers: [
-        // この Story ではこのハンドラーを使う
-        http.get('/api/xxx', () => HttpResponse.json({ error: 'Custom error' })),
-      ],
+      handlers: [http.get('/api/xxx', () => HttpResponse.json({ error: 'Custom error' }))],
     },
   },
 }
@@ -125,13 +120,8 @@ src/
 
 ```ts
 test('SampleModal に遷移してデータが表示される', async ({ page }) => {
-  // ルーティング
   await page.goto('/sampleModal/sample_a/type_1?akr_code=123')
-
-  // API 呼び出しと待機
   await page.waitForLoadState('networkidle')
-
-  // 画面検証
   await expect(page.getByRole('heading')).toContainText('SampleA Type1')
 })
 ```
@@ -171,32 +161,58 @@ Playwright は `getByRole` / `getByLabel` で要素を取得する。
 コンポーネント内でセマンティック HTML を自然に書くことで、テストが堅牢になる。
 
 ```tsx
-// ✅ Good - セマンティック HTML
-<button onClick={handleClose}>閉じる</button>
+// ✅ Good
+<button type="button" onClick={handleClose}>閉じる</button>
 <h1>タイトル</h1>
-<label htmlFor="input">ラベル</label>
-<input id="input" />
 
-// ❌ Bad - role を無視した div のみ
+// ❌ Bad
 <div onClick={handleClose}>閉じる</div>
 <div>タイトル</div>
 ```
 
-### Playwright で MSW を使う
+---
 
-Playwright の E2E テスト中も MSW が動作する。
-テスト内で API の返値をカスタマイズできる。
+## MSW（Mock Service Worker）
+
+Storybook・Vitest・Playwright で同じハンドラーを使い回す。
+
+### セットアップ
+
+- `msw-storybook-addon@2.x` を使用（MSW v2 との互換性問題は 2.0.7 で解消済み）
+- `public/mockServiceWorker.js` は `pnpm dlx msw init public/ --save` で生成済み
+
+### ハンドラーの追加方法
+
+新しい API を追加したら：
+
+1. `src/mocks/handlers/{domain}.ts` にハンドラーを追加
+2. `src/mocks/handlers/index.ts` に集約
+3. Storybook で確認（`pnpm storybook`）
+
+### URL パターンルール
+
+ハンドラーの URL パターンは `*/api/...` ではなく `/api/...`（相対パス）を使う。これは MSW v2 の仕様。
 
 ```ts
-test('エラー表示', async ({ page }) => {
-  // MSW ハンドラーを上書き
-  await page.goto('/sampleModal/sample_a/type_1?akr_code=123', {
-    waitUntil: 'networkidle',
-  })
+// ✅ OK
+http.get('/api/sample_a/type_1', () => ...)
 
-  // このテスト内では独自のハンドラーを使いたい場合は
-  // fixture で page を拡張
-})
+// ❌ NG
+http.get('*/api/sample_a/type_1', () => ...)
 ```
 
-詳細は `.claude/rules/msw.md` を参照。
+### モックデータ構成
+
+```
+src/mocks/
+├── browser.ts                   # Storybook・Playwright用 Service Worker
+├── data/
+│   ├── common.ts                # 共通APIのモックデータ
+│   ├── sampleA.ts               # SampleA APIのモックデータ
+│   └── sampleB.ts               # SampleB APIのモックデータ
+└── handlers/
+    ├── index.ts                 # 全ハンドラー集約
+    ├── common.ts                # 共通API（userInfo・batchDate）
+    ├── sampleA.ts               # SampleA API
+    └── sampleB.ts               # SampleB API
+```

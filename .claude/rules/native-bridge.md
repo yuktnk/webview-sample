@@ -1,5 +1,5 @@
 ---
-paths: ['src/bridge/**/*', 'src/**/*.tsx']
+paths: ['src/bridge/**/*']
 ---
 
 # NativeBridge 仕様
