@@ -9,7 +9,7 @@ export function SampleModalPage({ from, serviceType }: Props) {
   const Container = map[serviceType]
 
   if (!Container) {
-    return <div className="p-4 text-red-500">対応するコンテナが見つかりません</div>
+    return <div className="p-4 text-error-500">対応するコンテナが見つかりません</div>
   }
 
   return <Container />

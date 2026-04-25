@@ -49,7 +49,7 @@ function RootPage() {
   return (
     <div className="p-8">
       <h1 className="text-3xl font-bold mb-6">webview-sample</h1>
-      <p className="text-gray-600 mb-8">開発環境用のページリンク</p>
+      <p className="text-neutral-600 mb-8">開発環境用のページリンク</p>
 
       {staticRoutes.length > 0 && (
         <section className="mb-8">
@@ -61,7 +61,7 @@ function RootPage() {
 
               return (
                 <li key={id}>
-                  <a href={path} className="text-blue-600 hover:underline">
+                  <a href={path} className="text-primary-600 hover:underline">
                     {id}
                   </a>
                 </li>
@@ -79,7 +79,7 @@ function RootPage() {
               <li key={`${from}-${serviceType}`}>
                 <a
                   href={`/sampleModal?from=${from}&serviceType=${serviceType}`}
-                  className="text-blue-600 hover:underline"
+                  className="text-primary-600 hover:underline"
                 >
                   {from} / {serviceType}
                 </a>

@@ -9,6 +9,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 
 import { ErrorView } from '@/components/ui/ErrorView'
+import { LoadingView } from '@/components/ui/LoadingView'
 import { SampleModalPage } from '@/pages/sampleModal'
 import { FROM_VALUES, SERVICE_TYPE_VALUES } from '@/types/routing'
 
@@ -19,7 +20,7 @@ export const Route = createFileRoute('/sampleModal/$from/$serviceType')({
       serviceType: z.enum(SERVICE_TYPE_VALUES).parse(params.serviceType),
     }),
   },
-  pendingComponent: () => <div>Loading...</div>,
+  pendingComponent: LoadingView,
   errorComponent: ErrorView,
   component: function SampleModalPathRoute() {
     const { from, serviceType } = Route.useParams()
