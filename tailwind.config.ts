@@ -44,8 +44,10 @@ export default {
         100: '#f3f4f6',
         200: '#e5e7eb',
         300: '#d1d5db',
+        350: '#cccccc',
         400: '#9ca3af',
         500: '#6b7280',
+        550: '#555555',
         600: '#4b5563',
         700: '#374151',
         800: '#1f2937',
@@ -106,9 +108,18 @@ export default {
     },
     extend: {
       fontFamily: {
-        // メインフォント（サンセリフ）
-        sans: ['system-ui', 'sans-serif'],
-        // モノスペース（コード表示用）
+        sans: [
+          'Avenir Next',
+          'Open Sans',
+          'ヒラギノ角ゴ Pro W3',
+          'Hiragino Kaku Gothic Pro',
+          'メイリオ',
+          'Meiryo',
+          'MS Pゴシック',
+          'MSPGothic',
+          'ヒラギノ角ゴ ProN',
+          'sans-serif',
+        ],
         mono: ['ui-monospace', 'monospace'],
       },
       boxShadow: {
