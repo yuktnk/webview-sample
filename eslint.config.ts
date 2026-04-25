@@ -4,6 +4,7 @@ import js from '@eslint/js'
 import queryPlugin from '@tanstack/eslint-plugin-query'
 import prettier from 'eslint-config-prettier'
 import importPlugin from 'eslint-plugin-import'
+import jsxA11y from 'eslint-plugin-jsx-a11y'
 import reactPlugin from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
@@ -23,6 +24,7 @@ export default defineConfig([
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
       ...queryPlugin.configs['flat/recommended'],
+      jsxA11y.flatConfigs.recommended,
       prettier,
     ],
     plugins: {
@@ -171,16 +173,19 @@ export default defineConfig([
       'no-restricted-imports': 'off',
     },
   },
-  // NOTE: eslint.config.ts は ESLint 自身の設定のため、import/order ルールを除外
+  // NOTE: eslint.config.ts は ESLint 自身の設定のため、import/order ルールを除外。
+  // 一部のプラグイン（jsx-a11y 等）は TypeScript 型定義が不完全なため no-unsafe-* も除外する。
   {
     files: ['eslint.config.ts'],
     rules: {
       'import/order': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
     },
   },
   // NOTE: storybook.configs['flat/recommended'] が readonly 型を返すため、
   // ESLint の defineConfig の型定義と合致しない。eslint-plugin-storybook
   // の型定義が不完全なため、ここでのみ型アサーションを使用。
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ...(storybook.configs['flat/recommended'] as any),
 ])

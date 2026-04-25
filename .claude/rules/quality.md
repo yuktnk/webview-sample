@@ -64,6 +64,7 @@ paths: ['src/**/*', 'tests/**/*', '.github/**/*', 'lefthook.yml', 'package.json'
 | ----------------------------- | --------------------------- |
 | TypeScript strict mode        | 型の整合性・型安全性強化    |
 | ESLint                        | コードの品質ルール          |
+| eslint-plugin-jsx-a11y        | アクセシビリティ（JSX）     |
 | @tanstack/eslint-plugin-query | TanStack Query のベスプラ   |
 | Prettier                      | フォーマットの統一          |
 | knip                          | 未使用ファイル・export 検出 |
@@ -121,6 +122,46 @@ paths: ['src/**/*', 'tests/**/*', '.github/**/*', 'lefthook.yml', 'package.json'
 - `no-unnecessary-condition` — 型で絞られているのに冗長な条件・デッドコードを検知
 - `prefer-readonly` — 再代入されないプロパティに `readonly` を強制
 - `return-await` — `try/catch` 内で `return await` を強制（スタックトレースを正確に保つ）
+
+### アクセシビリティ（`eslint-plugin-jsx-a11y`）
+
+#### なぜアクセシビリティが必要か
+
+このアプリは iOS / Android の WebView で動作し、スクリーンリーダーなど支援技術を使うユーザーも利用する可能性がある。アクセシビリティの問題は**後から直すほどコストが上がる**ため、コードを書く時点で検知する。
+
+#### 多層防御の構造
+
+| レイヤー               | ツール                        | タイミング             | 検知できること                          |
+| ---------------------- | ----------------------------- | ---------------------- | --------------------------------------- |
+| **静的解析**（最速）   | `eslint-plugin-jsx-a11y`      | コード編集・コミット時 | JSX の書き方（alt 漏れ・role 誤用など） |
+| **コンポーネント確認** | `@storybook/addon-a11y`       | Storybook 表示時       | 実際のコンポーネント単位の違反          |
+| **E2E**（最終確認）    | `axe-playwright`（pnpm a11y） | CI・手動実行           | ページ全体の WCAG 準拠チェック          |
+
+**原則：下層（ESLint）で防いで上層（axe）に到達させない。**
+
+#### ESLint で検知するルール例
+
+```tsx
+// ❌ alt がない → jsx-a11y/alt-text
+<img src="logo.png" />
+
+// ✅
+<img src="logo.png" alt="サービスロゴ" />
+
+// ❌ type がない → jsx-a11y/button-has-type
+<button onClick={handleClose}>閉じる</button>
+
+// ✅
+<button type="button" onClick={handleClose}>閉じる</button>
+
+// ❌ label が input と紐付いていない → jsx-a11y/label-has-associated-control
+<label>名前</label>
+<input id="name" />
+
+// ✅
+<label htmlFor="name">名前</label>
+<input id="name" />
+```
 
 ---
 
