@@ -45,6 +45,3 @@ env/.env.*.local
 
 # TypeScript
 *.tsbuildinfo
-
-
-adr-draft/*
