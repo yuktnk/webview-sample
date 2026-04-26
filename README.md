@@ -97,5 +97,6 @@ pnpm bundle
 | **テスト戦略**               | [.claude/rules/testing.md](./.claude/rules/testing.md)             |
 | **品質保証**                 | [.claude/rules/quality.md](./.claude/rules/quality.md)             |
 | **デザインシステム**         | [.claude/rules/design-system.md](./.claude/rules/design-system.md) |
+| **技術的決定の経緯（ADR）**  | [docs/adr/](./docs/adr/)                                           |
 | **ドキュメント**             | [docs/](./docs/)                                                   |
 | **実装ルール一覧**           | [.claude/rules/](./.claude/rules/)                                 |
