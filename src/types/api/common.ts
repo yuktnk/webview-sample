@@ -5,7 +5,7 @@ export const userInfoResponseSchema = z.object({
   groupId: z.string(),
   stores: z.array(
     z.object({
-      akrCode: z.string(),
+      storeCode: z.string(),
       storeName: z.string(),
     }),
   ),

@@ -120,7 +120,7 @@ src/
 
 ```ts
 test('SampleModal に遷移してデータが表示される', async ({ page }) => {
-  await page.goto('/sampleModal/sample_a/type_1?akr_code=123')
+  await page.goto('/sampleModal/sample_a/type_1?store_code=123')
   await page.waitForLoadState('networkidle')
   await expect(page.getByRole('heading')).toContainText('SampleA Type1')
 })

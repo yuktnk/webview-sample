@@ -7,8 +7,8 @@ const getBridge = (): NativeBridge => {
   if (typeof window === 'undefined') throw new Error('window is undefined')
 
   // Android
-  if ('MebViewInterface' in window) {
-    return window.MebViewInterface as NativeBridge
+  if ('AndroidBridge' in window) {
+    return window.AndroidBridge as NativeBridge
   }
 
   // iOS

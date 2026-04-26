@@ -2,7 +2,7 @@ import { test as base } from '@playwright/test'
 
 /**
  * NativeBridge fixture
- * addInitScriptでページロード前にwindow.webkit / window.MebViewInterfaceをモックする。
+ * addInitScriptでページロード前にwindow.webkit / window.AndroidBridgeをモックする。
  * src/bridge/index.tsのgetBridge()がモジュール初期化時に呼ばれるためページナビゲーション前に設定が必要。
  */
 export const test = base.extend({
@@ -22,7 +22,7 @@ export const test = base.extend({
       ;(window as unknown as Record<string, unknown>)['webkit'] = {
         messageHandlers,
       }
-      ;(window as unknown as Record<string, unknown>)['MebViewInterface'] = new Proxy(
+      ;(window as unknown as Record<string, unknown>)['AndroidBridge'] = new Proxy(
         {} as Record<string, () => void>,
         { get: () => noop },
       )

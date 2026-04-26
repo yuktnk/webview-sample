@@ -2,8 +2,8 @@ export const mockUserInfo = {
   clientUserId: 'user_001',
   groupId: 'group_001',
   stores: [
-    { akrCode: 'AKR001', storeName: 'サンプル店舗1' },
-    { akrCode: 'AKR002', storeName: 'サンプル店舗2' },
+    { storeCode: 'STORE001', storeName: 'サンプル店舗1' },
+    { storeCode: 'STORE002', storeName: 'サンプル店舗2' },
   ],
 }
 
