@@ -47,12 +47,7 @@ paths: ['tsconfig*.json', 'eslint.config.ts', 'knip.config.ts']
 
 ### Dependabot は将来検討
 
-ライブラリが 20+ に増えたタイミングで Dependabot 導入を検討する理由：
-
-- 現在は管理するライブラリが少ない（手動管理で十分）
-- PR が多くなると（グループ化しても）ノイズになる
-- セキュリティ重視なら pnpm audit だけで OK
-- feature・内部更新は意図的に進める
+現在は管理ライブラリが少ないため pnpm audit のみで十分。ライブラリが 20+ に増えたタイミングで Dependabot の導入を改めて検討する。
 
 ---
 

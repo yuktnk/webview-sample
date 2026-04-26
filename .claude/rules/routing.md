@@ -4,6 +4,8 @@ paths: ['src/routes/**/*.tsx', 'src/types/routing.ts']
 
 # ルーティング設計
 
+TanStack Router 採用の経緯は [ADR-003](../../docs/adr/003-tanstack-router.md)、Zod 採用の経緯は [ADR-011](../../docs/adr/011-zod.md) を参照。
+
 ## 概要
 
 このアプリは以下の2つのルート形式をサポートしている。

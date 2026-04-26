@@ -10,35 +10,33 @@ paths: ['src/**/*.tsx', 'src/**/*.ts']
 
 - Native が都度 WebView を起動・閉じると JS コンテキストごとリセット
 - ページ間の状態共有は不要 → Zustand / Jotai は使わない
-- グローバル状態管理ライブラリ不要
+- グローバル状態管理ライブラリ不要（→ なぜ不要かは [ADR-004](../../docs/adr/004-no-global-state-library.md)）
 
 ### 2. 静的解析ツールの移行方針
 
-現在はESLint + Prettierを使用している。将来的にBiomeへの移行を検討しているが、
-以下の理由から現時点では移行しない。
-
-- `eslint-plugin-react-hooks`（`rules-of-hooks`・`exhaustive-deps`）のBiome対応が未完了
-- `eslint-plugin-react-refresh`・`eslint-plugin-storybook` も未対応
-
-**移行トリガー：**`eslint-plugin-react-hooks` 相当の機能がBiomeに追加されたタイミング。
-移行時はコード変更不要で設定ファイルの置き換えのみ（半日程度の作業）。
+現在は ESLint + Prettier を使用している。Biome への移行を検討したが現時点では見送っている。
+→ なぜ Biome に移行しないかは [ADR-012](../../docs/adr/012-eslint-over-biome.md)
 
 ### 3. 依存ライブラリは最小限
 
-- axios → fetch（built-in）で代替
-- Redux → TanStack Query + useState で代替
+- axios → fetch（built-in）で代替（→ [ADR-007](../../docs/adr/007-fetch-over-axios.md)）
+- Redux → TanStack Query + useState で代替（→ [ADR-004](../../docs/adr/004-no-global-state-library.md)・[ADR-010](../../docs/adr/010-tanstack-query.md)）
+- Next.js → Vite + React（SPA）で代替（→ [ADR-009](../../docs/adr/009-vite-react-over-nextjs.md)）
+- ESLint + Prettier → Biome への移行は現時点で見送り（→ [ADR-012](../../docs/adr/012-eslint-over-biome.md)）
 - 「使えそう」ではなく「使う理由がある」ものだけ入れる
 
 ### 4. TypeScript strict: true を妥協しない
 
 - `any` は原則禁止。`unknown` + 型ガードで代替
 - `ignoreBuildErrors` は絶対に使わない
+- → なぜ strict にするかは [ADR-008](../../docs/adr/008-typescript-strict.md)
 
 ### 5. テスト可能な設計
 
 - Storybook + Playwright を主軸
 - MSW でモックを一元管理（Storybook・Vitest・Playwright 全レイヤーで使い回す）
 - セマンティック HTML を自然に書く → Playwright の `getByRole` / `getByLabel` が使える
+- → テスト戦略の選定経緯は [ADR-006](../../docs/adr/006-test-strategy.md)
 
 ---
 

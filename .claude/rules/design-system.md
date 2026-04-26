@@ -18,9 +18,8 @@ arbitrary value（`p-[13px]`）や未定義の Tailwind デフォルト値の使
 
 ### 2. 単位の統一（px）
 
-このプロジェクトは WebView アプリで、Native（iOS/Android）が都度 WebView インスタンスを起動・閉じます。Native 側で `html font-size` を制御していないため、rem の値が予測不可能になります。
-
-そのため、すべての寸法値（fontSize・spacing・borderRadius）を **px で統一**。
+Native 側で `html font-size` を制御していないため rem の値が予測不可能になる。そのため、すべての寸法値（fontSize・spacing・borderRadius）を **px で統一**。
+→ なぜ px を選んだかは [ADR-005](../../docs/adr/005-tailwind-css.md)（「px を採用・rem を禁止した理由」節）を参照
 
 ### 3. スマートフォン専用設計
 
