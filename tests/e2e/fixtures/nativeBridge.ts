@@ -19,9 +19,11 @@ export const test = base.extend({
         },
       )
 
+      // biome-ignore lint/complexity/useLiteralKeys: noPropertyAccessFromIndexSignature requires bracket notation
       ;(window as unknown as Record<string, unknown>)['webkit'] = {
         messageHandlers,
       }
+      // biome-ignore lint/complexity/useLiteralKeys: noPropertyAccessFromIndexSignature requires bracket notation
       ;(window as unknown as Record<string, unknown>)['AndroidBridge'] = new Proxy(
         {} as Record<string, () => void>,
         { get: () => noop },

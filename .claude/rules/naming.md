@@ -165,25 +165,25 @@ import type { Props } from './component.tsx'
 
 ### 自動矯正の仕組み
 
-| ツール                            | 役割                                 | コマンド        |
-| --------------------------------- | ------------------------------------ | --------------- |
-| **ESLint** (`import/order`)       | import 順序を検出・エラー → 自動修正 | `pnpm lint:fix` |
-| **Prettier** (`organize-imports`) | import の並び替え（空行・整形）      | `pnpm format`   |
+| ツール                      | 役割                                        | コマンド          |
+| --------------------------- | ------------------------------------------- | ----------------- |
+| **ESLint** (`import/order`) | import 順序を検出・エラー → 自動修正        | `pnpm lint:fix`   |
+| **Biome** (`organizeImports`) | named import の名前順ソート（名前単位）   | `pnpm biome:fix`  |
 
-- **順序の検知・修正は ESLint が担当**。`import/order` は `error` なので、違反があると `pnpm lint` が失敗する
-- **Prettier は順序ルールを持たない**（TypeScript の organize imports を実行するだけ）。ESLint と競合しないよう `newlines-between: 'ignore'` を設定している
+- **グループ順序の検知・修正は ESLint が担当**。`import/order` は `error` なので、違反があると `pnpm lint` が失敗する
+- **Biome は named import 内の名前順ソートを担当**（`{ RouterProvider, createRouter }` → `{ createRouter, RouterProvider }`）。グループ間の順序は変更しないため ESLint と競合しない
 
 **開発フロー：**
 
 ```bash
-pnpm lint:fix && pnpm format
+pnpm lint:fix && pnpm biome:fix
 ```
 
 **CI/CD では：**
 
 ```bash
-pnpm lint          # エラー検出
-pnpm format:check  # フォーマット検証
+pnpm lint   # ESLint エラー検出
+pnpm biome  # Biome lint + format 検証
 ```
 
 ---

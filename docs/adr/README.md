@@ -35,4 +35,5 @@
 | [ADR-009](./009-vite-react-over-nextjs.md)    | Next.js を使わず Vite + React（SPA）にする                   | Accepted   |
 | [ADR-010](./010-tanstack-query.md)            | TanStack Query をサーバー状態管理に採用する                  | Accepted   |
 | [ADR-011](./011-zod.md)                       | バリデーションを Zod に統一する                              | Accepted   |
-| [ADR-012](./012-eslint-over-biome.md)         | 現時点では ESLint + Prettier を維持し Biome への移行を見送る | Accepted   |
+| [ADR-012](./012-eslint-over-biome.md)         | 現時点では ESLint + Prettier を維持し Biome への移行を見送る | Superseded |
+| [ADR-013](./013-biome-eslint-minimal.md)      | Biome をメインツールとし ESLint を最小構成で併用する         | Accepted   |

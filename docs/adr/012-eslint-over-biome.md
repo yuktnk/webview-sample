@@ -2,7 +2,7 @@
 
 |            |            |
 | ---------- | ---------- |
-| **Status** | Accepted   |
+| **Status** | Superseded by [ADR-013](013-biome-eslint-minimal.md) |
 | **Date**   | 2026-04-01 |
 
 ---

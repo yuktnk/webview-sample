@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw'
+import { HttpResponse, http } from 'msw'
 
 import { API_ENDPOINTS } from '@/constants/apiEndpoints'
 import { mockBatchDate, mockUserInfo } from '@/mocks/data/common'

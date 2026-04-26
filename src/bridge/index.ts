@@ -17,7 +17,9 @@ const getBridge = (): NativeBridge => {
       messageHandlers: Record<string, { postMessage: (params?: string) => void }>
     }
     return {
+      // biome-ignore lint/complexity/useLiteralKeys: noPropertyAccessFromIndexSignature requires bracket notation
       onClickClose: () => webkit.messageHandlers['onClickClose']?.postMessage(),
+      // biome-ignore lint/complexity/useLiteralKeys: noPropertyAccessFromIndexSignature requires bracket notation
       sendTrack: (params) => webkit.messageHandlers['sendTrack']?.postMessage(params),
     }
   }

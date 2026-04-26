@@ -1,0 +1,112 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.4.13/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		// .gitignore を参照して除外ファイルを自動決定する
+		"useIgnoreFile": true
+	},
+	"files": {
+		"includes": [
+			"**",
+			// !! プレフィックスで除外（ビルド成果物・自動生成ファイル）
+			"!!**/dist",
+			"!!**/coverage",
+			"!!**/storybook-static",
+			// TanStack Router が自動生成するルートツリー（手動編集しない）
+			"!!src/routeTree.gen.ts",
+			// MSW が生成する Service Worker（pnpm dlx msw init で生成済み）
+			"!!public/mockServiceWorker.js"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "space",
+		"indentWidth": 2,
+		"lineWidth": 100,
+		"lineEnding": "lf"
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single",
+			"trailingCommas": "all",
+			// セミコロンなし（ASI に任せる）
+			"semicolons": "asNeeded",
+			"arrowParentheses": "always"
+		}
+	},
+	"css": {
+		"formatter": {
+			"quoteStyle": "single"
+		}
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			// Biome 推奨ルールをベースに追加・強化
+			"recommended": true,
+			"suspicious": {
+				// error にしない: 開発中の console.log は許容し、CI で検知する運用
+				"noConsole": "warn",
+				// ESLint の @typescript-eslint/no-explicit-any に相当
+				"noExplicitAny": "error",
+				// ESLint の react/no-array-index-key に相当
+				"noArrayIndexKey": "error"
+			},
+			"style": {
+				// ESLint の @typescript-eslint/no-non-null-assertion に相当
+				"noNonNullAssertion": "error",
+				// ESLint の no-nested-ternary に相当
+				"noNestedTernary": "error",
+				// ESLint の @typescript-eslint/array-type に相当（T[] 形式に統一）
+				"useConsistentArrayType": {
+					"level": "error",
+					"options": { "syntax": "shorthand" }
+				},
+				// ESLint の prefer-template に相当
+				"useTemplate": "error",
+				// ESLint の react/self-closing-comp に相当
+				"useSelfClosingElements": "error",
+				// ESLint の @typescript-eslint/consistent-type-definitions に相当（type を強制）
+				// ※ .d.ts ファイルは宣言マージのため overrides で除外
+				"useConsistentTypeDefinitions": { "level": "error", "options": { "style": "type" } },
+				// ESLint の @typescript-eslint/consistent-type-imports に相当
+				"useImportType": "error",
+				"useExportType": "error",
+				// ESLint の react/jsx-curly-brace-presence に相当
+				"useConsistentCurlyBraces": "error"
+			},
+			"complexity": {
+				// ESLint の react/jsx-no-useless-fragment に相当
+				"noUselessFragments": "error"
+			},
+			"correctness": {
+				// ESLint の no-unused-vars に相当（import に特化）
+				"noUnusedImports": "error"
+			}
+		}
+	},
+	"overrides": [
+		{
+			// .d.ts ファイルは Vite 等のグローバル型を宣言マージで拡張するため interface が必要。
+			// type エイリアスは宣言マージができないため、useConsistentTypeDefinitions を無効化する。
+			"includes": ["**/*.d.ts"],
+			"linter": {
+				"rules": {
+					"style": {
+						"useConsistentTypeDefinitions": "off"
+					}
+				}
+			}
+		}
+	],
+	"assist": {
+		"enabled": true,
+		"actions": {
+			"source": {
+				// import 文を自動整列（ESLint の import/order とは別軸: こちらは名前順ソート）
+				"organizeImports": "on"
+			}
+		}
+	}
+}

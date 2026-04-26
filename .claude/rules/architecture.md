@@ -12,17 +12,17 @@ paths: ['src/**/*.tsx', 'src/**/*.ts']
 - ページ間の状態共有は不要 → Zustand / Jotai は使わない
 - グローバル状態管理ライブラリ不要（→ なぜ不要かは [ADR-004](../../docs/adr/004-no-global-state-library.md)）
 
-### 2. 静的解析ツールの移行方針
+### 2. 静的解析ツールの構成方針
 
-現在は ESLint + Prettier を使用している。Biome への移行を検討したが現時点では見送っている。
-→ なぜ Biome に移行しないかは [ADR-012](../../docs/adr/012-eslint-over-biome.md)
+Biome をメインツール（Formatter + 汎用 Linter）とし、ESLint をプラグイン専用の最小構成で併用する。Prettier は廃止。
+→ なぜこの構成にしたかは [ADR-013](../../docs/adr/013-biome-eslint-minimal.md)
 
 ### 3. 依存ライブラリは最小限
 
 - axios → fetch（built-in）で代替（→ [ADR-007](../../docs/adr/007-fetch-over-axios.md)）
 - Redux → TanStack Query + useState で代替（→ [ADR-004](../../docs/adr/004-no-global-state-library.md)・[ADR-010](../../docs/adr/010-tanstack-query.md)）
 - Next.js → Vite + React（SPA）で代替（→ [ADR-009](../../docs/adr/009-vite-react-over-nextjs.md)）
-- ESLint + Prettier → Biome への移行は現時点で見送り（→ [ADR-012](../../docs/adr/012-eslint-over-biome.md)）
+- Prettier → Biome（Formatter）で代替（→ [ADR-013](../../docs/adr/013-biome-eslint-minimal.md)）
 - 「使えそう」ではなく「使う理由がある」ものだけ入れる
 
 ### 4. TypeScript strict: true を妥協しない

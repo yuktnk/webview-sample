@@ -1,7 +1,7 @@
 # スキップ方法: LEFTHOOK=0 git commit または git commit --no-verify
 #
 # 設計判断:
-# - lint・format-check はステージングされたファイルのみ対象（{staged_files}）
+# - lint・biome-check はステージングされたファイルのみ対象（{staged_files}）
 # - secretlint はステージングされたファイルのみ対象（機密情報の流出防止）
 # - typecheck は pre-push（--incremental でキャッシュ活用・pre-commit だと重い）
 # - E2E テストは CI/CD のみ（Playwright はローカルで走らせるには重すぎる）
@@ -19,10 +19,10 @@ pre-commit:
       run: pnpm eslint {staged_files} --max-warnings 0 --no-warn-ignored
       fail_text: "ESLint errors found. Run 'pnpm lint' to see details."
 
-    format-check:
-      glob: '*.{ts,tsx,js,jsx,json,md}'
-      run: pnpm prettier --check {staged_files}
-      fail_text: "Formatting issues found. Run 'pnpm format' to fix."
+    biome-check:
+      glob: '*.{ts,tsx,js,jsx,json,css}'
+      run: pnpm exec biome check {staged_files}
+      fail_text: "Biome errors found. Run 'pnpm biome:fix' to fix."
 
     secretlint:
       run: pnpm secretlint {staged_files}

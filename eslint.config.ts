@@ -1,8 +1,7 @@
 // For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
 
-import js from '@eslint/js'
 import queryPlugin from '@tanstack/eslint-plugin-query'
-import prettier from 'eslint-config-prettier'
+import { defineConfig, globalIgnores } from 'eslint/config'
 import importPlugin from 'eslint-plugin-import'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
 import reactPlugin from 'eslint-plugin-react'
@@ -10,7 +9,6 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import storybook from 'eslint-plugin-storybook'
 import unicorn from 'eslint-plugin-unicorn'
-import { defineConfig, globalIgnores } from 'eslint/config'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
@@ -19,13 +17,11 @@ export default defineConfig([
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
-      js.configs.recommended,
       tseslint.configs.recommendedTypeChecked,
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
       ...queryPlugin.configs['flat/recommended'],
       jsxA11y.flatConfigs.recommended,
-      prettier,
     ],
     plugins: {
       react: reactPlugin,
@@ -51,12 +47,9 @@ export default defineConfig([
     },
     rules: {
       'react/function-component-definition': ['error', { namedComponents: 'function-declaration' }],
-      '@typescript-eslint/consistent-type-imports': [
-        'error',
-        { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
-      ],
-      'no-console': 'warn',
       'no-alert': 'error',
+      // Covered by Biome — disable to avoid double-reporting
+      '@typescript-eslint/no-explicit-any': 'off',
       'no-restricted-globals': [
         'error',
         {
@@ -64,36 +57,9 @@ export default defineConfig([
           message: 'Use NativeBridge instead of window.open in WebView.',
         },
       ],
-      'react/self-closing-comp': 'error',
-      'react/jsx-no-useless-fragment': 'error',
-      '@typescript-eslint/no-non-null-assertion': 'error',
-      'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
-      'react/no-array-index-key': 'error',
-      '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
-      '@typescript-eslint/array-type': ['error', { default: 'array' }],
-      'no-nested-ternary': 'error',
       'react/destructuring-assignment': ['error', 'always'],
-      '@typescript-eslint/no-explicit-any': 'error',
       'react/no-unstable-nested-components': 'error',
-      'prefer-template': 'error',
       'react/jsx-pascal-case': 'error',
-      eqeqeq: ['error', 'always'],
-      '@typescript-eslint/no-floating-promises': 'error',
-      '@typescript-eslint/no-misused-promises': [
-        'error',
-        { checksVoidReturn: { attributes: false } },
-      ],
-      'no-restricted-imports': [
-        'error',
-        {
-          patterns: [
-            {
-              group: ['../*'],
-              message: "Use '@/' path alias instead of relative imports going up directories.",
-            },
-          ],
-        },
-      ],
       '@typescript-eslint/naming-convention': [
         'error',
         {
@@ -101,7 +67,7 @@ export default defineConfig([
           format: ['PascalCase'],
         },
       ],
-      // TypeScript 型安全性強化
+      // type-checked rules (require TypeScript type information)
       '@typescript-eslint/prefer-nullish-coalescing': 'error',
       '@typescript-eslint/prefer-optional-chain': 'error',
       '@typescript-eslint/no-unnecessary-type-constraint': 'error',
@@ -112,18 +78,11 @@ export default defineConfig([
       '@typescript-eslint/no-unnecessary-condition': 'error',
       '@typescript-eslint/prefer-readonly': 'error',
       '@typescript-eslint/return-await': ['error', 'in-try-catch'],
-      // import/export ルール
+      // import/export rules
       'import/order': [
         'error',
         {
-          groups: [
-            'builtin', // Node.js 標準モジュール
-            'external', // 外部ライブラリ（node_modules）
-            'internal', // @/ エイリアス
-            'parent', // ../
-            'sibling', // ./
-            'index', // ./index
-          ],
+          groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
           pathGroups: [
             {
               pattern: '@/**',
@@ -139,6 +98,17 @@ export default defineConfig([
         },
       ],
       'import/no-cycle': 'warn',
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['../*'],
+              message: "Use '@/' path alias instead of relative imports going up directories.",
+            },
+          ],
+        },
+      ],
     },
   },
   // .ts ファイルのファイル名: camelCase のみ（自動生成ファイルは除外）
@@ -199,6 +169,6 @@ export default defineConfig([
   // NOTE: storybook.configs['flat/recommended'] が readonly 型を返すため、
   // ESLint の defineConfig の型定義と合致しない。eslint-plugin-storybook
   // の型定義が不完全なため、ここでのみ型アサーションを使用。
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // biome-ignore lint/suspicious/noExplicitAny: eslint-plugin-storybook の型定義が不完全
   ...(storybook.configs['flat/recommended'] as any),
 ])

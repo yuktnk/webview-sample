@@ -56,10 +56,10 @@
 
 | 観点                    | 担保しているツール            |
 | ----------------------- | ----------------------------- |
-| フォーマット            | Prettier                      |
+| フォーマット            | Biome                         |
 | import の順番           | ESLint (`import/order`)       |
-| any の使用              | ESLint                        |
-| console.log の残留      | ESLint                        |
+| any の使用              | Biome                         |
+| console.log の残留      | Biome                         |
 | 型の整合性              | TypeScript strict: true       |
 | 未使用変数・ファイル    | knip                          |
 | TanStack Query ベスプラ | @tanstack/eslint-plugin-query |

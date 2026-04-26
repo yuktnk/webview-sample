@@ -13,7 +13,7 @@ paths: ['lefthook.yml', '.github/**/*', 'package.json']
 ### pre-commit（差分ファイルのみ・数秒）
 
 - `lint` — ESLint
-- `format-check` — Prettier
+- `biome-check` — Biome（lint + format）
 - `secretlint` — 秘密情報漏洩チェック
 
 ### pre-push（少し重くてもOK）
@@ -34,7 +34,7 @@ paths: ['lefthook.yml', '.github/**/*', 'package.json']
 ### PR のたびに走る（quality）
 
 ```
-typecheck → lint → format:check → knip → secretlint → test → build
+typecheck → lint → biome → knip → secretlint → test → build
 ```
 
 ### main マージ時に走る

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { delay, http, HttpResponse } from 'msw'
+import { delay, HttpResponse, http } from 'msw'
 
 import { API_ENDPOINTS } from '@/constants/apiEndpoints'
 
@@ -25,7 +25,7 @@ export const Loading: Story = {
   },
 }
 
-export const Error: Story = {
+export const ErrorStory: Story = {
   parameters: {
     msw: {
       handlers: [http.get(API_ENDPOINTS.SAMPLE_A_TYPE2, () => HttpResponse.error())],

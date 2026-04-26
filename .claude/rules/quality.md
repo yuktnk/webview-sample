@@ -55,16 +55,16 @@ paths: ['tsconfig*.json', 'eslint.config.ts', 'knip.config.ts']
 
 ### 概要
 
-| ツール                        | 役割                        |
-| ----------------------------- | --------------------------- |
-| TypeScript strict mode        | 型の整合性・型安全性強化    |
-| ESLint                        | コードの品質ルール          |
-| eslint-plugin-jsx-a11y        | アクセシビリティ（JSX）     |
-| @tanstack/eslint-plugin-query | TanStack Query のベスプラ   |
-| Prettier                      | フォーマットの統一          |
-| knip                          | 未使用ファイル・export 検出 |
-| secretlint                    | 秘密情報の漏洩チェック      |
-| commitlint                    | コミットメッセージ形式統一  |
+| ツール                        | 役割                                           |
+| ----------------------------- | ---------------------------------------------- |
+| TypeScript strict mode        | 型の整合性・型安全性強化                       |
+| Biome                         | Formatter（旧 Prettier）+ 汎用 Linter          |
+| ESLint                        | プラグイン専用（Hooks・Query・a11y 等）        |
+| eslint-plugin-jsx-a11y        | アクセシビリティ（JSX）                        |
+| @tanstack/eslint-plugin-query | TanStack Query のベスプラ                      |
+| knip                          | 未使用ファイル・export 検出                    |
+| secretlint                    | 秘密情報の漏洩チェック                         |
+| commitlint                    | コミットメッセージ形式統一                     |
 
 ### TypeScript 型安全性強化
 

@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw'
+import { HttpResponse, http } from 'msw'
 
 import { API_ENDPOINTS } from '@/constants/apiEndpoints'
 import { mockSampleBType1Data } from '@/mocks/data/sampleB'
