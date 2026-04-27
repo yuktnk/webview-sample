@@ -4,11 +4,7 @@ import { createFileRoute, Link, useRouter } from '@tanstack/react-router'
 import { CONTAINER_MAP } from '@/pages/sampleModal/containers'
 import type { FromType, ServiceType } from '@/types/routing'
 
-type RouteNode = {
-  id: string
-  path?: string
-  children?: RouteNode[]
-}
+type RouteInfo = { id: string }
 
 function RootPage() {
   const isDev = import.meta.env.MODE === 'development'
@@ -19,24 +15,10 @@ function RootPage() {
     return <div />
   }
 
-  // 開発環境：リンク集を動的生成
-
-  // 1. 動的パスを含まないページをリスト化
-  const collectRoutes = (node: RouteNode, routes: RouteNode[] = []): RouteNode[] => {
-    const id = node.id
-    // パスパラメータ（$ を含む）がなく、ルートページ / とparent __ を除外
-    if (id && id !== '__root__' && id !== '/' && !id.includes('$')) {
-      routes.push(node)
-    }
-    if (node.children) {
-      node.children.forEach((child) => {
-        collectRoutes(child, routes)
-      })
-    }
-    return routes
-  }
-
-  const staticRoutes = collectRoutes(router.routeTree as unknown as RouteNode)
+  // 1. 動的パスを含まないページをリスト化（routesById で全ルートをフラットに取得）
+  const staticRoutes = Object.values(
+    router.routesById as unknown as Record<string, RouteInfo>,
+  ).filter((route) => route.id !== '__root__' && route.id !== '/' && !route.id.includes('$'))
 
   // 2. CONTAINER_MAP から利用可能な from と serviceType の組み合わせを取得
   const containerRoutes = Object.entries(CONTAINER_MAP).flatMap(([fromType, serviceTypes]) =>
@@ -55,18 +37,13 @@ function RootPage() {
         <section className="mb-8">
           <h2 className="text-lg font-semibold mb-4">静的ページ</h2>
           <ul className="space-y-2">
-            {staticRoutes.map((route: RouteNode) => {
-              const path = route.path ?? route.id
-              const id = route.id
-
-              return (
-                <li key={id}>
-                  <Link to={path} className="text-primary-600 hover:underline">
-                    {id}
-                  </Link>
-                </li>
-              )
-            })}
+            {staticRoutes.map((route) => (
+              <li key={route.id}>
+                <Link to={route.id} className="text-primary-600 hover:underline">
+                  {route.id}
+                </Link>
+              </li>
+            ))}
           </ul>
         </section>
       )}

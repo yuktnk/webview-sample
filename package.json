@@ -32,16 +32,15 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.99.0",
-    "@tanstack/react-query-devtools": "^5.99.0",
     "@tanstack/react-router": "^1.168.18",
     "clsx": "^2.1.1",
-    "msw": "^2.13.2",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "tailwind-merge": "^3.5.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@tanstack/react-query-devtools": "^5.99.0",
     "@biomejs/biome": "^2.4.13",
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
@@ -72,6 +71,7 @@
     "eslint-plugin-unicorn": "^64.0.0",
     "globals": "^17.5.0",
     "jsdom": "^29.0.2",
+    "msw": "^2.13.2",
     "knip": "^6.4.0",
     "lefthook": "^2.1.5",
     "lighthouse": "^12.3.0",
