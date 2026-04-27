@@ -11,6 +11,7 @@ import { playwright } from '@vitest/browser-playwright'
 import { visualizer } from 'rollup-plugin-visualizer'
 
 import { defineConfig } from 'vite'
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 import svgr from 'vite-plugin-svgr'
 
 const dirname =
@@ -21,6 +22,14 @@ export default defineConfig({
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   plugins: [
     tanstackRouter({ target: 'react', autoCodeSplitting: true }),
+    ViteImageOptimizer({
+      // SVG は vite-plugin-svgr で管理するためスキップ
+      svg: false,
+      png: { quality: 80 },
+      jpg: { quality: 80 },
+      jpeg: { quality: 80 },
+      webp: { quality: 80 },
+    }),
     svgr(),
     react(),
     tailwindcss(),

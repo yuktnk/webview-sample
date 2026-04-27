@@ -79,11 +79,14 @@
     "playwright": "^1.59.1",
     "rollup-plugin-visualizer": "^7.0.1",
     "secretlint": "^11.6.0",
+    "sharp": "^0.34.5",
     "storybook": "^10.3.5",
+    "svgo": "^4.0.1",
     "tailwindcss": "^4.2.2",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.58.1",
     "vite": "^8.0.8",
+    "vite-plugin-image-optimizer": "^2.0.3",
     "vite-plugin-svgr": "^5.2.0",
     "vitest": "^4.1.4"
   },
@@ -91,7 +94,8 @@
     "onlyBuiltDependencies": [
       "esbuild",
       "lefthook",
-      "msw"
+      "msw",
+      "sharp"
     ]
   },
   "msw": {
