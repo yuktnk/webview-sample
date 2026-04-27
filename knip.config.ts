@@ -12,13 +12,7 @@ const config: KnipConfig = {
     gif: imageCompiler,
     webp: imageCompiler,
   },
-  ignore: [
-    'src/bridge/index.ts',
-    'src/mocks/data/userInfo.ts',
-    'src/mocks/handlers/userInfo.ts',
-    'src/queries/userInfo.ts',
-    'src/types/api/userInfo.ts',
-  ],
+  ignore: ['src/bridge/index.ts'],
   entry: ['src/routes/**/*.tsx'],
   ignoreDependencies: ['@secretlint/secretlint-rule-preset-recommend'],
 }

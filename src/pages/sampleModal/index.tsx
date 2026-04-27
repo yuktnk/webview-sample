@@ -6,7 +6,7 @@ import { CONTAINER_MAP } from './containers'
 type Props = { from: FromType; serviceType: ServiceType }
 
 export function SampleModalPage({ from, serviceType }: Props) {
-  const map = CONTAINER_MAP[from] as Partial<Record<ServiceType, React.ComponentType>>
+  const map = CONTAINER_MAP[from]
   const Container = map[serviceType]
 
   if (!Container) {

@@ -7,9 +7,11 @@ import { batchDateResponseSchema, userInfoResponseSchema } from '@/types/api/com
 export const userInfoQueryOptions = queryOptions({
   queryKey: ['userInfo'],
   queryFn: () => apiFetch(API_ENDPOINTS.USER_INFO, userInfoResponseSchema),
+  staleTime: Infinity,
 })
 
 export const batchDateQueryOptions = queryOptions({
   queryKey: ['batchDate'],
   queryFn: () => apiFetch(API_ENDPOINTS.BATCH_DATE, batchDateResponseSchema),
+  staleTime: Infinity,
 })
