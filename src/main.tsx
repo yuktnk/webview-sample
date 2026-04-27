@@ -2,6 +2,12 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { createRouter, RouterProvider } from '@tanstack/react-router'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { z } from 'zod'
+
+z.object({
+  VITE_ENVIRONMENT: z.enum(['local', 'dev', 'stg', 'prd']),
+  VITE_API_BASE_URL: z.string().min(1),
+}).parse(import.meta.env)
 
 import './index.css'
 import { queryClient } from './lib/queryClient'

@@ -40,14 +40,11 @@ import { API_ENDPOINTS } from '@/constants/apiEndpoints'
 
 export const userInfoQueryOptions = queryOptions({
   queryKey: ['userInfo'],
-  queryFn: async () => {
-    const raw = await apiFetch(API_ENDPOINTS.USER_INFO)
-    return userInfoResponseSchema.parse(raw)
-  },
+  queryFn: () => apiFetch(API_ENDPOINTS.USER_INFO, userInfoResponseSchema),
 })
 ```
 
-**重要：** API URL は `API_ENDPOINTS` から参照する。型は `apiFetch` のジェネリクスではなく Zod の `.parse()` から得る。
+**重要：** API URL は `API_ENDPOINTS` から参照する。`apiFetch` の第2引数に Zod schema を渡すことで、型推論とランタイム検証を同時に行う。
 
 #### 2. 型定義 (`src/types/api/{apiName}.ts`)
 
@@ -203,7 +200,7 @@ export function Dashboard() {
 ## APIレスポンスの型検証（Zod）
 
 `src/types/api/` の型定義ファイルで Zod スキーマを定義し、`z.infer<>` で型を導出する。
-`queryFn` 内で `.parse()` を呼ぶことで、API レスポンスをランタイムで検証する。
+`apiFetch` の第2引数に schema を渡すことで、型推論とランタイム検証を1ステップで行う。
 
 ```ts
 // src/types/api/sampleA.ts
@@ -216,10 +213,8 @@ export const sampleAType1ResponseSchema = z.object({ result: sampleAType1ResultS
 export type SampleAType1Response = z.infer<typeof sampleAType1ResultSchema>
 
 // src/queries/sampleA.ts
-queryFn: async () => {
-  const raw = await apiFetch(API_ENDPOINTS.SAMPLE_A_TYPE1)
-  return sampleAType1ResponseSchema.parse(raw).result
-},
+queryFn: () => apiFetch(API_ENDPOINTS.SAMPLE_A_TYPE1, sampleAType1ResponseSchema),
 ```
 
 **理由：** OpenAPI spec がないため、手書きスキーマと実レスポンスの乖離をランタイムで検知する。バックエンドの変更を型エラーではなく parse エラーで早期に発見できる（→ [ADR-011](../../docs/adr/011-zod.md)）。
+`apiFetch` に schema を必須引数として組み込むことで、Zod 検証の省略を型レベルで防ぐ。

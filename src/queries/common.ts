@@ -6,16 +6,10 @@ import { batchDateResponseSchema, userInfoResponseSchema } from '@/types/api/com
 
 export const userInfoQueryOptions = queryOptions({
   queryKey: ['userInfo'],
-  queryFn: async () => {
-    const raw = await apiFetch(API_ENDPOINTS.USER_INFO)
-    return userInfoResponseSchema.parse(raw)
-  },
+  queryFn: () => apiFetch(API_ENDPOINTS.USER_INFO, userInfoResponseSchema),
 })
 
 export const batchDateQueryOptions = queryOptions({
   queryKey: ['batchDate'],
-  queryFn: async () => {
-    const raw = await apiFetch(API_ENDPOINTS.BATCH_DATE)
-    return batchDateResponseSchema.parse(raw)
-  },
+  queryFn: () => apiFetch(API_ENDPOINTS.BATCH_DATE, batchDateResponseSchema),
 })

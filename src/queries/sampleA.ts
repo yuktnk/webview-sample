@@ -6,16 +6,10 @@ import { sampleAType1ResponseSchema, sampleAType2ResponseSchema } from '@/types/
 
 export const sampleAType1QueryOptions = queryOptions({
   queryKey: ['sampleA', 'type1'],
-  queryFn: async () => {
-    const raw = await apiFetch(API_ENDPOINTS.SAMPLE_A_TYPE1)
-    return sampleAType1ResponseSchema.parse(raw)
-  },
+  queryFn: () => apiFetch(API_ENDPOINTS.SAMPLE_A_TYPE1, sampleAType1ResponseSchema),
 })
 
 export const sampleAType2QueryOptions = queryOptions({
   queryKey: ['sampleA', 'type2'],
-  queryFn: async () => {
-    const raw = await apiFetch(API_ENDPOINTS.SAMPLE_A_TYPE2)
-    return sampleAType2ResponseSchema.parse(raw)
-  },
+  queryFn: () => apiFetch(API_ENDPOINTS.SAMPLE_A_TYPE2, sampleAType2ResponseSchema),
 })

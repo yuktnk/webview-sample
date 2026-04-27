@@ -4,6 +4,7 @@ import { createRootRouteWithContext, Outlet } from '@tanstack/react-router'
 
 import { ErrorView } from '@/components/ui/ErrorView'
 import { LoadingView } from '@/components/ui/LoadingView'
+import { NotFoundView } from '@/components/ui/NotFoundView'
 import { batchDateQueryOptions, userInfoQueryOptions } from '@/queries/common'
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
@@ -14,6 +15,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ]),
   pendingComponent: LoadingView,
   errorComponent: ErrorView,
+  notFoundComponent: () => <NotFoundView />,
   component: function RootLayout() {
     return (
       <>
