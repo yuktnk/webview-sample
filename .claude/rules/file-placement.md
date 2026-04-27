@@ -48,6 +48,31 @@ src/
 | sampleModal 全体で使う  | `pages/sampleModal/components/` に配置  | `pages/sampleModal/hooks/` に配置   |
 | 複数ページで使う        | `src/components/` に配置                | `src/hooks/` に配置                 |
 
+### `components/ui/` に置けるものの条件
+
+`src/components/ui/` は **「ロジックなし・ドメイン知識なし」** の2条件を満たすコンポーネントのみ置く。
+
+| 種類 | 例 | 置ける？ |
+| ---- | ---- | ---- |
+| HTML 要素のラッパー（属性の強制・デフォルト統一） | `Button`, `Img`, `Checkbox`, `ExternalLink` | ✅ |
+| 汎用 UI 状態（表示のみ、業務の意味を持たない） | `LoadingView`, `ErrorView` | ✅ |
+| 業務知識を含むコンポーネント（1ページ専用） | 「商品カード」 | ❌ → `pages/` 配下へ |
+| 業務知識を含むコンポーネント（複数ページ共通） | `CloseButton`（NativeBridge を呼ぶ） | ❌ → `src/components/` 直下へ |
+| 複数 `ui/` コンポーネントを合成したフォーム部品 | `LabeledCheckbox` | ❌ → `components/form/` へ（将来） |
+
+Atomic Design の atoms に近い位置づけだが、分類基準は視覚的な複雑さではなく「ロジックなし・ドメイン知識なし」。
+
+`components/` 直下にはドメイン知識を持ちつつ複数ページで共通して使うコンポーネントを置く。
+
+```
+src/components/
+├── ui/               ← ロジックなし・ドメイン知識なし（primitives）
+│   ├── Button.tsx
+│   ├── Img.tsx
+│   └── ...
+└── CloseButton.tsx   ← 複数ページ共通・NativeBridge の知識あり
+```
+
 ### 移動ルール
 
 同じコンポーネントやフックを別の場所でも使いたくなったら、そのタイミングで一段上に移動する。

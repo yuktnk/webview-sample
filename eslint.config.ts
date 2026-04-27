@@ -97,6 +97,25 @@ export default defineConfig([
           'newlines-between': 'ignore',
         },
       ],
+      'react/forbid-elements': [
+        'error',
+        {
+          forbid: [
+            { element: 'img', message: 'Use <Img> from @/components/ui/Img instead.' },
+            {
+              element: 'a',
+              message:
+                'Use <ExternalLink> from @/components/ui/ExternalLink instead. For internal navigation, use <Link> from TanStack Router.',
+            },
+            { element: 'button', message: 'Use <Button> from @/components/ui/Button instead.' },
+            {
+              element: 'input',
+              message:
+                'Use a dedicated input component (e.g. <Checkbox> from @/components/ui/Checkbox). For other input types, create a dedicated component when needed.',
+            },
+          ],
+        },
+      ],
       'import/no-cycle': 'warn',
       'no-restricted-imports': [
         'error',
@@ -109,6 +128,18 @@ export default defineConfig([
           ],
         },
       ],
+    },
+  },
+  // ラッパーコンポーネント自身は素のタグを使って良い
+  {
+    files: [
+      'src/components/ui/Img.tsx',
+      'src/components/ui/ExternalLink.tsx',
+      'src/components/ui/Button.tsx',
+      'src/components/ui/Checkbox.tsx',
+    ],
+    rules: {
+      'react/forbid-elements': 'off',
     },
   },
   // .ts ファイルのファイル名: camelCase のみ（自動生成ファイルは除外）
