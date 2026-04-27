@@ -23,8 +23,6 @@ export default defineConfig({
   plugins: [
     tanstackRouter({ target: 'react', autoCodeSplitting: true }),
     ViteImageOptimizer({
-      // SVG は vite-plugin-svgr で管理するためスキップ
-      svg: false,
       png: { quality: 80 },
       jpg: { quality: 80 },
       jpeg: { quality: 80 },
