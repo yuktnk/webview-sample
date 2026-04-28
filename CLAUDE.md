@@ -89,14 +89,14 @@ App Engine のランタイムは Python を使用する。メインアプリは�
     └── webview-storybook サービス（Storybook）
 
 ローカル開発
-└── vite --mode local（MSW でモック）
+└── vite --mode localhost（MSW でモック）
 ```
 
 **ビルドモード一覧：**
 
-| モード | 用途                 | コマンド                          |
-| ------ | -------------------- | --------------------------------- |
-| local  | ローカル開発         | `pnpm local` / `pnpm build:local` |
+| モード    | 用途                 | コマンド                          |
+| --------- | -------------------- | --------------------------------- |
+| localhost | ローカル開発         | `pnpm local` / `pnpm build:local` |
 | dev    | GCP dev プロジェクト | `pnpm build:dev`                  |
 | stg    | GCP stg プロジェクト | `pnpm build:stg`                  |
 | prd    | GCP prd プロジェクト | `pnpm build:prd`                  |
