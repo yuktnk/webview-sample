@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "local": "vite --mode local",
-    "build:local": "vite build --mode local",
+    "local": "vite --mode localhost",
+    "build:local": "vite build --mode localhost",
     "build:dev": "vite build --mode dev",
     "build:stg": "vite build --mode stg",
     "build:prd": "vite build --mode prd",

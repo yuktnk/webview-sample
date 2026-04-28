@@ -7,7 +7,7 @@ import type { FromType, ServiceType } from '@/types/routing'
 type RouteInfo = { id: string }
 
 function RootPage() {
-  const isDev = import.meta.env.MODE === 'development'
+  const isDev = import.meta.env.VITE_ENVIRONMENT === 'local'
   const router = useRouter()
 
   if (!isDev) {
